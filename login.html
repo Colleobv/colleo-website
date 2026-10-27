@@ -396,9 +396,6 @@ p { margin: 0; text-wrap: pretty; }
 .team-note { margin-top: 26px; font-size: 0.92rem; color: var(--muted); background: var(--bg-2); border-radius: var(--r-sm); padding: 13px 16px; display: inline-block; }
 @media (max-width: 720px) { .team-grid { grid-template-columns: 1fr; max-width: 360px; } }
 
-
-.login-err { margin-top: 14px; padding: 10px 14px; border-radius: var(--r-sm); background: #fdecec; color: #8a1f1f; font-size: 0.92rem; }
-.login-err[hidden] { display: none; }
 </style>
 <style>/* Colleo — cursistenportaal styles (extends styles.css :root vars) */
 
@@ -692,15 +689,16 @@ p { margin: 0; text-wrap: pretty; }
   <main class="login-main">
     <div class="login-card">
       <h2>Inloggen</h2>
-      <p class="sub">Het portaal en de e-learnings zijn voorlopig enkel toegankelijk voor ingeschreven cursisten. Je toegangscode krijg je van ons.</p>
+      <p class="sub">Log in met je gegevens om je traject te bekijken.</p>
       <form id="loginForm">
         <div class="field"><label>Naam</label><input id="lname" required placeholder="Voor- en achternaam" autocomplete="name" /></div>
         <div class="field"><label>E-mailadres</label><input id="lmail" type="email" required placeholder="jij@praktijk.be" autocomplete="email" /></div>
-        <div class="field"><label>Toegangscode</label><input id="lpass" type="password" required placeholder="••••••••" autocomplete="current-password" /></div>
-        <p class="login-err" id="lerr" role="alert" hidden></p>
-        <button class="btn btn-primary btn-block" type="submit" id="lbtn" style="margin-top:20px">Inloggen <span class="arr" id="arr"></span></button>
+        <div class="field"><label>Wachtwoord</label><input id="lpass" type="password" required placeholder="••••••••" autocomplete="current-password" /></div>
+        <button class="btn btn-primary btn-block" type="submit" style="margin-top:20px">Inloggen <span class="arr" id="arr"></span></button>
       </form>
-      <p class="demo-note">Geen toegangscode of werkt ze niet? <a href="contact.html" style="color:var(--accent-ink);font-weight:600">Contacteer ons</a>.</p>
+      <div class="login-or">of</div>
+      <button class="btn btn-ghost btn-block" id="demoBtn">Bekijk als demo-cursist</button>
+      <p class="demo-note">Dit is een interactief prototype. Je voortgang wordt lokaal in je browser bewaard — er worden geen echte gegevens verstuurd.</p>
       <p class="login-alt">Nog niet ingeschreven? <a href="index.html#voordeel" style="color:var(--accent-ink);font-weight:600">Schrijf je in</a></p>
     </div>
   </main>
@@ -865,9 +863,10 @@ window.Colleo = (function () {
   // ── auth (prototype) ──
   function getUser() { try { return JSON.parse(localStorage.getItem(AUTH)); } catch (e) { return null; } }
   function setUser(u) { localStorage.setItem(AUTH, JSON.stringify(u)); }
-  function logout() { localStorage.removeItem(AUTH); try { fetch('/api/logout', { method: 'POST', keepalive: true }); } catch (e) {} }
+  function logout() { localStorage.removeItem(AUTH); }
   function requireAuth() {
-    if (!getUser()) { location.href='login.html'; return false; }
+    // Voorlopig vrij toegankelijk: zonder login krijg je een standaardprofiel.
+    if (!getUser()) setUser({ name: "Cursist", email: "" });
     return true;
   }
 
@@ -923,29 +922,16 @@ window.Colleo = (function () {
 </script>
 <script>
   document.getElementById('arr').innerHTML = UI.icon('arrow', 18);
-  const params = new URLSearchParams(location.search);
-  const nextUrl = params.get('next') || '/portaal.html';
-  const err = document.getElementById('lerr'), btn = document.getElementById('lbtn');
-  function showErr(t) { err.textContent = t; err.hidden = false; }
-  document.getElementById('loginForm').addEventListener('submit', async function (e) {
+  document.getElementById('loginForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    err.hidden = true; btn.disabled = true;
     const name = document.getElementById('lname').value.trim() || 'Cursist';
     const email = document.getElementById('lmail').value.trim();
-    const code = document.getElementById('lpass').value;
-    try {
-      const r = await fetch('/api/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ code: code, next: nextUrl }) });
-      const d = await r.json().catch(function () { return {}; });
-      if (r.ok && d.ok) {
-        Colleo.setUser({ name: name, email: email });
-        location.href = d.next || '/portaal.html';
-        return;
-      }
-      showErr(d.error === 'not_configured' ? 'De toegang is nog niet geactiveerd. Probeer het later opnieuw.' : 'Deze toegangscode klopt niet. Controleer ze en probeer opnieuw.');
-    } catch (x) {
-      showErr('Er ging iets mis met de verbinding. Probeer het opnieuw.');
-    }
-    btn.disabled = false;
+    Colleo.setUser({ name: name, email: email, riziv: '0-00000-00-000' });
+    location.href='portaal.html';
+  });
+  document.getElementById('demoBtn').addEventListener('click', function () {
+    Colleo.setUser({ name: 'Dr. An Peeters', email: 'an.peeters@praktijk.be', riziv: '1-23456-78-901' });
+    location.href='portaal.html';
   });
 </script>
 <script id="colleo-nav-js">

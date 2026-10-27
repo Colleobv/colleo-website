@@ -756,9 +756,10 @@ window.Colleo = (function () {
   // ── auth (prototype) ──
   function getUser() { try { return JSON.parse(localStorage.getItem(AUTH)); } catch (e) { return null; } }
   function setUser(u) { localStorage.setItem(AUTH, JSON.stringify(u)); }
-  function logout() { localStorage.removeItem(AUTH); try { fetch('/api/logout', { method: 'POST', keepalive: true }); } catch (e) {} }
+  function logout() { localStorage.removeItem(AUTH); }
   function requireAuth() {
-    if (!getUser()) { location.href='login.html'; return false; }
+    // Voorlopig vrij toegankelijk: zonder login krijg je een standaardprofiel.
+    if (!getUser()) setUser({ name: "Cursist", email: "" });
     return true;
   }
 
