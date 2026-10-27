@@ -306,7 +306,7 @@ p { margin: 0; text-wrap: pretty; }
 .footer { padding-block: 54px; border-top: 1px solid var(--hairline); }
 .footer-inner { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center; }
 .footer .muted { color: var(--muted); font-size: 0.92rem; }
-.footer-links { display: flex; gap: 26px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 10px 26px; }
 .footer-links a { color: var(--muted); font-size: 0.94rem; }
 .footer-links a:hover { color: var(--navy); }
 
@@ -430,21 +430,21 @@ window.ELEARNINGS = [
   {
     id: "finance",
     titel: "Finance for physios",
-    desc: "Grip op je financiën als zelfstandige kinesitherapeut: tarieven, kosten en fiscaliteit.",
-    tijd: "3,5 uur", punten: 6, prijs: "85",
+    desc: "Grip op je financiën als zelfstandige kinesitherapeut: structuur, pensioen en beleggen.",
+    tijd: "3,5 uur", punten: 6, prijs: "85", module: "elearning-finance.html",
     img:"",
     lede: "Als kinesitherapeut ben je vooral met je vak bezig — maar je praktijk is ook een onderneming. In deze module krijg je helder inzicht in de financiële kant van je zelfstandig beroep, zonder boekhoudkundig jargon.",
     leerdoelen: [
-      "Je begrijpt de opbouw van je tarieven, kosten en marges als zelfstandige.",
-      "Je kan je inkomsten en uitgaven structureren en opvolgen.",
-      "Je kent de belangrijkste fiscale aftrekposten voor een kinesitherapiepraktijk.",
-      "Je weet hoe je reserveert voor belastingen, pensioen en investeringen.",
+      "Je kent de verschillen tussen een eenmanszaak en een BV, en weet wanneer een vennootschap interessant wordt.",
+      "Je kent de pensioenproducten voor zelfstandigen: VAPZ, POZ en IPT.",
+      "Je begrijpt hoe je stap voor stap een gespreid vermogen opbouwt, van noodreserve tot ETF's.",
+      "Je kan een eerste persoonlijk actieplan opstellen.",
     ],
     inhoud: [
-      "Je praktijk als onderneming: cijfers die ertoe doen",
-      "Tarifering, conventie en de impact op je inkomen",
-      "Kosten, afschrijvingen en aftrekbaarheid",
-      "Sparen, investeren en je financiële buffer",
+      "Blok 1: juridische structuren (eenmanszaak of BV)",
+      "Blok 2: investeren via je vennootschap",
+      "Blok 3: de personal finance piramide",
+      "Blok 4: voorbeeldportefeuilles, financiële onafhankelijkheid en actieplan",
     ],
   },
   {
