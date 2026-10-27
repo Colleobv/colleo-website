@@ -639,7 +639,7 @@ window.ELEARNINGS = [
   document.getElementById('elGrid').innerHTML = (window.ELEARNINGS || []).map(function (e) {
     return '<a class="el-card" href="elearning.html?id=' + encodeURIComponent(e.id) + '">' +
       (e.img ? '<div class="el-img"><img src="' + esc(e.img) + '" alt="" loading="lazy" /></div>' : '') +
-      '<div class="el-top"><span class="el-badge' + (e.module ? ' live' : '') + '">' + (e.module ? 'Nu beschikbaar' : 'Binnenkort') + '</span><span class="el-pts">' + e.punten + ' punten</span></div>' +
+      '<div class="el-top">' + (e.module ? '<span></span>' : '<span class="el-badge">Binnenkort</span>') + '<span class="el-pts">' + e.punten + ' punten</span></div>' +
       '<h3>' + esc(e.titel) + '</h3><p>' + esc(e.desc) + '</p>' +
       '<div class="el-foot"><span class="el-meta">' + icon('clock', 16) + ' ' + esc(e.tijd) + '</span>' +
       '<span class="el-price">' + euro(e.prijs) + '<small>incl. btw</small></span></div>' +

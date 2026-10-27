@@ -608,7 +608,7 @@ window.ELEARNINGS = [
         <h1>${esc(e.titel)}</h1>
         <p class="lede">${esc(e.lede)}</p>
         <div class="eld-chips">
-          <span class="eld-chip badge">${e.module ? 'Nu beschikbaar' : 'Binnenkort'}</span>
+          ${e.module ? '' : '<span class="eld-chip badge">Binnenkort</span>'}
           <span class="eld-chip">${icon('clock', 16)} ${esc(e.tijd)}</span>
           <span class="eld-chip">${icon('medal', 16)} ${e.punten} Pro-Q-Kine punten</span>
           <span class="eld-chip price">${'\u20ac' + esc(e.prijs)} incl. btw</span>
