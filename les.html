@@ -758,8 +758,8 @@ window.Colleo = (function () {
   // ── curriculum: 5 avondsessies, elk 8 punten = 40 punten (jaarplan 2026) ──
   const curriculum = [
     { id: 1, topic: "Manuele Therapie Refresher: Cx en Tx", ne: 8, date: "4 mrt 2026", dur: "3 – 3,5u", format: "Fysiek/digitaal",
-      desc: "Opfrissing van onderzoek en behandeling van de cervicale en thoracale wervelzuil.",
-      lessons: ["Onderzoek cervicale & thoracale wervelzuil", "Mobilisatie- en manipulatietechnieken", "Klinisch redeneren & red flags"],
+      desc: "Veilig en precies manipuleren van de cervicale en thoracale wervelzuil, van screening tot techniek.",
+      lessons: ["Rode vlaggen & veiligheid", "3D-onderzoek: upslope en downslope", "7 kerntechnieken Cx en Tx"],
       materials: ["Slides — MT Refresher Cx/Tx (PDF)", "Techniekenhandout (PDF)", "Red flags checklist (PDF)"],
       quiz: [
         { q: "Wat hoort altijd vooraf te gaan aan cervicale manipulatie?", a: ["Screening op red flags en contra-indicaties", "Maximale eindrek", "Niets, je start meteen"], correct: 0 },
@@ -767,8 +767,8 @@ window.Colleo = (function () {
         { q: "Hoeveel punten levert deze sessie op?", a: ["4", "8", "12"], correct: 1 },
       ] },
     { id: 2, topic: "Personal finance for physios", ne: 8, date: "6 mei 2026", dur: "3 – 3,5u", format: "Fysiek/digitaal",
-      desc: "Grip op je financiën als zelfstandige kinesitherapeut.",
-      lessons: ["Inkomsten & kosten van je praktijk", "Belastingen en aftrekposten", "Sparen, investeren & pensioen"],
+      desc: "Grip op je financiën als zelfstandige kinesitherapeut: structuur, pensioen en beleggen.",
+      lessons: ["Eenmanszaak of BV", "Pensioen: VAPZ, POZ en IPT", "Beleggen: buffer, ETF's en vastgoed"],
       materials: ["Slides — Personal finance (PDF)", "Fiscale checklist (PDF)", "Budgetsjabloon (XLSX)"],
       quiz: [
         { q: "Waarom is financiële kennis relevant voor een kinesitherapeut?", a: ["Het is enkel voor boekhouders", "Als zelfstandige bepaal je mee je eigen rendabiliteit", "Het heeft geen invloed op je praktijk"], correct: 1 },
@@ -776,8 +776,8 @@ window.Colleo = (function () {
         { q: "Wat is een gezonde financiële gewoonte?", a: ["Alles op één rekening laten staan", "Periodiek reserveren voor belastingen en pensioen", "Nooit budgetteren"], correct: 1 },
       ] },
     { id: 3, topic: "Manuele Therapie Refresher: Lx en extremiteiten", ne: 8, date: "17 jun 2026", dur: "3 – 3,5u", format: "Fysiek/digitaal",
-      desc: "Opfrissing van de lumbale wervelzuil en de extremiteiten.",
-      lessons: ["Onderzoek lumbale wervelzuil", "Technieken onderste lidmaat", "Technieken bovenste lidmaat"],
+      desc: "Onderzoek en manipulatie van de lage rug, het bekken en de extremiteiten.",
+      lessons: ["Rode vlaggen rug, bekken & extremiteiten", "Klinisch onderzoek & SIG-cluster", "12 kerntechnieken"],
       materials: ["Slides — MT Refresher Lx & extremiteiten (PDF)", "Techniekenhandout (PDF)", "Oefenschema (PDF)"],
       quiz: [
         { q: "Wat is essentieel bij lage-rugklachten?", a: ["Onderscheid maken tussen specifieke en aspecifieke klachten", "Altijd beeldvorming aanvragen", "Steeds bedrust adviseren"], correct: 0 },
@@ -897,7 +897,7 @@ window.Colleo = (function () {
   // ── auth (prototype) ──
   function getUser() { try { return JSON.parse(localStorage.getItem(AUTH)); } catch (e) { return null; } }
   function setUser(u) { localStorage.setItem(AUTH, JSON.stringify(u)); }
-  function logout() { localStorage.removeItem(AUTH); }
+  function logout() { localStorage.removeItem(AUTH); try { fetch('/api/logout', { method: 'POST', keepalive: true }); } catch (e) {} }
   function requireAuth() {
     if (!getUser()) { location.href='login.html'; return false; }
     return true;

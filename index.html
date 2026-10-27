@@ -1264,7 +1264,10 @@ function Nav({
     href: "contact.html"
   }, "Contact")), React.createElement("div", {
     className: "nav-cta"
-  }, React.createElement("button", {
+  }, React.createElement("a", {
+    className: "nav-login",
+    href: "login.html"
+  }, "Inloggen"), React.createElement("button", {
     className: "btn btn-primary",
     onClick: onOpen
   }, ctaLabel, React.createElement("span", {
@@ -1736,6 +1739,8 @@ function Footer() {
   }, "Word lesgever"), React.createElement("a", {
     href: "contact.html"
   }, "Contact"), React.createElement("a", {
+    href: "login.html"
+  }, "Inloggen"), React.createElement("a", {
     href: "voorwaarden.html"
   }, "Voorwaarden"), React.createElement("a", {
     href: "privacy.html"
@@ -1901,15 +1906,15 @@ const ACCENT_INK = {
 };
 const TOPICS = [{
   topic: "Manuele Therapie Refresher: Cx en Tx",
-  desc: "Opfrissing van onderzoek en behandeling van de cervicale en thoracale wervelzuil.",
+  desc: "Veilig en precies manipuleren van de cervicale en thoracale wervelzuil, van screening tot techniek.",
   ne: 8
 }, {
   topic: "Personal finance for physios",
-  desc: "Grip op je financi\u00ebn als zelfstandige kinesitherapeut.",
+  desc: "Grip op je financi\u00ebn als zelfstandige kinesitherapeut: structuur, pensioen en beleggen.",
   ne: 8
 }, {
   topic: "Manuele Therapie Refresher: Lx en extremiteiten",
-  desc: "Opfrissing van de lumbale wervelzuil en de extremiteiten.",
+  desc: "Onderzoek en manipulatie van de lage rug, het bekken en de extremiteiten.",
   ne: 8
 }, {
   topic: "(Sport)voeding: gezondheid en prestatie",

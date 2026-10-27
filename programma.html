@@ -395,6 +395,29 @@ p { margin: 0; text-wrap: pretty; }
 .team-note { margin-top: 26px; font-size: 0.92rem; color: var(--muted); background: var(--bg-2); border-radius: var(--r-sm); padding: 13px 16px; display: inline-block; }
 @media (max-width: 720px) { .team-grid { grid-template-columns: 1fr; max-width: 360px; } }
 
+
+/* ===== sessiedetails & avondverloop ===== */
+.pdet { margin-top: 16px; border-top: 1px solid var(--hairline-soft); padding-top: 12px; }
+.pdet summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent-ink); font-size: 0.95rem; }
+.pdet summary::-webkit-details-marker { display: none; }
+.pdet summary svg { transition: transform .16s; transform: rotate(90deg); }
+.pdet[open] summary svg { transform: rotate(-90deg); }
+.pdet-body { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; margin-top: 14px; }
+.pdet-body .ol { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.pdet-body ul { margin: 0; padding-left: 18px; color: var(--ink); font-size: 0.95rem; }
+.pdet-body li + li { margin-top: 6px; }
+.pdet-body p { margin: 0; color: var(--ink); font-size: 0.95rem; }
+.pdet-body .pnoot { margin-top: 14px; font-size: 0.88rem; color: var(--muted); font-style: italic; }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.step { background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: var(--r-card); padding: 24px; box-shadow: var(--shadow-sm); }
+.step .sn { font-family: var(--font-display); font-weight: 700; color: var(--accent-ink); font-size: 1.15rem; }
+.step h3 { font-size: 1.15rem; margin-top: 8px; }
+.step p { margin-top: 6px; color: var(--muted); font-size: 0.95rem; }
+.after { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.after > div { background: var(--bg-2); border-radius: var(--r-sm); padding: 18px 22px; color: var(--muted); font-size: 0.95rem; }
+.after strong { display: block; color: var(--navy); margin-bottom: 4px; }
+@media (max-width: 860px) { .steps { grid-template-columns: repeat(2, 1fr); } .pdet-body, .after { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
 </style>
 <style>
   /* programme detail */
@@ -476,6 +499,7 @@ p { margin: 0; text-wrap: pretty; }
       <a href="contact.html">Contact</a>
     </div>
     <div class="nav-cta">
+      <a class="nav-login" href="login.html">Inloggen</a>
       <a class="btn btn-primary" href="index.html#voordeel">Schrijf je in <span class="arr" id="navArr"></span></a>
     </div>
   </div>
@@ -492,6 +516,23 @@ p { margin: 0; text-wrap: pretty; }
     <div class="a"><div class="v"><em>€2.550</em></div><div class="k">RIZIV-kwaliteitspremie</div></div>
   </div>
 </header>
+
+<!-- avond -->
+<section class="section" id="avond" style="padding-block:clamp(20px,3vw,40px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Zo verloopt een avond</span><h2>Weinig slides, veel praktijk.</h2><p>Elke sessie volgt hetzelfde ritme, zodat je de kennis niet alleen hoort maar ook zelf onder de knie krijgt.</p></div>
+    <div class="steps">
+      <div class="step"><div class="sn">18u30</div><h3>Onthaal</h3><p>Deuren open, koffie en een babbel met collega’s.</p></div>
+      <div class="step"><div class="sn">19u00</div><h3>Theorie</h3><p>Kort en to the point: enkel wat je nodig hebt in de praktijk.</p></div>
+      <div class="step"><div class="sn">Daarna</div><h3>Demonstratie &amp; oefenen</h3><p>De lesgever toont, jij oefent per twee met directe feedback.</p></div>
+      <div class="step"><div class="sn">Tot ±22u</div><h3>Casuïstiek</h3><p>Samen redeneren over herkenbare patiënten, als peer review.</p></div>
+    </div>
+    <div class="after">
+      <div><strong>Achteraf</strong> Je krijgt het cursusmateriaal, en we nemen de sessies zoveel mogelijk op zodat je ze kan herbekijken.</div>
+      <div><strong>Jouw mening telt</strong> Na elke sessie vul je een korte evaluatie in. Daarmee sturen we het programma bij.</div>
+    </div>
+  </div>
+</section>
 
 <!-- sessions -->
 <section class="section" id="sessies" style="padding-top:clamp(20px,3vw,40px)">
@@ -548,6 +589,7 @@ p { margin: 0; text-wrap: pretty; }
       <a href="lesgever.html">Word lesgever</a>
       <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
+      <a href="login.html">Inloggen</a>
       <a href="voorwaarden.html">Voorwaarden</a>
       <a href="privacy.html">Privacy</a>
     </div>
@@ -575,8 +617,8 @@ window.Colleo = (function () {
   // ── curriculum: 5 avondsessies, elk 8 punten = 40 punten (jaarplan 2026) ──
   const curriculum = [
     { id: 1, topic: "Manuele Therapie Refresher: Cx en Tx", ne: 8, date: "4 mrt 2026", dur: "3 – 3,5u", format: "Fysiek/digitaal",
-      desc: "Opfrissing van onderzoek en behandeling van de cervicale en thoracale wervelzuil.",
-      lessons: ["Onderzoek cervicale & thoracale wervelzuil", "Mobilisatie- en manipulatietechnieken", "Klinisch redeneren & red flags"],
+      desc: "Veilig en precies manipuleren van de cervicale en thoracale wervelzuil, van screening tot techniek.",
+      lessons: ["Rode vlaggen & veiligheid", "3D-onderzoek: upslope en downslope", "7 kerntechnieken Cx en Tx"],
       materials: ["Slides — MT Refresher Cx/Tx (PDF)", "Techniekenhandout (PDF)", "Red flags checklist (PDF)"],
       quiz: [
         { q: "Wat hoort altijd vooraf te gaan aan cervicale manipulatie?", a: ["Screening op red flags en contra-indicaties", "Maximale eindrek", "Niets, je start meteen"], correct: 0 },
@@ -584,8 +626,8 @@ window.Colleo = (function () {
         { q: "Hoeveel punten levert deze sessie op?", a: ["4", "8", "12"], correct: 1 },
       ] },
     { id: 2, topic: "Personal finance for physios", ne: 8, date: "6 mei 2026", dur: "3 – 3,5u", format: "Fysiek/digitaal",
-      desc: "Grip op je financiën als zelfstandige kinesitherapeut.",
-      lessons: ["Inkomsten & kosten van je praktijk", "Belastingen en aftrekposten", "Sparen, investeren & pensioen"],
+      desc: "Grip op je financiën als zelfstandige kinesitherapeut: structuur, pensioen en beleggen.",
+      lessons: ["Eenmanszaak of BV", "Pensioen: VAPZ, POZ en IPT", "Beleggen: buffer, ETF's en vastgoed"],
       materials: ["Slides — Personal finance (PDF)", "Fiscale checklist (PDF)", "Budgetsjabloon (XLSX)"],
       quiz: [
         { q: "Waarom is financiële kennis relevant voor een kinesitherapeut?", a: ["Het is enkel voor boekhouders", "Als zelfstandige bepaal je mee je eigen rendabiliteit", "Het heeft geen invloed op je praktijk"], correct: 1 },
@@ -593,8 +635,8 @@ window.Colleo = (function () {
         { q: "Wat is een gezonde financiële gewoonte?", a: ["Alles op één rekening laten staan", "Periodiek reserveren voor belastingen en pensioen", "Nooit budgetteren"], correct: 1 },
       ] },
     { id: 3, topic: "Manuele Therapie Refresher: Lx en extremiteiten", ne: 8, date: "17 jun 2026", dur: "3 – 3,5u", format: "Fysiek/digitaal",
-      desc: "Opfrissing van de lumbale wervelzuil en de extremiteiten.",
-      lessons: ["Onderzoek lumbale wervelzuil", "Technieken onderste lidmaat", "Technieken bovenste lidmaat"],
+      desc: "Onderzoek en manipulatie van de lage rug, het bekken en de extremiteiten.",
+      lessons: ["Rode vlaggen rug, bekken & extremiteiten", "Klinisch onderzoek & SIG-cluster", "12 kerntechnieken"],
       materials: ["Slides — MT Refresher Lx & extremiteiten (PDF)", "Techniekenhandout (PDF)", "Oefenschema (PDF)"],
       quiz: [
         { q: "Wat is essentieel bij lage-rugklachten?", a: ["Onderscheid maken tussen specifieke en aspecifieke klachten", "Altijd beeldvorming aanvragen", "Steeds bedrust adviseren"], correct: 0 },
@@ -714,7 +756,7 @@ window.Colleo = (function () {
   // ── auth (prototype) ──
   function getUser() { try { return JSON.parse(localStorage.getItem(AUTH)); } catch (e) { return null; } }
   function setUser(u) { localStorage.setItem(AUTH, JSON.stringify(u)); }
-  function logout() { localStorage.removeItem(AUTH); }
+  function logout() { localStorage.removeItem(AUTH); try { fetch('/api/logout', { method: 'POST', keepalive: true }); } catch (e) {} }
   function requireAuth() {
     if (!getUser()) { location.href='login.html'; return false; }
     return true;
@@ -776,6 +818,60 @@ window.Colleo = (function () {
   document.getElementById('ctaArr').innerHTML = icon('arrow', 18);
   document.getElementById('callArr').innerHTML = icon('arrow', 18);
 
+
+  // ── uitgebreide info per sessie (uit het cursusmateriaal) ──
+  const DETAILS = {
+    1: {
+      lesgever: 'Jan Uten',
+      leer: [
+        'Veiligheid eerst: rode vlaggen (neurologisch, vasculair, structureel en relatief), informed consent en correcte dossiervoering',
+        'Functionele anatomie en koppeling van de hoge cervicale, cervicale en thoracale wervelzuil, met de wetten van Fryette',
+        '3D-onderzoek: convergentie- en divergentiepatronen herkennen (downslope en upslope)',
+        'Zeven kerntechnieken: Cx upslope, gapping en downslope, Cx belast, Tx extensiepositie, Tx dog en Tx Nelson',
+        'Hoe manipulatie neurofysiologisch werkt, en waarom je ze altijd combineert met oefentherapie',
+        'De meest gemaakte fouten in de uitvoering, en hoe je ze corrigeert'
+      ],
+      aanpak: 'Korte theorie, live demonstratie en daarna zelf oefenen per twee, met feedback van de lesgever en je collega\u2019s. We sluiten af met drie casussen die je oplost met een vaste beslissingsboom: van rode vlag tot re-test.'
+    },
+    2: {
+      leer: [
+        'Eenmanszaak of BV: voor- en nadelen, je sociaal statuut en vanaf wanneer een vennootschap loont',
+        'Pensioen opbouwen als zelfstandige: VAPZ, POZ en IPT naast elkaar gezet',
+        'Investeren via je vennootschap: wat kan, wat loont en waar je op moet letten',
+        'De persoonlijke financi\u00eble piramide: buffer, aandelen en ETF\u2019s, vastgoed en fiscale producten',
+        'Uitgewerkte rekenvoorbeelden op basis van de Belgische cijfers'
+      ],
+      aanpak: 'Drie blokken met concrete rekenvoorbeelden, volledig toegespitst op de situatie van kinesitherapeuten. Er is ruim tijd voor vragen uit je eigen praktijk.',
+      noot: 'Deze sessie geeft algemene informatie en geen persoonlijk financieel advies. Bespreek je eigen situatie met je boekhouder.'
+    },
+    3: {
+      lesgever: 'Jan Uten',
+      leer: [
+        'Rode vlaggen en absolute contra-indicaties voor lage rug, bekken en extremiteiten',
+        'Functionele anatomie en biomechanica van de thoracolumbale overgang, lumbale wervelzuil, SIG, heup, knie, enkel en pols',
+        'Klinisch onderzoek met patroonherkenning, waaronder de Laslett-cluster voor het SIG',
+        'Twaalf kerntechnieken: TLO, lumbaal, SIG, heup, tibiofibulair, talocruraal en radiocarpaal',
+        'Manipulatie inzetten als opstap naar oefentherapie'
+      ],
+      aanpak: 'Theorie, demonstratie, praktijk en peer review. Je redeneert mee in vier casussen: acute lage rugpijn na tillen, chronische SIG-pijn na een bevalling, enkelpijn na een distorsie en polsklachten na een Colles-fractuur.'
+    },
+    4: {
+      aanpak: 'Theorie gekoppeld aan situaties uit de praktijk, met concrete adviezen die je binnen je eigen competenties aan je pati\u00ebnten kan meegeven.'
+    },
+    5: {
+      aanpak: 'Theorie en praktijk wisselen elkaar af: je oefent gesprekstechnieken en pijneducatie aan de hand van herkenbare casussen uit de eerste lijn.'
+    }
+  };
+  function detailsHtml(id) {
+    const d = DETAILS[id]; if (!d) return '';
+    let h = '<details class="pdet"><summary>Meer over deze sessie ' + icon('chevron', 15) + '</summary><div class="pdet-body">';
+    if (d.leer) h += '<div class="pdet-col"><div class="ol">In detail</div><ul>' + d.leer.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul></div>';
+    h += '<div class="pdet-col"><div class="ol">Zo pakken we het aan</div><p>' + esc(d.aanpak) + '</p>';
+    if (d.lesgever) h += '<div class="ol" style="margin-top:16px">Lesgever</div><p>' + esc(d.lesgever) + '</p>';
+    if (d.noot) h += '<p class="pnoot">' + esc(d.noot) + '</p>';
+    h += '</div></div></details>';
+    return h;
+  }
   document.getElementById('sessions').innerHTML = Colleo.curriculum.map(function (c) {
     return '<div class="pcard"><div class="pnum">' + String(c.id).padStart(2, '0') + '</div><div>' +
       '<div class="pmeta">' +
@@ -788,7 +884,7 @@ window.Colleo = (function () {
       '<p class="pdesc">' + esc(c.desc) + '</p>' +
       '<div class="obj"><div class="ol">Wat je leert</div>' +
         c.lessons.map(function (l) { return '<div class="o"><span class="c">' + icon('check', 16) + '</span>' + esc(l) + '</div>'; }).join('') +
-      '</div></div></div>';
+      '</div>' + detailsHtml(c.id) + '</div></div>';
   }).join('');
 
   const info = [
