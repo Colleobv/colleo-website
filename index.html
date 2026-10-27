@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Colleo — Bijscholing voor kinesitherapeuten</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>/* ===== Colleo — design system ===== */
+:root {
+  /* Brand */
+  --navy: #1e2d4a;          /* primary (tweakable) */
+  --accent: #3ecfb2;        /* accent (tweakable) */
+  --accent-ink: #0f5e50;    /* readable text-on-light derived from accent */
+
+  /* Warm neutrals */
+  --bg: #f7f3ec;
+  --bg-2: #efe9df;
+  --surface: #ffffff;
+  --ink: #1b2436;
+  --muted: #5b6577;
+  --hairline: rgba(30, 45, 74, 0.12);
+  --hairline-soft: rgba(30, 45, 74, 0.07);
+
+  /* Type */
+  --font-display: "Bricolage Grotesque", Georgia, serif;
+  --font-body: "Hanken Grotesk", system-ui, sans-serif;
+
+  /* Shape */
+  --r-card: 22px;
+  --r-pill: 999px;
+  --r-sm: 12px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(27, 36, 54, 0.04), 0 2px 8px rgba(27, 36, 54, 0.05);
+  --shadow-md: 0 12px 30px -12px rgba(27, 36, 54, 0.22);
+  --shadow-lg: 0 30px 70px -30px rgba(27, 36, 54, 0.40);
+
+  /* Layout */
+  --maxw: 1180px;
+  --gutter: clamp(20px, 5vw, 64px);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+  margin: 0;
+  color: var(--navy);
+  text-wrap: balance;
+}
+p { margin: 0; text-wrap: pretty; }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
+.section { padding-block: clamp(64px, 9vw, 130px); }
+
+/* eyebrow */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--accent-ink);
+}
+.eyebrow::before {
+  content: ""; width: 22px; height: 2px; border-radius: 2px;
+  background: var(--accent);
+}
+.eyebrow.center::after {
+  content: ""; width: 22px; height: 2px; border-radius: 2px; background: var(--accent);
+}
+
+/* buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  border: none; border-radius: var(--r-pill);
+  padding: 16px 26px; font-size: 1.02rem; font-weight: 600;
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease, color .16s ease;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--navy); color: #fff; box-shadow: var(--shadow-md); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.btn-accent { background: var(--accent); color: var(--navy); box-shadow: var(--shadow-md); }
+.btn-accent:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.btn-ghost {
+  background: transparent; color: var(--navy);
+  border: 1.5px solid var(--hairline); padding: 14.5px 24px;
+}
+.btn-ghost:hover { border-color: var(--navy); background: rgba(30,45,74,0.04); }
+.btn-block { width: 100%; }
+.btn .arr { transition: transform .16s ease; }
+.btn:hover .arr { transform: translateX(3px); }
+
+/* nav */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s ease, background .2s ease;
+}
+.nav.scrolled { border-color: var(--hairline-soft); background: color-mix(in srgb, var(--bg) 92%, transparent); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+.brand { display: flex; align-items: center; gap: 11px; font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--navy); letter-spacing: -0.03em; }
+.brand .dot { width: 30px; height: 30px; border-radius: 9px; background: var(--navy); display: grid; place-items: center; color: var(--accent); font-size: 1.05rem; }
+.nav-links { display: flex; align-items: center; gap: 34px; }
+.nav-links a { font-weight: 500; color: var(--muted); font-size: 0.98rem; transition: color .15s; }
+.nav-links a:hover { color: var(--navy); }
+.nav-cta { display: flex; align-items: center; gap: 16px; }
+.nav-login { font-weight: 600; font-size: 0.96rem; color: var(--navy); padding: 8px 4px; }
+.nav-login:hover { color: var(--accent-ink); }
+@media (max-width: 520px) { .nav-login { display: none; } }
+@media (max-width: 860px) { .nav-links { display: none; } }
+
+/* hero */
+.hero { position: relative; overflow: hidden; }
+.hero-grid {
+  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(32px, 5vw, 72px);
+  align-items: center; padding-top: clamp(48px, 7vw, 90px); padding-bottom: clamp(56px, 8vw, 110px);
+}
+.hero h1 { font-size: clamp(2.7rem, 5.6vw, 4.5rem); }
+.hero h1 .hl { color: var(--accent-ink); position: relative; white-space: nowrap; }
+.hero .lede { margin-top: 26px; font-size: clamp(1.08rem, 1.6vw, 1.28rem); color: var(--muted); max-width: 33ch; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+.hero-note { margin-top: 18px; font-size: 0.92rem; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.hero-note .check { color: var(--accent-ink); }
+
+/* hero visual */
+.hero-visual { position: relative; }
+.premie-card {
+  background: var(--navy); color: #fff; border-radius: var(--r-card);
+  padding: 30px 30px 26px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+}
+.premie-card::after {
+  content: ""; position: absolute; inset: auto -40px -60px auto; width: 200px; height: 200px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 55%, transparent), transparent 70%);
+}
+.premie-card .lbl { font-size: 0.82rem; letter-spacing: 0.05em; text-transform: uppercase; color: color-mix(in srgb, #fff 70%, transparent); }
+.premie-card .big { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.6rem, 5vw, 3.4rem); line-height: 1; margin-top: 8px; }
+.premie-card .big small { font-size: 1.1rem; font-weight: 600; color: var(--accent); }
+.premie-row { display: flex; justify-content: space-between; gap: 16px; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.16); position: relative; z-index: 1; }
+.premie-row .col .k { font-size: 0.8rem; color: color-mix(in srgb, #fff 65%, transparent); }
+.premie-row .col .v { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; margin-top: 3px; }
+.premie-row .col .v.pos { color: var(--accent); }
+
+.float-card {
+  position: absolute; left: -28px; bottom: -58px; background: var(--surface);
+  border-radius: 16px; box-shadow: var(--shadow-md); padding: 15px 18px;
+  display: flex; align-items: center; gap: 13px; max-width: 240px;
+}
+.float-card .ic { width: 40px; height: 40px; border-radius: 11px; background: color-mix(in srgb, var(--accent) 22%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; flex: none; }
+.float-card .t { font-weight: 700; font-size: 0.95rem; color: var(--navy); }
+.float-card .s { font-size: 0.82rem; color: var(--muted); }
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-visual { margin-top: 22px; }
+  .float-card { position: static; margin: 16px 0 0; max-width: none; width: fit-content; }
+}
+
+/* stat strip */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--hairline-soft); border-radius: var(--r-card); overflow: hidden; border: 1px solid var(--hairline-soft); margin-top: 8px; }
+.stat { background: var(--bg); padding: 26px 22px; text-align: center; }
+.stat .num { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--navy); line-height: 1; }
+.stat .num em { font-style: normal; color: var(--accent-ink); }
+.stat .cap { font-size: 0.88rem; color: var(--muted); margin-top: 8px; }
+@media (max-width: 680px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+/* generic section header */
+.sec-head { max-width: 640px; margin-bottom: clamp(36px, 5vw, 60px); }
+.sec-head.center { margin-inline: auto; text-align: center; }
+.sec-head h2 { font-size: clamp(2rem, 3.8vw, 3rem); margin-top: 16px; }
+.sec-head p { margin-top: 18px; font-size: 1.12rem; color: var(--muted); }
+
+/* why cards */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.card {
+  background: var(--surface); border-radius: var(--r-card); padding: 32px;
+  box-shadow: var(--shadow-sm); border: 1px solid var(--hairline-soft);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.card .ic { width: 52px; height: 52px; border-radius: 14px; background: color-mix(in srgb, var(--accent) 20%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; margin-bottom: 20px; }
+.card h3 { font-size: 1.4rem; }
+.card p { margin-top: 11px; color: var(--muted); font-size: 1rem; }
+@media (max-width: 860px) { .cards { grid-template-columns: 1fr; } }
+
+/* programma */
+.prog { background: var(--bg-2); }
+.prog-list { display: flex; flex-direction: column; gap: 14px; }
+.prog-row {
+  display: grid; grid-template-columns: 76px 1fr auto; gap: 26px; align-items: center;
+  background: var(--surface); border-radius: 18px; padding: 24px 28px;
+  border: 1px solid var(--hairline-soft); box-shadow: var(--shadow-sm);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.prog-row:hover { transform: translateX(4px); box-shadow: var(--shadow-md); }
+.prog-row .idx { font-family: var(--font-display); font-weight: 700; font-size: 1.9rem; color: var(--accent-ink); }
+.prog-row .body .topic { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; color: var(--navy); }
+.prog-row .body .desc { color: var(--muted); margin-top: 4px; font-size: 0.98rem; }
+.prog-row .meta { text-align: right; }
+.prog-row .meta .date { font-weight: 700; color: var(--navy); white-space: nowrap; }
+.prog-row .meta .ne { font-size: 0.85rem; color: var(--accent-ink); font-weight: 600; margin-top: 3px; }
+@media (max-width: 720px) {
+  .prog-row { grid-template-columns: 50px 1fr; }
+  .prog-row .meta { grid-column: 1 / -1; text-align: left; padding-top: 12px; border-top: 1px solid var(--hairline-soft); display: flex; gap: 16px; align-items: baseline; }
+  .prog-row .meta .ne { margin-top: 0; }
+}
+
+/* voordeel */
+.voordeel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(34px, 5vw, 70px); align-items: center; }
+.calc { background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow-md); border: 1px solid var(--hairline-soft); padding: clamp(28px, 4vw, 42px); }
+.calc-row { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--hairline-soft); }
+.calc-row:first-of-type { padding-top: 0; }
+.calc-row .lbl { color: var(--muted); font-size: 1rem; }
+.calc-row .lbl b { display: block; color: var(--ink); font-weight: 600; font-size: 1.08rem; }
+.calc-row .amt { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; color: var(--navy); white-space: nowrap; }
+.calc-row .amt.cost { color: var(--muted); }
+.calc-row .amt.cost::before { content: "−"; margin-right: 2px; }
+.calc-row .amt.gain { color: var(--accent-ink); }
+.calc-row .amt.gain::before { content: "+"; margin-right: 1px; }
+.calc-total { display: flex; align-items: center; justify-content: space-between; margin-top: 22px; padding: 22px 24px; background: var(--navy); color: #fff; border-radius: 16px; }
+.calc-total .lbl { font-weight: 600; font-size: 1.05rem; }
+.calc-total .amt { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.9rem, 3.5vw, 2.5rem); color: var(--accent); }
+.bars { display: flex; align-items: flex-end; gap: 22px; height: 220px; margin-top: 8px; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 12px; height: 100%; justify-content: flex-end; }
+.bar { width: 100%; border-radius: 12px 12px 0 0; position: relative; transition: height .6s cubic-bezier(.2,.7,.2,1); }
+.bar.cost { background: var(--bg-2); border: 1px solid var(--hairline); }
+.bar.gain { background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 75%, var(--navy))); }
+.bar-col .cap { font-size: 0.9rem; color: var(--muted); text-align: center; }
+.bar-col .cap b { display: block; color: var(--navy); font-family: var(--font-display); font-size: 1.15rem; }
+@media (max-width: 860px) { .voordeel-grid { grid-template-columns: 1fr; } }
+
+/* aanpak steps */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; counter-reset: step; }
+.step { position: relative; }
+.step .n { width: 46px; height: 46px; border-radius: 50%; background: var(--surface); border: 1.5px solid var(--hairline); color: var(--navy); font-family: var(--font-display); font-weight: 700; display: grid; place-items: center; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
+.step h3 { font-size: 1.22rem; }
+.step p { color: var(--muted); margin-top: 8px; font-size: 0.98rem; }
+.step:not(:last-child) .n::after { content: ""; position: absolute; left: 46px; top: 23px; width: calc(100% - 46px - 20px); height: 1.5px; background: var(--hairline); }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr 1fr; } .step .n::after { display: none; } }
+@media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+
+/* merged aanpak + voordeel */
+.merge-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(34px, 5vw, 70px); align-items: start; }
+@media (max-width: 880px) { .merge-grid { grid-template-columns: 1fr; } }
+.steps-vert { display: flex; flex-direction: column; }
+.vstep { position: relative; display: grid; grid-template-columns: 48px 1fr; gap: 20px; padding-bottom: 30px; }
+.vstep:last-child { padding-bottom: 0; }
+.vstep .n { width: 48px; height: 48px; border-radius: 50%; background: var(--surface); border: 1.5px solid var(--hairline); color: var(--navy); font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; display: grid; place-items: center; box-shadow: var(--shadow-sm); z-index: 1; }
+.vstep:not(:last-child)::before { content: ""; position: absolute; left: 23.5px; top: 48px; bottom: 6px; width: 1.5px; background: var(--hairline); }
+.vstep .vbody h3 { font-size: 1.22rem; }
+.vstep .vbody p { color: var(--muted); margin-top: 5px; font-size: 0.99rem; }
+.calc-extras { display: grid; gap: 14px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--hairline-soft); }
+.calc-extra { display: flex; gap: 13px; align-items: flex-start; }
+.calc-extra .ce-ic { width: 40px; height: 40px; flex: none; border-radius: 11px; background: color-mix(in srgb, var(--accent) 18%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; }
+.calc-extra .ce-t { font-weight: 700; color: var(--navy); font-size: 1rem; }
+.calc-extra .ce-s { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
+
+/* e-learnings */
+.el-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+@media (max-width: 880px) { .el-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 580px) { .el-grid { grid-template-columns: 1fr; } }
+.el-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: var(--r-card); padding: 26px; box-shadow: var(--shadow-sm); transition: transform .18s ease, box-shadow .18s ease; color: inherit; }
+.el-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.el-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; color: var(--accent-ink); font-weight: 600; font-size: 0.92rem; }
+.el-more svg { transition: transform .16s ease; }
+.el-card:hover .el-more svg { transform: translateX(4px); }
+.el-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.el-badge { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 18%, var(--surface)); padding: 5px 11px; border-radius: 999px; }
+.el-pts { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
+.el-card h3 { font-size: 1.25rem; overflow-wrap: anywhere; }
+.el-card p { color: var(--muted); margin-top: 10px; font-size: 0.98rem; flex: 1; }
+.el-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--hairline-soft); }
+.el-meta { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: 0.92rem; }
+.el-price { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--navy); text-align: right; line-height: 1; }
+.el-price small { display: block; font-family: var(--font-body); font-weight: 500; font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
+.el-note { text-align: center; margin-top: 30px; color: var(--muted); font-size: 1rem; }
+.el-note a { color: var(--accent-ink); font-weight: 600; }
+
+/* final cta */
+.cta-band { background: var(--navy); color: #fff; border-radius: clamp(22px, 4vw, 36px); padding: clamp(44px, 7vw, 84px) clamp(28px, 6vw, 80px); text-align: center; position: relative; overflow: hidden; }
+.cta-band::before { content: ""; position: absolute; inset: -50% 30% auto -20%; height: 400px; background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 40%, transparent), transparent 65%); pointer-events: none; }
+.cta-band h2 { color: #fff; font-size: clamp(2.1rem, 4.5vw, 3.4rem); position: relative; }
+.cta-band p { color: color-mix(in srgb, #fff 78%, transparent); font-size: 1.15rem; margin-top: 18px; max-width: 52ch; margin-inline: auto; position: relative; }
+.cta-band .hero-cta { justify-content: center; position: relative; }
+.cta-band .hero-note { justify-content: center; color: color-mix(in srgb, #fff 70%, transparent); }
+.cta-band .hero-note .check { color: var(--accent); }
+
+/* footer */
+.footer { padding-block: 54px; border-top: 1px solid var(--hairline); }
+.footer-inner { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center; }
+.footer .muted { color: var(--muted); font-size: 0.92rem; }
+.footer-links { display: flex; gap: 26px; }
+.footer-links a { color: var(--muted); font-size: 0.94rem; }
+.footer-links a:hover { color: var(--navy); }
+
+/* reveal on scroll */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+/* modal */
+.modal-back { position: fixed; inset: 0; z-index: 100; background: rgba(20,28,46,0.55); backdrop-filter: blur(4px); display: grid; place-items: center; padding: 20px; animation: fade .2s ease; }
+@keyframes fade { from { opacity: 0; } }
+.modal {
+  background: var(--surface); border-radius: var(--r-card); width: min(480px, 100%);
+  box-shadow: var(--shadow-lg); padding: clamp(26px, 4vw, 40px); position: relative; animation: pop .25s cubic-bezier(.2,.8,.2,1);
+  max-height: calc(100vh - 40px); overflow: auto;
+}
+@keyframes pop { from { opacity: 0; transform: translateY(12px) scale(.98); } }
+.modal .close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--bg-2); color: var(--ink); display: grid; place-items: center; }
+.modal .close:hover { background: var(--hairline); }
+.modal h3 { font-size: 1.7rem; }
+.modal .sub { color: var(--muted); margin-top: 8px; }
+.field { margin-top: 18px; }
+.field label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 7px; color: var(--ink); }
+.field input {
+  width: 100%; padding: 13px 15px; border-radius: var(--r-sm); border: 1.5px solid var(--hairline);
+  font-family: inherit; font-size: 1rem; background: var(--bg); color: var(--ink); transition: border-color .15s, box-shadow .15s;
+}
+.field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+.modal .summary { margin-top: 18px; background: var(--bg-2); border-radius: var(--r-sm); padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
+.modal .summary .k { color: var(--muted); font-size: 0.92rem; }
+.modal .summary .v { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--navy); }
+.success { text-align: center; padding: 14px 0; }
+.success .badge { width: 70px; height: 70px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 25%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; margin: 0 auto 20px; }
+
+/* ===== Over ons page ===== */
+.page-hero { padding-top: clamp(48px, 7vw, 86px); padding-bottom: clamp(36px, 5vw, 56px); }
+
+/* ===== eerste-keer band (home) ===== */
+.firsttime { background: var(--bg-2); border-radius: var(--r-card); padding: clamp(36px, 6vw, 68px); text-align: center; max-width: 800px; margin-inline: auto; position: relative; overflow: hidden; }
+.firsttime .ft-ic { width: 60px; height: 60px; border-radius: 16px; background: color-mix(in srgb, var(--accent) 22%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; margin: 0 auto 22px; }
+.firsttime .eyebrow { justify-content: center; }
+.firsttime h2 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); margin-top: 14px; }
+.firsttime p { color: var(--muted); font-size: 1.12rem; margin-top: 18px; max-width: 60ch; margin-inline: auto; }
+.firsttime p .wink { color: var(--accent-ink); font-style: italic; }
+.firsttime .btn { margin-top: 28px; }
+
+.page-hero .eyebrow { margin-bottom: 18px; }
+.page-hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); max-width: 18ch; }
+.page-hero .lede { margin-top: 24px; font-size: clamp(1.1rem, 1.7vw, 1.35rem); color: var(--muted); max-width: 46ch; }
+
+/* image placeholder (striped, monospace label) */
+.imgph { position: relative; border-radius: var(--r-card); overflow: hidden; border: 1px solid var(--hairline);
+  background: repeating-linear-gradient(135deg, var(--bg-2) 0 16px, color-mix(in srgb, var(--bg-2) 55%, var(--surface)) 16px 32px);
+  display: grid; place-items: center; min-height: 260px; box-shadow: var(--shadow-sm); }
+.imgph .lab { font-family: ui-monospace, monospace; font-size: 0.82rem; color: var(--muted); background: color-mix(in srgb, var(--surface) 86%, transparent); padding: 7px 13px; border-radius: 8px; }
+.imgph.has-img { background: none; border: none; }
+.imgph.has-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* story */
+.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(34px, 5vw, 72px); align-items: center; }
+.story-grid .imgph { min-height: 420px; height: 100%; }
+.story h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
+.story p { color: var(--muted); font-size: 1.1rem; margin-top: 18px; }
+.story p strong { color: var(--ink); font-weight: 600; }
+@media (max-width: 860px) { .story-grid { grid-template-columns: 1fr; } .story-grid .imgph { min-height: 280px; order: -1; } }
+
+/* pull quote */
+.pullquote { text-align: center; padding-block: clamp(56px, 8vw, 96px); }
+.pullquote blockquote { margin: 0; font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; font-size: clamp(2.2rem, 5.2vw, 4rem); color: var(--navy); max-width: 16ch; margin-inline: auto; }
+.pullquote blockquote .accent { color: var(--accent-ink); }
+.pullquote .by { margin-top: 24px; color: var(--muted); font-size: 1rem; }
+
+/* values */
+.values-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+.value { display: flex; gap: 20px; background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: var(--r-card); padding: 30px; box-shadow: var(--shadow-sm); }
+.value .ic { width: 50px; height: 50px; flex: none; border-radius: 14px; background: color-mix(in srgb, var(--accent) 20%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; }
+.value h3 { font-size: 1.3rem; }
+.value p { color: var(--muted); margin-top: 9px; font-size: 1rem; }
+@media (max-width: 720px) { .values-grid { grid-template-columns: 1fr; } }
+
+/* team */
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.member .imgph { aspect-ratio: 1 / 1; min-height: 0; border-radius: var(--r-card); }
+.member .nm { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--navy); margin-top: 16px; }
+.member .ro { color: var(--accent-ink); font-weight: 600; font-size: 0.92rem; margin-top: 2px; }
+.team-note { margin-top: 26px; font-size: 0.92rem; color: var(--muted); background: var(--bg-2); border-radius: var(--r-sm); padding: 13px 16px; display: inline-block; }
+@media (max-width: 720px) { .team-grid { grid-template-columns: 1fr; max-width: 360px; } }
+
+</style>
+<style id="colleo-nav-fix">
+.brand { flex-shrink: 0; margin-right: 28px; }
+.nav-links a, .nav-cta .btn { white-space: nowrap; }
+.nav-cta { flex-shrink: 0; }
+@media (max-width: 1180px) { .nav-links { gap: 22px; } .nav-links a { font-size: 0.93rem; } }
+.nav-burger { display: none; width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--hairline-soft, rgba(30,45,74,.15)); background: transparent; color: var(--navy, #1e2d4a); cursor: pointer; align-items: center; justify-content: center; margin-left: 10px; }
+.nav-burger svg { width: 20px; height: 20px; }
+@media (max-width: 960px) {
+  .nav-links { display: none !important; }
+  .nav-burger { display: inline-flex; }
+  body.menu-open .nav-links { display: flex !important; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 4px; padding: 12px 20px 18px; background: var(--bg, #f7f2ec); border-bottom: 1px solid var(--hairline-soft, rgba(30,45,74,.12)); box-shadow: 0 12px 24px rgba(30,45,74,.08); }
+  body.menu-open .nav-links a { font-size: 1.05rem; padding: 10px 0; width: 100%; }
+}
+@media (max-width: 520px) { .nav-cta .btn { padding-left: 16px; padding-right: 16px; } }
+.form-privacy { font-size: 0.82rem; color: var(--muted, #6b7280); margin-top: 12px; line-height: 1.5; }
+.form-privacy a { text-decoration: underline; }
+</style>
+</head>
+<body>
+<form name="inschrijving" data-netlify="true" netlify-honeypot="bot-field" hidden><input name="naam"><input name="email"><input name="riziv"><input name="bot-field"></form>
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<rect width="100" height="100" fill="#1e2d4a"/>
+<rect x="30" y="30" width="40" height="40" rx="11" fill="#3ecfb2"/>
+<text x="50" y="64" font-family="Georgia, serif" font-size="30" font-weight="700" fill="#1e2d4a" text-anchor="middle">C</text>
+</svg>
+</template>
+<div id="root"></div>
+
+<script>/* Colleo — gedeelde e-learning catalogus (plain JS, window.ELEARNINGS) */
+window.ELEARNINGS = [
+  {
+    id: "finance",
+    titel: "Finance for physios",
+    desc: "Grip op je financiën als zelfstandige kinesitherapeut: tarieven, kosten en fiscaliteit.",
+    tijd: "3,5 uur", punten: 6, prijs: "85",
+    img:"",
+    lede: "Als kinesitherapeut ben je vooral met je vak bezig — maar je praktijk is ook een onderneming. In deze module krijg je helder inzicht in de financiële kant van je zelfstandig beroep, zonder boekhoudkundig jargon.",
+    leerdoelen: [
+      "Je begrijpt de opbouw van je tarieven, kosten en marges als zelfstandige.",
+      "Je kan je inkomsten en uitgaven structureren en opvolgen.",
+      "Je kent de belangrijkste fiscale aftrekposten voor een kinesitherapiepraktijk.",
+      "Je weet hoe je reserveert voor belastingen, pensioen en investeringen.",
+    ],
+    inhoud: [
+      "Je praktijk als onderneming: cijfers die ertoe doen",
+      "Tarifering, conventie en de impact op je inkomen",
+      "Kosten, afschrijvingen en aftrekbaarheid",
+      "Sparen, investeren en je financiële buffer",
+    ],
+  },
+  {
+    id: "voeding",
+    titel: "Voeding & sportprestaties",
+    desc: "Voeding in functie van herstel, prestatie en blessurepreventie bij sporters.",
+    tijd: "4 uur", punten: 8, prijs: "100",
+    img:"",
+    lede: "Voeding bepaalt mee hoe snel een patiënt herstelt en hoe goed een sporter presteert. Deze module vertaalt de wetenschap naar concrete adviezen die je meteen in je praktijk kan toepassen.",
+    leerdoelen: [
+      "Je begrijpt de rol van macro- en micronutriënten bij herstel en prestatie.",
+      "Je kan voedingsadvies afstemmen op trainings- en revalidatiedoelen.",
+      "Je herkent voedingsgerelateerde risicofactoren voor blessures.",
+      "Je weet wanneer je doorverwijst naar een (sport)diëtist.",
+    ],
+    inhoud: [
+      "Energiesystemen en voedingsbehoeften",
+      "Eiwitten en herstel na inspanning",
+      "Hydratatie en timing rond training",
+      "Praktische adviezen en valkuilen",
+    ],
+  },
+  {
+    id: "relaxatie",
+    titel: "Relaxatie in de praktijk",
+    desc: "Praktische ontspannings- en ademhalingstechnieken om in je behandeling te integreren.",
+    tijd: "3,5 uur", punten: 6, prijs: "85",
+    img:"",
+    lede: "Ontspanning is een krachtig en onderschat instrument in de kinesitherapie. Je leert eenvoudige, evidence-informed technieken die je direct met je patiënten kan inzetten bij stress, spanning en pijn.",
+    leerdoelen: [
+      "Je beheerst verschillende ademhalings- en ontspanningstechnieken.",
+      "Je kan ontspanning gericht inzetten bij spanning, stress en pijn.",
+      "Je leert patiënten zelfstandig oefenen met heldere instructies.",
+      "Je integreert relaxatie vlot in een bestaand behandelplan.",
+    ],
+    inhoud: [
+      "Fysiologie van spanning en ontspanning",
+      "Ademhalingstechnieken stap voor stap",
+      "Progressieve spierrelaxatie",
+      "Toepassing en patiëntbegeleiding",
+    ],
+  },
+  {
+    id: "pijneducatie",
+    titel: "Chronische pijneducatie",
+    desc: "Pijnneurowetenschap vertaald naar heldere educatie voor je patiënt.",
+    tijd: "4 uur", punten: 8, prijs: "100",
+    img:"",
+    lede: "Bij chronische pijn is uitleggen vaak even belangrijk als behandelen. Deze module leert je de moderne pijnneurowetenschap helder en geruststellend overbrengen, zodat je patiënt weer in beweging komt.",
+    leerdoelen: [
+      "Je begrijpt de moderne pijnneurowetenschap en het biopsychosociale model.",
+      "Je kan complexe pijnmechanismen eenvoudig uitleggen aan je patiënt.",
+      "Je zet pijneducatie in om angst en vermijding te doorbreken.",
+      "Je combineert educatie met graded activity en exposure.",
+    ],
+    inhoud: [
+      "Wat is pijn? Van weefsel tot brein",
+      "Het biopsychosociale model in de praktijk",
+      "Communiceren over pijn: do's en don'ts",
+      "Educatie koppelen aan actieve revalidatie",
+    ],
+  },
+  {
+    id: "looptraining",
+    titel: "Looptraining",
+    desc: "Loopanalyse en opbouwschema's voor revalidatie en prestatieverbetering.",
+    tijd: "4 uur", punten: 8, prijs: "100",
+    img:"",
+    lede: "Of je nu een loper reviseert na een blessure of een prestatie wil verbeteren: een goede loopanalyse en doordachte belastingsopbouw maken het verschil. Deze module geeft je het kader en de tools.",
+    leerdoelen: [
+      "Je kan een basis-loopanalyse uitvoeren en interpreteren.",
+      "Je herkent veelvoorkomende looppatronen en risicofactoren.",
+      "Je stelt progressieve opbouwschema's op voor revalidatie en prestatie.",
+      "Je adviseert onderbouwd over cadans, schoeisel en belasting.",
+    ],
+    inhoud: [
+      "Biomechanica van het lopen",
+      "Loopanalyse: waar let je op?",
+      "Belastbaarheid en opbouwprincipes",
+      "Van revalidatie naar prestatie",
+    ],
+  },
+  {
+    id: "lactaat",
+    titel: "Lactaattesting",
+    desc: "Lactaatmetingen correct afnemen en vertalen naar trainingszones.",
+    tijd: "3,5 uur", punten: 6, prijs: "85",
+    img:"",
+    lede: "Lactaattesting is een waardevol instrument om trainingszones objectief te bepalen. Je leert hoe je een test correct afneemt, de data interpreteert en vertaalt naar bruikbaar trainingsadvies.",
+    leerdoelen: [
+      "Je begrijpt de fysiologie achter lactaat en drempels.",
+      "Je voert een lactaattest correct en veilig uit.",
+      "Je interpreteert een lactaatcurve en bepaalt trainingszones.",
+      "Je vertaalt de resultaten naar een concreet trainingsplan.",
+    ],
+    inhoud: [
+      "Lactaatfysiologie en drempelbegrippen",
+      "Testprotocollen en meettechniek",
+      "De lactaatcurve interpreteren",
+      "Zones vertalen naar training",
+    ],
+  },
+];
+</script>
+
+<script src="vendor/react.production.min.js"></script>
+<script src="vendor/react-dom.production.min.js"></script>
+
+<script>
+const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom right;
+    background:rgba(250,249,247,.78);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
+    width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
+    overflow-y:auto;overflow-x:hidden;min-height:0;
+    scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+  .twk-body::-webkit-scrollbar{width:8px}
+  .twk-body::-webkit-scrollbar-track{background:transparent;margin:2px}
+  .twk-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:4px;
+    border:2px solid transparent;background-clip:content-box}
+  .twk-body::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.25);
+    border:2px solid transparent;background-clip:content-box}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;
+    color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+
+  .twk-field{appearance:none;box-sizing:border-box;width:100%;min-width:0;height:26px;padding:0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;
+    background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
+  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
+  select.twk-field{padding-right:22px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");
+    background-repeat:no-repeat;background-position:right 8px center}
+
+  .twk-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;margin:6px 0;
+    border-radius:999px;background:rgba(0,0,0,.12);outline:none}
+  .twk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+    width:14px;height:14px;border-radius:50%;background:#fff;
+    border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+    background:#fff;border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
+    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg.dragging .twk-seg-thumb{transition:none}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
+    background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;
+    border-radius:6px;cursor:default;padding:4px 6px;line-height:1.2;
+    overflow-wrap:anywhere}
+
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
+    background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+
+  .twk-num{display:flex;align-items:center;box-sizing:border-box;min-width:0;height:26px;padding:0 0 0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;background:rgba(255,255,255,.6)}
+  .twk-num-lbl{font-weight:500;color:rgba(41,38,27,.6);cursor:ew-resize;
+    user-select:none;padding-right:8px}
+  .twk-num input{flex:1;min-width:0;height:100%;border:0;background:transparent;
+    font:inherit;font-variant-numeric:tabular-nums;text-align:right;padding:0 8px 0 0;
+    outline:none;color:inherit;-moz-appearance:textfield}
+  .twk-num input::-webkit-inner-spin-button,.twk-num input::-webkit-outer-spin-button{
+    -webkit-appearance:none;margin:0}
+  .twk-num-unit{padding-right:8px;color:rgba(41,38,27,.45)}
+
+  .twk-btn{appearance:none;height:26px;padding:0 12px;border:0;border-radius:7px;
+    background:rgba(0,0,0,.78);color:#fff;font:inherit;font-weight:500;cursor:default}
+  .twk-btn:hover{background:rgba(0,0,0,.88)}
+  .twk-btn.secondary{background:rgba(0,0,0,.06);color:inherit}
+  .twk-btn.secondary:hover{background:rgba(0,0,0,.1)}
+
+  .twk-swatch{appearance:none;-webkit-appearance:none;width:56px;height:22px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:6px;padding:0;cursor:default;
+    background:transparent;flex-shrink:0}
+  .twk-swatch::-webkit-color-swatch-wrapper{padding:0}
+  .twk-swatch::-webkit-color-swatch{border:0;border-radius:5.5px}
+  .twk-swatch::-moz-color-swatch{border:0;border-radius:5.5px}
+
+  .twk-chips{display:flex;gap:6px}
+  .twk-chip{position:relative;appearance:none;flex:1;min-width:0;height:46px;
+    padding:0;border:0;border-radius:6px;overflow:hidden;cursor:default;
+    box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.06);
+    transition:transform .12s cubic-bezier(.3,.7,.4,1),box-shadow .12s}
+  .twk-chip:hover{transform:translateY(-1px);
+    box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.12)}
+  .twk-chip[data-on="1"]{box-shadow:0 0 0 1.5px rgba(0,0,0,.85),
+    0 2px 6px rgba(0,0,0,.15)}
+  .twk-chip>span{position:absolute;top:0;bottom:0;right:0;width:34%;
+    display:flex;flex-direction:column;box-shadow:-1px 0 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i{flex:1;box-shadow:0 -1px 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i:first-child{box-shadow:none}
+  .twk-chip svg{position:absolute;top:6px;left:6px;width:13px;height:13px;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+`;
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  const setTweak = React.useCallback((keyOrEdits, val) => {
+    const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null ? keyOrEdits : {
+      [keyOrEdits]: val
+    };
+    setValues(prev => ({
+      ...prev,
+      ...edits
+    }));
+    window.parent.postMessage({
+      type: '__edit_mode_set_keys',
+      edits
+    }, '*');
+    window.dispatchEvent(new CustomEvent('tweakchange', {
+      detail: edits
+    }));
+  }, []);
+  return [values, setTweak];
+}
+function TweaksPanel({
+  title = 'Tweaks',
+  children
+}) {
+  const [open, setOpen] = React.useState(false);
+  const dragRef = React.useRef(null);
+  const offsetRef = React.useRef({
+    x: 16,
+    y: 16
+  });
+  const PAD = 16;
+  const clampToViewport = React.useCallback(() => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const w = panel.offsetWidth,
+      h = panel.offsetHeight;
+    const maxRight = Math.max(PAD, window.innerWidth - w - PAD);
+    const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
+    offsetRef.current = {
+      x: Math.min(maxRight, Math.max(PAD, offsetRef.current.x)),
+      y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y))
+    };
+    panel.style.right = offsetRef.current.x + 'px';
+    panel.style.bottom = offsetRef.current.y + 'px';
+  }, []);
+  React.useEffect(() => {
+    if (!open) return;
+    clampToViewport();
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', clampToViewport);
+      return () => window.removeEventListener('resize', clampToViewport);
+    }
+    const ro = new ResizeObserver(clampToViewport);
+    ro.observe(document.documentElement);
+    return () => ro.disconnect();
+  }, [open, clampToViewport]);
+  React.useEffect(() => {
+    const onMsg = e => {
+      const t = e?.data?.type;
+      if (t === '__activate_edit_mode') setOpen(true);else if (t === '__deactivate_edit_mode') setOpen(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({
+      type: '__edit_mode_available'
+    }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+  const dismiss = () => {
+    setOpen(false);
+    window.parent.postMessage({
+      type: '__edit_mode_dismissed'
+    }, '*');
+  };
+  const onDragStart = e => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const r = panel.getBoundingClientRect();
+    const sx = e.clientX,
+      sy = e.clientY;
+    const startRight = window.innerWidth - r.right;
+    const startBottom = window.innerHeight - r.bottom;
+    const move = ev => {
+      offsetRef.current = {
+        x: startRight - (ev.clientX - sx),
+        y: startBottom - (ev.clientY - sy)
+      };
+      clampToViewport();
+    };
+    const up = () => {
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', up);
+    };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  };
+  if (!open) return null;
+  return React.createElement(React.Fragment, null, React.createElement("style", null, __TWEAKS_STYLE), React.createElement("div", {
+    ref: dragRef,
+    className: "twk-panel",
+    "data-omelette-chrome": "",
+    style: {
+      right: offsetRef.current.x,
+      bottom: offsetRef.current.y
+    }
+  }, React.createElement("div", {
+    className: "twk-hd",
+    onMouseDown: onDragStart
+  }, React.createElement("b", null, title), React.createElement("button", {
+    className: "twk-x",
+    "aria-label": "Close tweaks",
+    onMouseDown: e => e.stopPropagation(),
+    onClick: dismiss
+  }, "✕")), React.createElement("div", {
+    className: "twk-body"
+  }, children)));
+}
+function TweakSection({
+  label,
+  children
+}) {
+  return React.createElement(React.Fragment, null, React.createElement("div", {
+    className: "twk-sect"
+  }, label), children);
+}
+function TweakRow({
+  label,
+  value,
+  children,
+  inline = false
+}) {
+  return React.createElement("div", {
+    className: inline ? 'twk-row twk-row-h' : 'twk-row'
+  }, React.createElement("div", {
+    className: "twk-lbl"
+  }, React.createElement("span", null, label), value != null && React.createElement("span", {
+    className: "twk-val"
+  }, value)), children);
+}
+function TweakSlider({
+  label,
+  value,
+  min = 0,
+  max = 100,
+  step = 1,
+  unit = '',
+  onChange
+}) {
+  return React.createElement(TweakRow, {
+    label: label,
+    value: `${value}${unit}`
+  }, React.createElement("input", {
+    type: "range",
+    className: "twk-slider",
+    min: min,
+    max: max,
+    step: step,
+    value: value,
+    onChange: e => onChange(Number(e.target.value))
+  }));
+}
+function TweakToggle({
+  label,
+  value,
+  onChange
+}) {
+  return React.createElement("div", {
+    className: "twk-row twk-row-h"
+  }, React.createElement("div", {
+    className: "twk-lbl"
+  }, React.createElement("span", null, label)), React.createElement("button", {
+    type: "button",
+    className: "twk-toggle",
+    "data-on": value ? '1' : '0',
+    role: "switch",
+    "aria-checked": !!value,
+    onClick: () => onChange(!value)
+  }, React.createElement("i", null)));
+}
+function TweakRadio({
+  label,
+  value,
+  options,
+  onChange
+}) {
+  const trackRef = React.useRef(null);
+  const [dragging, setDragging] = React.useState(false);
+  const valueRef = React.useRef(value);
+  valueRef.current = value;
+  const labelLen = o => String(typeof o === 'object' ? o.label : o).length;
+  const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
+  const fitsAsSegments = maxLen <= ({
+    2: 16,
+    3: 10
+  }[options.length] ?? 0);
+  if (!fitsAsSegments) {
+    const resolve = s => {
+      const m = options.find(o => String(typeof o === 'object' ? o.value : o) === s);
+      return m === undefined ? s : typeof m === 'object' ? m.value : m;
+    };
+    return React.createElement(TweakSelect, {
+      label: label,
+      value: value,
+      options: options,
+      onChange: s => onChange(resolve(s))
+    });
+  }
+  const opts = options.map(o => typeof o === 'object' ? o : {
+    value: o,
+    label: o
+  });
+  const idx = Math.max(0, opts.findIndex(o => o.value === value));
+  const n = opts.length;
+  const segAt = clientX => {
+    const r = trackRef.current.getBoundingClientRect();
+    const inner = r.width - 4;
+    const i = Math.floor((clientX - r.left - 2) / inner * n);
+    return opts[Math.max(0, Math.min(n - 1, i))].value;
+  };
+  const onPointerDown = e => {
+    setDragging(true);
+    const v0 = segAt(e.clientX);
+    if (v0 !== valueRef.current) onChange(v0);
+    const move = ev => {
+      if (!trackRef.current) return;
+      const v = segAt(ev.clientX);
+      if (v !== valueRef.current) onChange(v);
+    };
+    const up = () => {
+      setDragging(false);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  return React.createElement(TweakRow, {
+    label: label
+  }, React.createElement("div", {
+    ref: trackRef,
+    role: "radiogroup",
+    onPointerDown: onPointerDown,
+    className: dragging ? 'twk-seg dragging' : 'twk-seg'
+  }, React.createElement("div", {
+    className: "twk-seg-thumb",
+    style: {
+      left: `calc(2px + ${idx} * (100% - 4px) / ${n})`,
+      width: `calc((100% - 4px) / ${n})`
+    }
+  }), opts.map(o => React.createElement("button", {
+    key: o.value,
+    type: "button",
+    role: "radio",
+    "aria-checked": o.value === value
+  }, o.label))));
+}
+function TweakSelect({
+  label,
+  value,
+  options,
+  onChange
+}) {
+  return React.createElement(TweakRow, {
+    label: label
+  }, React.createElement("select", {
+    className: "twk-field",
+    value: value,
+    onChange: e => onChange(e.target.value)
+  }, options.map(o => {
+    const v = typeof o === 'object' ? o.value : o;
+    const l = typeof o === 'object' ? o.label : o;
+    return React.createElement("option", {
+      key: v,
+      value: v
+    }, l);
+  })));
+}
+function TweakText({
+  label,
+  value,
+  placeholder,
+  onChange
+}) {
+  return React.createElement(TweakRow, {
+    label: label
+  }, React.createElement("input", {
+    className: "twk-field",
+    type: "text",
+    value: value,
+    placeholder: placeholder,
+    onChange: e => onChange(e.target.value)
+  }));
+}
+function TweakNumber({
+  label,
+  value,
+  min,
+  max,
+  step = 1,
+  unit = '',
+  onChange
+}) {
+  const clamp = n => {
+    if (min != null && n < min) return min;
+    if (max != null && n > max) return max;
+    return n;
+  };
+  const startRef = React.useRef({
+    x: 0,
+    val: 0
+  });
+  const onScrubStart = e => {
+    e.preventDefault();
+    startRef.current = {
+      x: e.clientX,
+      val: value
+    };
+    const decimals = (String(step).split('.')[1] || '').length;
+    const move = ev => {
+      const dx = ev.clientX - startRef.current.x;
+      const raw = startRef.current.val + dx * step;
+      const snapped = Math.round(raw / step) * step;
+      onChange(clamp(Number(snapped.toFixed(decimals))));
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  return React.createElement("div", {
+    className: "twk-num"
+  }, React.createElement("span", {
+    className: "twk-num-lbl",
+    onPointerDown: onScrubStart
+  }, label), React.createElement("input", {
+    type: "number",
+    value: value,
+    min: min,
+    max: max,
+    step: step,
+    onChange: e => onChange(clamp(Number(e.target.value)))
+  }), unit && React.createElement("span", {
+    className: "twk-num-unit"
+  }, unit));
+}
+function __twkIsLight(hex) {
+  const h = String(hex).replace('#', '');
+  const x = h.length === 3 ? h.replace(/./g, c => c + c) : h.padEnd(6, '0');
+  const n = parseInt(x.slice(0, 6), 16);
+  if (Number.isNaN(n)) return true;
+  const r = n >> 16 & 255,
+    g = n >> 8 & 255,
+    b = n & 255;
+  return r * 299 + g * 587 + b * 114 > 148000;
+}
+const __TwkCheck = ({
+  light
+}) => React.createElement("svg", {
+  viewBox: "0 0 14 14",
+  "aria-hidden": "true"
+}, React.createElement("path", {
+  d: "M3 7.2 5.8 10 11 4.2",
+  fill: "none",
+  strokeWidth: "2.2",
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+  stroke: light ? 'rgba(0,0,0,.78)' : '#fff'
+}));
+function TweakColor({
+  label,
+  value,
+  options,
+  onChange
+}) {
+  if (!options || !options.length) {
+    return React.createElement("div", {
+      className: "twk-row twk-row-h"
+    }, React.createElement("div", {
+      className: "twk-lbl"
+    }, React.createElement("span", null, label)), React.createElement("input", {
+      type: "color",
+      className: "twk-swatch",
+      value: value,
+      onChange: e => onChange(e.target.value)
+    }));
+  }
+  const key = o => String(JSON.stringify(o)).toLowerCase();
+  const cur = key(value);
+  return React.createElement(TweakRow, {
+    label: label
+  }, React.createElement("div", {
+    className: "twk-chips",
+    role: "radiogroup"
+  }, options.map((o, i) => {
+    const colors = Array.isArray(o) ? o : [o];
+    const [hero, ...rest] = colors;
+    const sup = rest.slice(0, 4);
+    const on = key(o) === cur;
+    return React.createElement("button", {
+      key: i,
+      type: "button",
+      className: "twk-chip",
+      role: "radio",
+      "aria-checked": on,
+      "data-on": on ? '1' : '0',
+      "aria-label": colors.join(', '),
+      title: colors.join(' · '),
+      style: {
+        background: hero
+      },
+      onClick: () => onChange(o)
+    }, sup.length > 0 && React.createElement("span", null, sup.map((c, j) => React.createElement("i", {
+      key: j,
+      style: {
+        background: c
+      }
+    }))), on && React.createElement(__TwkCheck, {
+      light: __twkIsLight(hero)
+    }));
+  })));
+}
+function TweakButton({
+  label,
+  onClick,
+  secondary = false
+}) {
+  return React.createElement("button", {
+    type: "button",
+    className: secondary ? 'twk-btn secondary' : 'twk-btn',
+    onClick: onClick
+  }, label);
+}
+Object.assign(window, {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakRow,
+  TweakSlider,
+  TweakToggle,
+  TweakRadio,
+  TweakSelect,
+  TweakText,
+  TweakNumber,
+  TweakColor,
+  TweakButton
+});
+</script>
+<script>
+const {
+  useState,
+  useEffect,
+  useRef
+} = React;
+function Icon({
+  name,
+  size = 24,
+  stroke = 1.8
+}) {
+  const p = {
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: stroke,
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  };
+  const paths = {
+    moon: React.createElement(React.Fragment, null, React.createElement("path", {
+      ...p,
+      d: "M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"
+    })),
+    clock: React.createElement(React.Fragment, null, React.createElement("circle", {
+      ...p,
+      cx: "12",
+      cy: "12",
+      r: "9"
+    }), React.createElement("path", {
+      ...p,
+      d: "M12 7v5l3 2"
+    })),
+    users: React.createElement(React.Fragment, null, React.createElement("circle", {
+      ...p,
+      cx: "9",
+      cy: "8",
+      r: "3.2"
+    }), React.createElement("path", {
+      ...p,
+      d: "M3.5 19a5.5 5.5 0 0 1 11 0M16 6.2a3 3 0 0 1 0 5.6M20.5 19a5.5 5.5 0 0 0-3.2-5"
+    })),
+    shield: React.createElement(React.Fragment, null, React.createElement("path", {
+      ...p,
+      d: "M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3Z"
+    }), React.createElement("path", {
+      ...p,
+      d: "m9 12 2 2 4-4"
+    })),
+    check: React.createElement(React.Fragment, null, React.createElement("path", {
+      ...p,
+      d: "m5 13 4 4 10-11"
+    })),
+    arrow: React.createElement(React.Fragment, null, React.createElement("path", {
+      ...p,
+      d: "M5 12h14M13 6l6 6-6 6"
+    })),
+    calendar: React.createElement(React.Fragment, null, React.createElement("rect", {
+      ...p,
+      x: "3.5",
+      y: "5",
+      width: "17",
+      height: "16",
+      rx: "2.5"
+    }), React.createElement("path", {
+      ...p,
+      d: "M3.5 10h17M8 3v4M16 3v4"
+    })),
+    spark: React.createElement(React.Fragment, null, React.createElement("path", {
+      ...p,
+      d: "M12 3v18M3 12h18M6 6l12 12M18 6 6 18"
+    })),
+    medal: React.createElement(React.Fragment, null, React.createElement("circle", {
+      ...p,
+      cx: "12",
+      cy: "14",
+      r: "6"
+    }), React.createElement("path", {
+      ...p,
+      d: "M9 9 7 3h10l-2 6M12 11.5l1 2 2 .3-1.5 1.5.4 2.2L12 17.5l-1.9 1.2.4-2.2L9 15l2-.5 1-2Z"
+    })),
+    edit: React.createElement(React.Fragment, null, React.createElement("path", {
+      ...p,
+      d: "M4 20h4L19 9l-4-4L4 16v4Z"
+    }), React.createElement("path", {
+      ...p,
+      d: "m14 6 4 4"
+    })),
+    doc: React.createElement(React.Fragment, null, React.createElement("path", {
+      ...p,
+      d: "M7 3h7l5 5v13H7z"
+    }), React.createElement("path", {
+      ...p,
+      d: "M14 3v5h5M10 13h6M10 17h6"
+    })),
+    handshake: React.createElement(React.Fragment, null, React.createElement("path", {
+      ...p,
+      d: "M3 12l4-4 5 4 5-4 4 4M7 8v6a2 2 0 0 0 4 0M11 14a2 2 0 0 0 4 0V9"
+    }))
+  };
+  return React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    "aria-hidden": "true"
+  }, paths[name]);
+}
+function RichTitle({
+  text
+}) {
+  const parts = String(text).split("*");
+  return React.createElement(React.Fragment, null, parts.map((s, i) => i % 2 ? React.createElement("span", {
+    className: "hl",
+    key: i
+  }, s) : React.createElement(React.Fragment, {
+    key: i
+  }, s)));
+}
+const euro = v => "\u20ac" + v;
+function Nav({
+  onOpen,
+  ctaLabel
+}) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 12);
+    window.addEventListener("scroll", fn, {
+      passive: true
+    });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+  return React.createElement("nav", {
+    className: "nav" + (scrolled ? " scrolled" : "")
+  }, React.createElement("div", {
+    className: "wrap nav-inner"
+  }, React.createElement("a", {
+    className: "brand",
+    href: "#top"
+  }, React.createElement("span", {
+    className: "dot"
+  }, "C"), "Colleo"), React.createElement("div", {
+    className: "nav-links"
+  }, React.createElement("a", {
+    href: "#programma"
+  }, "Programma"), React.createElement("a", {
+    href: "#elearnings"
+  }, "E-learnings"), React.createElement("a", {
+    href: "over-ons.html"
+  }, "Over ons"), React.createElement("a", {
+    href: "#aanpak"
+  }, "Aanpak"), React.createElement("a", {
+    href: "contact.html"
+  }, "Contact")), React.createElement("div", {
+    className: "nav-cta"
+  }, React.createElement("button", {
+    className: "btn btn-primary",
+    onClick: onOpen
+  }, ctaLabel, React.createElement("span", {
+    className: "arr"
+  }, React.createElement(Icon, {
+    name: "arrow",
+    size: 18
+  }))))));
+}
+function Hero({
+  t,
+  prices,
+  onOpen,
+  ctaLabel
+}) {
+  return React.createElement("header", {
+    className: "hero",
+    id: "top"
+  }, React.createElement("div", {
+    className: "wrap hero-grid"
+  }, React.createElement("div", {
+    className: "reveal in"
+  }, React.createElement("span", {
+    className: "eyebrow"
+  }, "Bijscholing voor kinesitherapeuten"), React.createElement("h1", {
+    style: {
+      marginTop: 22
+    }
+  }, React.createElement(RichTitle, {
+    text: t.heroTitle
+  })), React.createElement("p", {
+    className: "lede"
+  }, t.heroLede), React.createElement("div", {
+    className: "hero-cta"
+  }, React.createElement("button", {
+    className: "btn btn-primary",
+    onClick: onOpen
+  }, ctaLabel, " — ", euro(prices.inschrijving), React.createElement("span", {
+    className: "arr"
+  }, React.createElement(Icon, {
+    name: "arrow",
+    size: 18
+  }))), React.createElement("a", {
+    className: "btn btn-ghost",
+    href: "#programma"
+  }, "Bekijk het programma")), React.createElement("p", {
+    className: "hero-note"
+  }, React.createElement("span", {
+    className: "check"
+  }, React.createElement(Icon, {
+    name: "check",
+    size: 18
+  })), " Volledige Pro-Q-Kine accreditatie · administratie inbegrepen")), React.createElement("div", {
+    className: "hero-visual reveal in"
+  }, React.createElement("div", {
+    className: "premie-card"
+  }, React.createElement("div", {
+    className: "lbl"
+  }, "RIZIV-kwaliteitspremie"), React.createElement("div", {
+    className: "big"
+  }, euro(prices.premie), React.createElement("small", null, " / jaar")), React.createElement("div", {
+    className: "premie-row"
+  }, React.createElement("div", {
+    className: "col"
+  }, React.createElement("div", {
+    className: "k"
+  }, "Inschrijving Colleo"), React.createElement("div", {
+    className: "v"
+  }, euro(prices.inschrijving))), React.createElement("div", {
+    className: "col"
+  }, React.createElement("div", {
+    className: "k"
+  }, "Netto voordeel"), React.createElement("div", {
+    className: "v pos"
+  }, "+", euro((parseInt(String(prices.premie).replace(/\./g, ""), 10) - parseInt(String(prices.inschrijving).replace(/\./g, ""), 10)).toLocaleString("nl-BE")))))), React.createElement("div", {
+    className: "float-card"
+  }, React.createElement("span", {
+    className: "ic"
+  }, React.createElement(Icon, {
+    name: "clock",
+    size: 22
+  })), React.createElement("div", null, React.createElement("div", {
+    className: "t"
+  }, "5 avondsessies"), React.createElement("div", {
+    className: "s"
+  }, "Fysiek en/of digitaal"))))));
+}
+function Stats({
+  prices
+}) {
+  const items = [{
+    num: "5",
+    cap: "avondsessies per jaar"
+  }, {
+    num: "40",
+    cap: "Pro-Q-Kine punten"
+  }, {
+    num: "2",
+    cap: "peer reviews"
+  }, {
+    num: React.createElement(React.Fragment, null, React.createElement("em", null, "+", euro((parseInt(String(prices.premie).replace(/\./g, ""), 10) - parseInt(String(prices.inschrijving).replace(/\./g, ""), 10)).toLocaleString("nl-BE")))),
+    cap: "netto voordeel per jaar"
+  }];
+  return React.createElement("div", {
+    className: "wrap",
+    style: {
+      marginTop: "-30px",
+      position: "relative",
+      zIndex: 2
+    }
+  }, React.createElement("div", {
+    className: "stats reveal"
+  }, items.map((s, i) => React.createElement("div", {
+    className: "stat",
+    key: i
+  }, React.createElement("div", {
+    className: "num"
+  }, s.num), React.createElement("div", {
+    className: "cap"
+  }, s.cap)))));
+}
+function Why() {
+  const cards = [{
+    ic: "clock",
+    h: "Avondsessies",
+    p: "Vijf avonden per jaar, fysiek en/of digitaal te volgen \u2014 bijscholing die in je agenda past, zonder werkdagen te verliezen."
+  }, {
+    ic: "users",
+    h: "Peer-to-peer",
+    p: "Leer mét en ván collega-kinesitherapeuten. Echte casussen, directe uitwisseling, geen eenrichtingsverkeer."
+  }, {
+    ic: "shield",
+    h: "Administratieve begeleiding",
+    p: "Stap-per-stap begeleiding: w\u00e1t je moet doen, wann\u00e9\u00e9r je iets moet doen en h\u00f3\u00e9 je het moet doen in je Pro-Q-Kine-portfolio."
+  }];
+  return React.createElement("section", {
+    className: "section",
+    id: "waarom"
+  }, React.createElement("div", {
+    className: "wrap"
+  }, React.createElement("div", {
+    className: "sec-head reveal"
+  }, React.createElement("span", {
+    className: "eyebrow"
+  }, "Waarom Colleo"), React.createElement("h2", null, "Bijscholing hoeft geen tijd- en geldverlies te zijn."), React.createElement("p", null, "Je kwaliteitspremie behalen kost vandaag te veel tijdsbesteding, te veel administratie en te veel onduidelijkheid. Colleo maakt het eenvoudig.")), React.createElement("div", {
+    className: "cards"
+  }, cards.map((c, i) => React.createElement("div", {
+    className: "card reveal",
+    style: {
+      transitionDelay: `${i * 80}ms`
+    },
+    key: i
+  }, React.createElement("span", {
+    className: "ic"
+  }, React.createElement(Icon, {
+    name: c.ic,
+    size: 26
+  })), React.createElement("h3", null, c.h), React.createElement("p", null, c.p))))));
+}
+function Programma({
+  sessions
+}) {
+  return React.createElement("section", {
+    className: "section prog",
+    id: "programma"
+  }, React.createElement("div", {
+    className: "wrap"
+  }, React.createElement("div", {
+    className: "sec-head reveal"
+  }, React.createElement("span", {
+    className: "eyebrow"
+  }, "Het programma"), React.createElement("h2", null, "Vijf avonden naar je volledige accreditatie."), React.createElement("p", null, "Elke sessie is goed voor 8 Pro-Q-Kine punten. Samen met 2 peer reviews behaal je de vereiste 40 punten in één jaar.")), React.createElement("div", {
+    className: "prog-list"
+  }, sessions.map((s, i) => React.createElement("div", {
+    className: "prog-row reveal",
+    style: {
+      transitionDelay: `${i * 60}ms`
+    },
+    key: i
+  }, React.createElement("div", {
+    className: "idx"
+  }, String(i + 1).padStart(2, "0")), React.createElement("div", {
+    className: "body"
+  }, React.createElement("div", {
+    className: "topic"
+  }, s.topic), React.createElement("div", {
+    className: "desc"
+  }, s.desc)), React.createElement("div", {
+    className: "meta"
+  }, React.createElement("div", {
+    className: "date"
+  }, s.date), React.createElement("div", {
+    className: "ne"
+  }, s.ne, " punten"))))), React.createElement("div", {
+    style: {
+      marginTop: 28
+    }
+  }, React.createElement("a", {
+    className: "btn btn-ghost",
+    href: "programma.html"
+  }, "Bekijk het volledige programma in detail ", React.createElement("span", {
+    className: "arr"
+  }, React.createElement(Icon, {
+    name: "arrow",
+    size: 18
+  }))))));
+}
+window.ColleoSections = {
+  Icon,
+  RichTitle,
+  euro,
+  Nav,
+  Hero,
+  Stats,
+  Why,
+  Programma
+};
+</script>
+<script>
+const {
+  useState: useState2
+} = React;
+const {
+  Icon: I2,
+  euro: euro2
+} = window.ColleoSections;
+const ELEARNINGS = window.ELEARNINGS;
+function Elearnings() {
+  return React.createElement("section", {
+    className: "section",
+    id: "elearnings"
+  }, React.createElement("div", {
+    className: "wrap"
+  }, React.createElement("div", {
+    className: "sec-head center reveal"
+  }, React.createElement("span", {
+    className: "eyebrow center",
+    style: {
+      display: "inline-flex"
+    }
+  }, "E-learnings"), React.createElement("h2", null, "Losse online modules, op je eigen tempo."), React.createElement("p", null, "Naast het jaarprogramma rollen we stap voor stap een aanbod aan e-learnings uit. Volg ze waar en wanneer je wil — elke module is goed voor extra Pro-Q-Kine punten.")), React.createElement("div", {
+    className: "el-grid"
+  }, ELEARNINGS.map((e, i) => React.createElement("a", {
+    className: "el-card reveal",
+    href: "elearning.html?id=" + e.id,
+    style: {
+      transitionDelay: `${i % 3 * 70}ms`
+    },
+    key: e.id
+  }, React.createElement("div", {
+    className: "el-top"
+  }, React.createElement("span", {
+    className: "el-badge"
+  }, "Binnenkort"), React.createElement("span", {
+    className: "el-pts"
+  }, e.punten, " punten")), React.createElement("h3", null, e.titel), React.createElement("p", null, e.desc), React.createElement("div", {
+    className: "el-foot"
+  }, React.createElement("span", {
+    className: "el-meta"
+  }, React.createElement(I2, {
+    name: "clock",
+    size: 16
+  }), " ", e.tijd), React.createElement("span", {
+    className: "el-price"
+  }, euro2(e.prijs), React.createElement("small", null, "incl. btw"))), React.createElement("span", {
+    className: "el-more"
+  }, "Meer info ", React.createElement(I2, {
+    name: "arrow",
+    size: 16
+  }))))), React.createElement("p", {
+    className: "el-note reveal"
+  }, "Interesse in een specifieke module? ", React.createElement("a", {
+    href: "contact.html"
+  }, "Laat het ons weten"), " — we lanceren ze in volgorde van vraag.")));
+}
+function EersteKeer({
+  onOpen,
+  ctaLabel
+}) {
+  return React.createElement("section", {
+    className: "section",
+    id: "eerste-keer"
+  }, React.createElement("div", {
+    className: "wrap"
+  }, React.createElement("div", {
+    className: "firsttime"
+  }, React.createElement("div", {
+    className: "ft-ic"
+  }, React.createElement(I2, {
+    name: "spark",
+    size: 28
+  })), React.createElement("span", {
+    className: "eyebrow"
+  }, "Nog nooit je accreditatie behaald?"), React.createElement("h2", null, "Verdwaald in het bos van accreditatie-eenheden?"), React.createElement("p", null, "Raak je verloren tussen ingewikkelde eenheden en opleidingen? Ook wij kregen daar ooit", " ", React.createElement("span", {
+    className: "wink"
+  }, "bilaterale hoofdpijnen"), " van. Net daarom is dit dé kans om voor het eerst wél je accreditatie te behalen: we leggen stap per stap uit wát je moet doen, wannéér je het moet doen en hóé je het moet doen."), React.createElement("button", {
+    className: "btn btn-primary",
+    onClick: onOpen
+  }, ctaLabel, React.createElement("span", {
+    className: "arr"
+  }, React.createElement(I2, {
+    name: "arrow",
+    size: 18
+  }))))));
+}
+function Aanpak({
+  prices,
+  onOpen,
+  ctaLabel
+}) {
+  const steps = [{
+    h: "Schrijf je in",
+    p: "Eén inschrijving voor het volledige jaartraject. Direct je plek verzekerd."
+  }, {
+    h: "Volg 5 avondsessies",
+    p: "Praktijkgerichte avonden, fysiek en/of digitaal, samen goed voor 40 navormingseenheden."
+  }, {
+    h: "Doe 2 peer reviews",
+    p: "Begeleide uitwisseling met collega's — een verplicht onderdeel, voor jou geregeld."
+  }, {
+    h: "Wij regelen de rest",
+    p: "We begeleiden je stap per stap, sturen je een factuur door en zorgen ervoor dat je aan alle voorwaarden voldoet om de kwaliteitspremie aan te vragen."
+  }];
+  return React.createElement("section", {
+    className: "section prog",
+    id: "aanpak"
+  }, React.createElement("div", {
+    className: "wrap"
+  }, React.createElement("span", {
+    id: "voordeel",
+    style: {
+      position: "relative",
+      top: "-80px"
+    }
+  }), React.createElement("div", {
+    className: "sec-head center reveal"
+  }, React.createElement("span", {
+    className: "eyebrow center",
+    style: {
+      display: "inline-flex"
+    }
+  }, "Zo werkt het"), React.createElement("h2", null, "Van inschrijving tot premie — en wat het kost.")), React.createElement("div", {
+    className: "merge-grid"
+  }, React.createElement("div", {
+    className: "steps-vert reveal"
+  }, steps.map((s, i) => React.createElement("div", {
+    className: "vstep",
+    key: i
+  }, React.createElement("div", {
+    className: "n"
+  }, i + 1), React.createElement("div", {
+    className: "vbody"
+  }, React.createElement("h3", null, s.h), React.createElement("p", null, s.p))))), React.createElement("div", {
+    className: "calc reveal"
+  }, React.createElement("div", {
+    className: "calc-row"
+  }, React.createElement("div", {
+    className: "lbl"
+  }, React.createElement("b", null, "RIZIV-kwaliteitspremie"), "uitbetaald bij accreditatie"), React.createElement("div", {
+    className: "amt gain"
+  }, euro2(prices.premie))), React.createElement("div", {
+    className: "calc-row"
+  }, React.createElement("div", {
+    className: "lbl"
+  }, React.createElement("b", null, "Inschrijving Colleo"), "5 sessies + 2 peer reviews + administratie"), React.createElement("div", {
+    className: "amt"
+  }, euro2(prices.inschrijving))), React.createElement("div", {
+    className: "calc-total"
+  }, React.createElement("span", {
+    className: "lbl"
+  }, "Netto voordeel"), React.createElement("span", {
+    className: "amt",
+    style: {
+      fontSize: "1.3rem"
+    }
+  }, "+", euro2((parseInt(String(prices.premie).replace(/\./g, ""), 10) - parseInt(String(prices.inschrijving).replace(/\./g, ""), 10)).toLocaleString("nl-BE")))), React.createElement("div", {
+    className: "calc-extras"
+  }, React.createElement("div", {
+    className: "calc-extra"
+  }, React.createElement("span", {
+    className: "ce-ic"
+  }, React.createElement(I2, {
+    name: "doc",
+    size: 20
+  })), React.createElement("div", null, React.createElement("div", {
+    className: "ce-t"
+  }, "Factuur als beroepskost"), React.createElement("div", {
+    className: "ce-s"
+  }, "Je inschrijving is aftrekbaar als kost."))), React.createElement("div", {
+    className: "calc-extra"
+  }, React.createElement("span", {
+    className: "ce-ic"
+  }, React.createElement(I2, {
+    name: "spark",
+    size: 20
+  })), React.createElement("div", null, React.createElement("div", {
+    className: "ce-t"
+  }, "Geen verborgen kosten"), React.createElement("div", {
+    className: "ce-s"
+  }, "Sessies, peer reviews en administratie inbegrepen.")))), React.createElement("button", {
+    className: "btn btn-accent btn-block",
+    style: {
+      marginTop: 22
+    },
+    onClick: onOpen
+  }, ctaLabel, React.createElement("span", {
+    className: "arr"
+  }, React.createElement(I2, {
+    name: "arrow",
+    size: 18
+  })))))));
+}
+function FinalCTA({
+  prices,
+  onOpen,
+  ctaLabel
+}) {
+  return React.createElement("section", {
+    className: "section",
+    id: "faq"
+  }, React.createElement("div", {
+    className: "wrap"
+  }, React.createElement("div", {
+    className: "cta-band reveal"
+  }, React.createElement("h2", null, "Klaar om je kwaliteitspremie te behalen?"), React.createElement("p", null, "Schrijf je in voor het volledige jaartraject. Vijf avonden, twee peer reviews en volledige begeleiding — voor één inschrijving van ", euro2(prices.inschrijving), "."), React.createElement("div", {
+    className: "hero-cta"
+  }, React.createElement("button", {
+    className: "btn btn-accent",
+    onClick: onOpen
+  }, ctaLabel, " — ", euro2(prices.inschrijving), React.createElement("span", {
+    className: "arr"
+  }, React.createElement(I2, {
+    name: "arrow",
+    size: 18
+  })))), React.createElement("p", {
+    className: "hero-note",
+    style: {
+      marginTop: 20
+    }
+  }, React.createElement("span", {
+    className: "check"
+  }, React.createElement(I2, {
+    name: "check",
+    size: 18
+  })), " Beperkt aantal plaatsen per sessie"))));
+}
+function Footer() {
+  return React.createElement("footer", {
+    className: "footer"
+  }, React.createElement("div", {
+    className: "wrap footer-inner"
+  }, React.createElement("a", {
+    className: "brand",
+    href: "#top"
+  }, React.createElement("span", {
+    className: "dot"
+  }, "C"), "Colleo"), React.createElement("div", {
+    className: "footer-links"
+  }, React.createElement("a", {
+    href: "#programma"
+  }, "Programma"), React.createElement("a", {
+    href: "over-ons.html"
+  }, "Over ons"), React.createElement("a", {
+    href: "programma.html"
+  }, "Programma 2026"), React.createElement("a", {
+    href: "faq.html"
+  }, "FAQ"), React.createElement("a", {
+    href: "lesgever.html"
+  }, "Word lesgever"), React.createElement("a", {
+    href: "contact.html"
+  }, "Contact"), React.createElement("a", {
+    href: "voorwaarden.html"
+  }, "Voorwaarden"), React.createElement("a", {
+    href: "privacy.html"
+  }, "Privacy")), React.createElement("div", {
+    className: "muted"
+  }, "Bijscholing voor kinesitherapeuten in Vlaanderen · Pro-Q-Kine erkend")));
+}
+function InschrijfModal({
+  open,
+  onClose,
+  prices,
+  ctaLabel
+}) {
+  const [done, setDone] = useState2(false);
+  const [busy, setBusy] = useState2(false);
+  const [err, setErr] = useState2(false);
+  if (!open) return null;
+  const submit = e => {
+    e.preventDefault();
+    setBusy(true);
+    setErr(false);
+    const fd = new FormData(e.target);
+    fd.append('form-name', 'inschrijving');
+    fetch('/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams(fd).toString()
+    }).then(r => {
+      if (!r.ok) throw new Error(r.status);
+      setDone(true);
+    }).catch(() => setErr(true)).finally(() => setBusy(false));
+  };
+  const close = () => {
+    setDone(false);
+    onClose();
+  };
+  return React.createElement("div", {
+    className: "modal-back",
+    onMouseDown: e => {
+      if (e.target === e.currentTarget) close();
+    }
+  }, React.createElement("div", {
+    className: "modal",
+    role: "dialog",
+    "aria-modal": "true"
+  }, React.createElement("button", {
+    className: "close",
+    onClick: close,
+    "aria-label": "Sluiten"
+  }, React.createElement(I2, {
+    name: "spark",
+    size: 18
+  })), !done ? React.createElement(React.Fragment, null, React.createElement("h3", null, "Schrijf je in"), React.createElement("p", {
+    className: "sub"
+  }, "Volledig jaartraject — 5 avondsessies + 2 peer reviews + administratie."), React.createElement("form", {
+    onSubmit: submit
+  }, React.createElement("div", {
+    className: "field"
+  }, React.createElement("label", null, "Naam"), React.createElement("input", {
+    name: "naam",
+    required: true,
+    placeholder: "Voor- en achternaam"
+  })), React.createElement("div", {
+    className: "field"
+  }, React.createElement("label", null, "E-mailadres"), React.createElement("input", {
+    name: "email",
+    required: true,
+    type: "email",
+    placeholder: "jij@praktijk.be"
+  })), React.createElement("div", {
+    className: "field"
+  }, React.createElement("label", null, "RIZIV-nummer"), React.createElement("input", {
+    name: "riziv",
+    required: true,
+    placeholder: "0-00000-00-000"
+  })), React.createElement("div", {
+    className: "summary"
+  }, React.createElement("span", {
+    className: "k"
+  }, "Inschrijving (incl. btw)"), React.createElement("span", {
+    className: "v"
+  }, euro2(prices.inschrijving))), err && React.createElement("p", {
+    style: {
+      color: "#c0392b",
+      marginTop: 12
+    }
+  }, "Er ging iets mis. Probeer opnieuw of mail ons."), React.createElement("button", {
+    className: "btn btn-primary btn-block",
+    type: "submit",
+    disabled: busy,
+    style: {
+      marginTop: 18
+    }
+  }, "Bevestig inschrijving", React.createElement("span", {
+    className: "arr"
+  }, React.createElement(I2, {
+    name: "arrow",
+    size: 18
+  })))), React.createElement("p", {
+    className: "form-privacy"
+  }, "Door in te schrijven ga je akkoord met onze ", React.createElement("a", {
+    href: "voorwaarden.html",
+    target: "_blank"
+  }, "algemene voorwaarden"), ". Je gegevens gebruiken we enkel voor je inschrijving en accreditatie (", React.createElement("a", {
+    href: "privacy.html",
+    target: "_blank"
+  }, "privacyverklaring"), ").")) : React.createElement("div", {
+    className: "success"
+  }, React.createElement("div", {
+    className: "badge"
+  }, React.createElement(I2, {
+    name: "check",
+    size: 34
+  })), React.createElement("h3", null, "Je inschrijving is ontvangen!"), React.createElement("p", {
+    className: "sub",
+    style: {
+      marginTop: 10
+    }
+  }, "We bevestigen je inschrijving binnen twee werkdagen per e-mail, samen met de betaalinstructies en de data van de vijf avondsessies."), React.createElement("button", {
+    className: "btn btn-accent btn-block",
+    onClick: close,
+    style: {
+      marginTop: 22
+    }
+  }, "Terug naar de site"))));
+}
+window.ColleoSections2 = {
+  Elearnings,
+  EersteKeer,
+  Aanpak,
+  FinalCTA,
+  Footer,
+  InschrijfModal
+};
+</script>
+<script>
+const {
+  useEffect: useEffectA,
+  useState: useStateA,
+  useRef: useRefA
+} = React;
+const S = window.ColleoSections;
+const S2 = window.ColleoSections2;
+const TWEAK_DEFAULTS = {
+  "primaryColor": "#1e2d4a",
+  "accentColor": "#3ecfb2",
+  "ctaText": "Schrijf je in",
+  "heroTitle": "Behaal je volledige *Pro-Q-Kine* accreditatie in 5 avonden.",
+  "heroLede": "Colleo brengt je in \u00e9\u00e9n jaar aan 40 navormingseenheden en 2 peer reviews \u2014 met avondsessies (fysiek en/of digitaal), een peer-to-peer aanpak en volledige administratieve ontzorging.",
+  "priceInschrijving": "810",
+  "pricePremie": "2.550",
+  "date1": "4 mrt 2026",
+  "date2": "6 mei 2026",
+  "date3": "17 jun 2026",
+  "date4": "16 sep 2026",
+  "date5": "4 nov 2026"
+};
+const ACCENT_INK = {
+  "#3ecfb2": "#0f5e50",
+  "#3B8BD4": "#1f5b8f"
+};
+const TOPICS = [{
+  topic: "Manuele Therapie Refresher: Cx en Tx",
+  desc: "Opfrissing van onderzoek en behandeling van de cervicale en thoracale wervelzuil.",
+  ne: 8
+}, {
+  topic: "Personal finance for physios",
+  desc: "Grip op je financi\u00ebn als zelfstandige kinesitherapeut.",
+  ne: 8
+}, {
+  topic: "Manuele Therapie Refresher: Lx en extremiteiten",
+  desc: "Opfrissing van de lumbale wervelzuil en de extremiteiten.",
+  ne: 8
+}, {
+  topic: "(Sport)voeding: gezondheid en prestatie",
+  desc: "Voeding in functie van gezondheid, herstel en prestatie.",
+  ne: 8
+}, {
+  topic: "Communicatie & pati\u00ebnteneducatie bij chronische pijn",
+  desc: "Communiceren en eduqueren bij chronische pijn.",
+  ne: 8
+}];
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [modal, setModal] = useStateA(false);
+  const open = () => setModal(true);
+  useEffectA(() => {
+    const r = document.documentElement.style;
+    r.setProperty("--navy", t.primaryColor);
+    r.setProperty("--accent", t.accentColor);
+    r.setProperty("--accent-ink", ACCENT_INK[t.accentColor] || "#0f5e50");
+  }, [t.primaryColor, t.accentColor]);
+  useEffectA(() => {
+    const els = document.querySelectorAll(".reveal:not(.in)");
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: "0px 0px -8% 0px"
+    });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  });
+  const prices = {
+    inschrijving: t.priceInschrijving,
+    premie: t.pricePremie
+  };
+  const sessions = TOPICS.map((s, i) => ({
+    ...s,
+    date: t["date" + (i + 1)]
+  }));
+  const cta = t.ctaText;
+  return React.createElement(React.Fragment, null, React.createElement(S.Nav, {
+    onOpen: open,
+    ctaLabel: cta
+  }), React.createElement(S.Hero, {
+    t: t,
+    prices: prices,
+    onOpen: open,
+    ctaLabel: cta
+  }), React.createElement(S.Stats, {
+    prices: prices
+  }), React.createElement(S.Why, null), React.createElement(S.Programma, {
+    sessions: sessions
+  }), React.createElement(S2.Elearnings, null), React.createElement(S2.EersteKeer, {
+    onOpen: open,
+    ctaLabel: cta
+  }), React.createElement(S2.Aanpak, {
+    prices: prices,
+    onOpen: open,
+    ctaLabel: cta
+  }), React.createElement(S2.FinalCTA, {
+    prices: prices,
+    onOpen: open,
+    ctaLabel: cta
+  }), React.createElement(S2.Footer, null), React.createElement(S2.InschrijfModal, {
+    open: modal,
+    onClose: () => setModal(false),
+    prices: prices,
+    ctaLabel: cta
+  }), React.createElement(TweaksPanel, {
+    title: "Tweaks"
+  }, React.createElement(TweakSection, {
+    label: "Kleuren"
+  }), React.createElement(TweakColor, {
+    label: "Primaire kleur",
+    value: t.primaryColor,
+    options: ["#1e2d4a", "#2e4a7a"],
+    onChange: v => setTweak("primaryColor", v)
+  }), React.createElement(TweakColor, {
+    label: "Accentkleur",
+    value: t.accentColor,
+    options: ["#3ecfb2", "#3B8BD4"],
+    onChange: v => setTweak("accentColor", v)
+  }), React.createElement(TweakSection, {
+    label: "Hero"
+  }), React.createElement(TweakText, {
+    label: "Titel (* = accent)",
+    value: t.heroTitle,
+    onChange: v => setTweak("heroTitle", v)
+  }), React.createElement(TweakText, {
+    label: "Ondertitel",
+    value: t.heroLede,
+    onChange: v => setTweak("heroLede", v)
+  }), React.createElement(TweakSection, {
+    label: "CTA-knop"
+  }), React.createElement(TweakSelect, {
+    label: "Knoptekst",
+    value: t.ctaText,
+    options: ["Schrijf je in", "Reserveer je plek", "Start je inschrijving"],
+    onChange: v => setTweak("ctaText", v)
+  }), React.createElement(TweakSection, {
+    label: "Prijzen (\\u20ac)"
+  }), React.createElement(TweakText, {
+    label: "Inschrijving",
+    value: t.priceInschrijving,
+    onChange: v => setTweak("priceInschrijving", v)
+  }), React.createElement(TweakText, {
+    label: "Kwaliteitspremie",
+    value: t.pricePremie,
+    onChange: v => setTweak("pricePremie", v)
+  }), React.createElement(TweakSection, {
+    label: "Programma — data"
+  }), [1, 2, 3, 4, 5].map(n => React.createElement(TweakText, {
+    key: n,
+    label: "Sessie " + n,
+    value: t["date" + n],
+    onChange: v => setTweak("date" + n, v)
+  }))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App, null));
+</script>
+<script id="colleo-nav-js">
+(function () {
+  var ICON_OPEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+  var ICON_CLOSE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+  function ensure() {
+    var cta = document.querySelector('.nav .nav-cta');
+    if (!cta || !document.querySelector('.nav .nav-links') || cta.querySelector('.nav-burger')) return;
+    var b = document.createElement('button');
+    b.className = 'nav-burger'; b.type = 'button'; b.setAttribute('aria-label', 'Menu openen'); b.innerHTML = ICON_OPEN;
+    b.addEventListener('click', function () {
+      var open = document.body.classList.toggle('menu-open');
+      b.innerHTML = open ? ICON_CLOSE : ICON_OPEN; b.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
+    });
+    cta.appendChild(b);
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('.nav-links a')) document.body.classList.remove('menu-open');
+  });
+  ensure();
+  new MutationObserver(ensure).observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+</body>
+</html>
