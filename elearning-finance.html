@@ -420,6 +420,11 @@ p { margin: 0; text-wrap: pretty; }
 .el-img { margin: -26px -26px 20px; overflow: hidden; border-radius: var(--r-card) var(--r-card) 0 0; background: var(--bg-2); }
 .el-img img { width: 100%; height: auto; display: block; }
 
+.el-badge.live { background: var(--navy); color: var(--accent); }
+
+.el-rule { margin-top: 26px; max-width: 760px; background: #fdf6e8; border: 1px solid #f1dcb0; border-radius: var(--r-sm); padding: 16px 20px; color: var(--ink); font-size: 0.97rem; }
+.el-rule ul { margin: 8px 0 0; padding-left: 20px; }
+.el-rule li + li { margin-top: 4px; }
 
 /* ===== e-learning speler ===== */
 .m-wrap > * { min-width: 0; }
@@ -528,6 +533,22 @@ p { margin: 0; text-wrap: pretty; }
   .m-cardnav { flex-wrap: wrap; }
 }
 
+.t-rules { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; color: var(--muted); font-size: 0.9rem; }
+.t-rules span { display: inline-flex; align-items: center; gap: 6px; }
+.m-opt.sel { border-color: var(--navy); background: color-mix(in srgb, var(--navy) 8%, var(--surface)); font-weight: 600; }
+.t-q.ok { border-color: color-mix(in srgb, var(--accent) 60%, var(--surface)); }
+.t-q.nok { border-color: #e6b0aa; background: #fdf6f5; }
+.t-submit { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 22px; color: var(--muted); font-size: 0.92rem; flex-wrap: wrap; }
+.t-res { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 20px; border-radius: var(--r-sm); padding: 18px 20px; }
+.t-res .big { font-family: var(--font-display); font-weight: 700; font-size: 2.2rem; line-height: 1; }
+.t-res > div:nth-child(2) { flex: 1; min-width: 200px; }
+.t-res.pass { background: color-mix(in srgb, var(--accent) 18%, var(--surface)); color: var(--accent-ink); }
+.t-res.fail { background: #fdecec; color: #8a1f1f; }
+
+.t-lock { display: flex; gap: 16px; align-items: flex-start; margin-top: 22px; background: var(--bg); border: 1px solid var(--hairline-soft); border-radius: var(--r-sm); padding: 22px; }
+.t-lock svg { flex: none; color: var(--muted); }
+.t-lock p { color: var(--muted); margin: 6px 0 14px; }
+
 .m-hero { padding-top: clamp(28px, 4vw, 56px); padding-bottom: clamp(20px, 3vw, 32px); }
 .m-hero .crumb { color: var(--muted); font-size: 0.92rem; }
 .m-hero .crumb a { color: var(--accent-ink); font-weight: 600; }
@@ -603,7 +624,7 @@ p { margin: 0; text-wrap: pretty; }
 <header class="wrap m-hero" id="mTop">
   <div class="crumb"><a href="elearnings.html">E-learnings</a> <span aria-hidden="true">›</span> Finance for physios</div>
   <h1>Finance for physios</h1>
-  <p class="lede">Van structuurkeuze tot beleggingsportefeuille. Wissel af tussen de opname van de sessie, korte geschreven samenvattingen en checks.</p>
+  <p class="lede">Van structuurkeuze tot beleggingsportefeuille. Wissel af tussen de opname van de sessie, korte geschreven samenvattingen en checks, en sluit af met een eindtoets.</p>
 </header>
 <main class="wrap m-wrap">
   <aside class="m-side">
@@ -677,7 +698,7 @@ window.MODULE = {
     { type: "lezen", titel: "Welkom", kaarten: [
       { h: "Welkom bij Finance for physios", p: [
         "Als kinesitherapeut ben je vooral met je vak bezig. Maar als zelfstandige ben je ook ondernemer, en de keuzes die je financieel maakt hebben een grote impact op je inkomen, je pensioen en je vrijheid later.",
-        "Deze module is de opname van onze avondsessie, aangevuld met geschreven uitleg en korte checks. Je doorloopt vier blokken."
+        "Deze module is de opname van onze avondsessie, aangevuld met geschreven uitleg en korte checks. Je doorloopt vier blokken en sluit af met een eindtoets."
       ], lijst: [
         "Blok 1: juridische structuren (eenmanszaak of BV)",
         "Blok 2: investeren via je vennootschap",
@@ -841,14 +862,15 @@ window.MODULE = {
           "Spreid geleidelijk verder, en houd risicovolle beleggingen beperkt."
         ] }
     ] },
-    { type: "check", blok: 4, titel: "Eindcheck", eind: true, vragen: [
+    { type: "check", blok: 4, titel: "Blok 4 · Check", vragen: [
       { q: "Volgens de 4%-regel: hoeveel kapitaal heb je ongeveer nodig als je €24.000 per jaar uitgeeft?", a: ["€240.000", "€600.000", "€1.200.000"], c: 1,
         u: "25 keer je jaarlijkse uitgaven: 25 × €24.000 = €600.000." },
       { q: "Wat is de eerste stap in het actieplan?", a: ["Een BV oprichten", "Een noodreserve aanleggen", "Crypto kopen"], c: 1,
         u: "Eerst een buffer, dan pas beleggen." },
       { q: "Van wie krijg je advies over je persoonlijke situatie?", a: ["Van deze e-learning", "Van je boekhouder, fiscalist of erkend financieel adviseur", "Van sociale media"], c: 1,
         u: "Deze module geeft algemene informatie. Je persoonlijke situatie bespreek je met een professional." }
-    ] }
+    ] },
+    {"type": "toets", "titel": "Eindtoets", "slagen": 70, "vragen": [{"q": "Wat is een belangrijk nadeel van een eenmanszaak?", "a": ["Je hebt een notaris nodig om te starten", "Je bent onbeperkt persoonlijk aansprakelijk", "Je mag geen beroepskosten inbrengen"], "c": 1}, {"q": "Wanneer wordt een BV volgens de vuistregel uit de module interessant?", "a": ["Vanaf ongeveer €20.000 winst", "Vanaf ongeveer €60.000 tot €70.000 bruto winst", "Pas vanaf €250.000 winst"], "c": 1}, {"q": "Waaruit bestaat in het rekenvoorbeeld het grootste voordeel van de BV?", "a": ["Een hoger netto loon in handen", "De reserve die in de vennootschap blijft", "Het wegvallen van alle sociale bijdragen"], "c": 1}, {"q": "Welk pensioenproduct is enkel mogelijk via een vennootschap?", "a": ["VAPZ", "POZ", "IPT"], "c": 2}, {"q": "Voor wie is de POZ bedoeld?", "a": ["Voor zelfstandigen zonder vennootschap", "Enkel voor werknemers", "Enkel voor bedrijfsleiders met een BV"], "c": 0}, {"q": "Wat is het kenmerk van een DBI-bevek in je vennootschap?", "a": ["De inkomsten zijn grotendeels vrijgesteld", "Ze heeft lagere kosten dan een ETF", "Ze moet binnen het jaar verkocht worden"], "c": 0}, {"q": "Wat doe je best vóór je begint te beleggen?", "a": ["Een noodreserve van 3 tot 6 maanden netto inkomen aanleggen", "Een lening aangaan", "Wachten op de volgende beurscrash"], "c": 0}, {"q": "Waarom verkiest de module een brede ETF boven een actief bankfonds?", "a": ["Een ETF garandeert winst", "Een ETF heeft veel lagere kosten en volgt de markt", "Een actief fonds is verboden in België"], "c": 1}, {"q": "Wat betekent 'tijd in de markt verslaat timing'?", "a": ["Regelmatig en lang belegd blijven werkt beter dan het perfecte instapmoment zoeken", "Je moet elke dag kopen en verkopen", "Je belegt best enkel na een crash"], "c": 0}, {"q": "Volgens de 4%-regel: hoeveel kapitaal heb je ongeveer nodig bij €30.000 uitgaven per jaar?", "a": ["€300.000", "€750.000", "€1.500.000"], "c": 1}]}
   ]
 };
 
@@ -871,7 +893,7 @@ window.MODULE = {
   const elBar = document.getElementById('mBar');
   const elPct = document.getElementById('mPct');
 
-  const TYPE = { video: ['play', 'Kijken'], lezen: ['book', 'Lezen'], check: ['check', 'Check'] };
+  const TYPE = { video: ['play', 'Kijken'], lezen: ['book', 'Lezen'], check: ['check', 'Check'], toets: ['medal', 'Eindtoets'] };
 
   function progress() {
     const n = steps.filter(function (_, i) { return st.done[i]; }).length;
@@ -883,8 +905,8 @@ window.MODULE = {
   function renderNav() {
     let html = '', lastBlok = null;
     steps.forEach(function (s, i) {
-      const b = s.blok || 0;
-      if (b !== lastBlok) { html += '<div class="mn-group">' + (b ? 'Blok ' + b : 'Start') + '</div>'; lastBlok = b; }
+      const b = s.type === 'toets' ? 'T' : (s.blok || 0);
+      if (b !== lastBlok) { html += '<div class="mn-group">' + (b === 'T' ? 'Afsluiten' : (b ? 'Blok ' + b : 'Start')) + '</div>'; lastBlok = b; }
       const t = TYPE[s.type];
       html += '<button class="mn-item' + (i === cur ? ' cur' : '') + (st.done[i] ? ' done' : '') + '" data-i="' + i + '">' +
         '<span class="mn-ic">' + icon(st.done[i] ? 'check' : t[0], 15) + '</span>' +
@@ -1034,15 +1056,90 @@ window.MODULE = {
     if (s.eind && done) showEnd();
   }
 
+
+  // ── eindtoets ──
+  function renderToets(s) {
+    const pass = s.slagen || 70, n = s.vragen.length;
+    const todo = steps.map(function (_, i) { return i; }).filter(function (i) { return i < cur && steps[i].type !== 'lezen' && !st.done[i]; });
+    if (todo.length) {
+      elStage.innerHTML = head(s) + '<div class="t-lock">' + icon('lock', 26) + '<div><strong>Nog even geduld</strong><p>Doorloop eerst alle video\u2019s en checks van de module. Daarna kan je de eindtoets afleggen. Nog ' + todo.length + (todo.length === 1 ? ' stap' : ' stappen') + ' te gaan.</p>' +
+        '<button class="btn btn-primary" id="tGo">Ga naar de volgende stap ' + icon('arrow', 18) + '</button></div></div>' +
+        '<div class="m-foot">' + (cur > 0 ? '<button class="btn btn-ghost" id="mPrev">' + icon('arrowL', 18) + ' Vorige</button>' : '<span></span>') + '</div>';
+      document.getElementById('tGo').addEventListener('click', function () { go(todo[0]); });
+      const pv = document.getElementById('mPrev'); if (pv) pv.addEventListener('click', function () { go(cur - 1); });
+      return;
+    }
+    const prevRes = st.toets;
+    let html = head(s) +
+      '<p class="m-intro">' + esc(s.intro || ('Deze eindtoets bestaat uit ' + n + ' vragen. Je slaagt vanaf ' + pass + '%. Pas na het indienen zie je je score.')) + '</p>' +
+      '<div class="t-rules"><span>' + icon('list', 16) + ' ' + n + ' vragen</span><span>' + icon('medal', 16) + ' Slagen vanaf ' + pass + '%</span><span>' + icon('clock', 16) + ' Onbeperkt opnieuw proberen</span></div>';
+    if (prevRes && prevRes.geslaagd) {
+      html += '<div class="m-ok">' + icon('check', 20) + '<span>Je slaagde op ' + esc(prevRes.datum) + ' met ' + prevRes.score + '%. Je mag de toets gerust opnieuw maken.</span></div>';
+    }
+    s.vragen.forEach(function (v, qi) {
+      html += '<div class="m-q t-q" data-q="' + qi + '"><div class="qn">Vraag ' + (qi + 1) + ' van ' + n + '</div><h3>' + esc(v.q) + '</h3><div class="m-opts">' +
+        v.a.map(function (a, ai) { return '<button class="m-opt" data-a="' + ai + '" aria-pressed="false">' + esc(a) + '</button>'; }).join('') +
+        '</div><div class="m-fb" hidden></div></div>';
+    });
+    html += '<div class="t-submit"><span id="tCount">0 / ' + n + ' beantwoord</span><button class="btn btn-primary" id="tSend" disabled>Toets indienen ' + icon('arrow', 18) + '</button></div>' +
+      '<div id="tResult"></div>' +
+      '<div class="m-foot">' + (cur > 0 ? '<button class="btn btn-ghost" id="mPrev">' + icon('arrowL', 18) + ' Vorige</button>' : '<span></span>') + '</div>';
+    elStage.innerHTML = html;
+    const p = document.getElementById('mPrev'); if (p) p.addEventListener('click', function () { go(cur - 1); });
+
+    const ans = {}; let locked = false;
+    const send = document.getElementById('tSend'), cnt = document.getElementById('tCount');
+    elStage.querySelectorAll('.t-q').forEach(function (qEl) {
+      const qi = +qEl.dataset.q;
+      qEl.querySelectorAll('.m-opt').forEach(function (b) {
+        b.addEventListener('click', function () {
+          if (locked) return;
+          qEl.querySelectorAll('.m-opt').forEach(function (o) { o.classList.remove('sel'); o.setAttribute('aria-pressed', 'false'); });
+          b.classList.add('sel'); b.setAttribute('aria-pressed', 'true');
+          ans[qi] = +b.dataset.a;
+          const k = Object.keys(ans).length;
+          cnt.textContent = k + ' / ' + n + ' beantwoord';
+          send.disabled = k < n;
+        });
+      });
+    });
+    send.addEventListener('click', function () {
+      locked = true; send.disabled = true;
+      let good = 0;
+      elStage.querySelectorAll('.t-q').forEach(function (qEl) {
+        const qi = +qEl.dataset.q, v = s.vragen[qi], ok = ans[qi] === v.c;
+        if (ok) good++;
+        qEl.classList.add(ok ? 'ok' : 'nok');
+        const fb = qEl.querySelector('.m-fb');
+        fb.hidden = false;
+        fb.className = 'm-fb ' + (ok ? 'good' : 'bad');
+        fb.innerHTML = ok ? '<strong>Juist.</strong>' : '<strong>Fout.</strong>';
+      });
+      const score = Math.round(good / n * 100), passed = score >= pass;
+      const res = document.getElementById('tResult');
+      if (passed) {
+        const d = new Date().toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' });
+        st.toets = { geslaagd: true, score: score, datum: d }; save(st); markDone(cur);
+        res.innerHTML = '<div class="t-res pass"><div class="big">' + score + '%</div><div><strong>Geslaagd!</strong> Je beantwoordde ' + good + ' van ' + n + ' vragen juist.</div></div>';
+        showEnd();
+      } else {
+        res.innerHTML = '<div class="t-res fail"><div class="big">' + score + '%</div><div><strong>Nog niet geslaagd.</strong> Je beantwoordde ' + good + ' van ' + n + ' vragen juist; je hebt minstens ' + pass + '% nodig. Herbekijk gerust de blokken en probeer opnieuw.</div>' +
+          '<button class="btn btn-primary" id="tRetry">Opnieuw proberen</button></div>';
+        document.getElementById('tRetry').addEventListener('click', function () { render(); document.getElementById('mTop').scrollIntoView({ behavior: 'smooth' }); });
+      }
+      res.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
   function showEnd() {
     if (document.getElementById('mEnd')) return;
     const d = document.createElement('div');
     d.id = 'mEnd'; d.className = 'm-end';
     d.innerHTML = '<div class="m-end-ic">' + icon('medal', 30) + '</div><h3>Module afgerond</h3>' +
-      '<p>Je hebt alle blokken van <strong>' + esc(M.titel) + '</strong> doorlopen. Vergeet niet om deze navorming zelf toe te voegen in je Pro-Q-Kine-portfolio.</p>' +
+      '<p>Je hebt <strong>' + esc(M.titel) + '</strong> doorlopen en bent geslaagd voor de eindtoets. Vergeet niet om deze navorming zelf toe te voegen in je Pro-Q-Kine-portfolio.</p>' +
       '<div class="m-end-cta"><a class="btn btn-primary" href="elearnings.html">Naar alle e-learnings</a><button class="btn btn-ghost" id="mRestart">Opnieuw beginnen</button></div>';
     elStage.appendChild(d);
-    document.getElementById('mRestart').addEventListener('click', function () { st = { done: {} }; save(st); progress(); go(0); });
+    document.getElementById('mRestart').addEventListener('click', function () { st = { done: {} }; save(st);  progress(); go(0); });
   }
 
   function render() {
@@ -1050,6 +1147,7 @@ window.MODULE = {
     elStage.classList.remove('in'); void elStage.offsetWidth; elStage.classList.add('in');
     if (s.type === 'video') renderVideo(s);
     else if (s.type === 'lezen') renderLezen(s);
+    else if (s.type === 'toets') renderToets(s);
     else renderCheck(s);
   }
 

@@ -637,10 +637,11 @@ window.ELEARNINGS = [
             <div class="row"><span class="k">Duur</span><span class="v">${esc(e.tijd)}</span></div>
             <div class="row"><span class="k">Pro-Q-Kine punten</span><span class="v">${e.punten}</span></div>
             <div class="row"><span class="k">Vorm</span><span class="v">Online · op je tempo</span></div>
+            <div class="row"><span class="k">Afronding</span><span class="v">Eindtoets, slagen vanaf 70%</span></div>
             <div class="row" style="border:none"><span class="k">Prijs</span><span class="v big">${'\u20ac' + esc(e.prijs)}</span></div>
             ${e.module
               ? `<a class="btn btn-accent btn-block" href="${esc(e.module)}" style="margin-top:18px">Start de module ${icon('arrow', 18)}</a>
-                 <p class="note">Je volgt de module op je eigen tempo. Je voortgang wordt bewaard in je browser.</p>`
+                 <p class="note">Je volgt de module op je eigen tempo en sluit af met een eindtoets. Via e-learning behaal je maximaal 24 navormingseenheden per jaar.</p>`
               : `<a class="btn btn-accent btn-block" href="contact.html" style="margin-top:18px">Hou me op de hoogte ${icon('arrow', 18)}</a>
                  <p class="note">Deze e-learning wordt binnenkort gelanceerd. Laat je gegevens na via contact en we verwittigen je zodra ze beschikbaar is.</p>`}
           </div>
