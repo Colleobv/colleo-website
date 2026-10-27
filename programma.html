@@ -418,6 +418,28 @@ p { margin: 0; text-wrap: pretty; }
 .after strong { display: block; color: var(--navy); margin-bottom: 4px; }
 @media (max-width: 860px) { .steps { grid-template-columns: repeat(2, 1fr); } .pdet-body, .after { grid-template-columns: 1fr; } }
 @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+
+/* ===== criteria ===== */
+.crit-legend { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-bottom: 18px; color: var(--muted); font-size: 0.92rem; }
+.crit-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.tag { font-style: normal; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 4px 9px; border-radius: 999px; white-space: nowrap; flex: none; }
+.tag.colleo { color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 20%, var(--surface)); }
+.tag.zelf { color: #7a4a00; background: #fdf0d8; }
+.crit-cols { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; align-items: start; }
+.crit-box { background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: var(--r-card); box-shadow: var(--shadow-sm); padding: clamp(22px, 3vw, 30px); }
+.cb-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px solid var(--hairline-soft); }
+.cb-head h3 { font-size: 1.35rem; }
+.cb-head span { color: var(--muted); font-size: 0.9rem; }
+.crit-items { list-style: none; margin: 0; padding: 0; }
+.crit-items li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--hairline-soft); }
+.crit-items li:last-child { border-bottom: none; padding-bottom: 0; }
+.crit-items .tag { margin-top: 2px; min-width: 64px; text-align: center; }
+.crit-items strong { display: block; color: var(--navy); }
+.crit-items div span { display: block; color: var(--muted); font-size: 0.92rem; margin-top: 2px; }
+.portfolio-callout { margin-top: 18px; background: #fdf6e8; border: 1px solid #f1dcb0; border-radius: var(--r-card); padding: clamp(22px, 3vw, 32px); }
+.portfolio-callout h3 { font-size: 1.2rem; color: var(--navy); }
+.portfolio-callout p { margin-top: 10px; color: var(--ink); font-size: 1rem; }
+@media (max-width: 860px) { .crit-cols { grid-template-columns: 1fr; } }
 </style>
 <style>
   /* programme detail */
@@ -542,6 +564,44 @@ p { margin: 0; text-wrap: pretty; }
   </div>
 </section>
 
+<!-- criteria -->
+<section class="section" id="criteria">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Pro-Q-Kine criteria</span><h2>Wat moet je behalen voor je kwaliteitspremie?</h2><p>Pro-Q-Kine werkt met <strong>jaarcriteria</strong>, die je elk kalenderjaar opnieuw behaalt, en <strong>periodecriteria</strong>, die je maar één keer per accreditatieperiode behaalt. Hieronder zie je per criterium wie ervoor zorgt.</p></div>
+
+    <div class="crit-legend">
+      <span><i class="tag colleo">Colleo</i> daar zorgen wij voor</span>
+      <span><i class="tag zelf">Zelf</i> doe je zelf, met onze handleiding</span>
+    </div>
+
+    <div class="crit-cols">
+      <div class="crit-box">
+        <div class="cb-head"><h3>Jaarcriteria</h3><span>Elk kalenderjaar opnieuw</span></div>
+        <ul class="crit-items">
+          <li><i class="tag zelf">Zelf</i><div><strong>Verbetertraject invullen</strong><span>Vóór eind maart</span></div></li>
+          <li><i class="tag colleo">Colleo</i><div><strong>40 navormingseenheden</strong><span>Via de 5 geaccrediteerde avondsessies (5 × 8 NE)</span></div></li>
+          <li><i class="tag colleo">Colleo</i><div><strong>Peer review met vrij thema</strong><span>Door ons georganiseerd</span></div></li>
+          <li><i class="tag colleo">Colleo</i><div><strong>Peer review met vast thema</strong><span>Door ons georganiseerd</span></div></li>
+          <li><i class="tag zelf">Zelf</i><div><strong>Evaluatie van je verbetertraject</strong><span>Op het einde van het jaar, vanaf november</span></div></li>
+        </ul>
+      </div>
+      <div class="crit-box">
+        <div class="cb-head"><h3>Periodecriteria</h3><span>Eén keer per periode, nu 2025–2027</span></div>
+        <ul class="crit-items">
+          <li><i class="tag zelf">Zelf</i><div><strong>Checklist 'Praktijk' invullen</strong><span>Vul ze in vóór het einde van het jaar waarvoor je de premie aanvraagt</span></div></li>
+          <li><i class="tag zelf">Zelf</i><div><strong>10 patiëntenbevragingen</strong><span>Je nodigt zelf patiënten uit via je portfolio; 10 moeten de bevraging effectief invullen</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="portfolio-callout">
+      <h3>Belangrijk: je Pro-Q-Kine-portfolio beheer je zelf</h3>
+      <p>Colleo zorgt voor je <strong>accreditatiepunten</strong>: de 40 navormingseenheden en de 2 peer reviews. Alles <strong>toevoegen en aanpassen in je Pro-Q-Kine-portfolio</strong> doe je zelf. Wij hebben technisch geen toegang tot jouw account en kunnen dat dus niet voor je doen.</p>
+      <p>Je staat er wel niet alleen voor: je krijgt van ons stap-voor-stap handleidingen voor het verbetertraject, de checklist en de patiëntenbevragingen. Zit je toch vast, stuur ons gerust een bericht.</p>
+    </div>
+  </div>
+</section>
+
 <!-- practical info -->
 <section class="section prog" id="praktisch">
   <div class="wrap">
@@ -570,7 +630,7 @@ p { margin: 0; text-wrap: pretty; }
   <div class="wrap">
     <div class="cta-band">
       <h2>Schrijf je in voor het programma 2026.</h2>
-      <p>Eén inschrijving van €810 voor het volledige jaartraject — vijf avonden, twee peer reviews en volledige administratieve begeleiding.</p>
+      <p>Eén inschrijving van €810 voor het volledige jaartraject — vijf avonden, twee peer reviews en stap-voor-stap begeleiding bij je Pro-Q-Kine-traject.</p>
       <div class="hero-cta">
         <a class="btn btn-accent" href="index.html#voordeel">Schrijf je in — €810 <span id="ctaArr"></span></a>
       </div>
@@ -669,24 +729,24 @@ window.Colleo = (function () {
 
   // ── jaarcriteria: ELK kalenderjaar opnieuw te behalen (vóór 31 dec) ──
   const jaarcriteria = [
-    { id: "verbetertraject", label: "Verbetertraject invullen", when: "Begin van het jaar", type: "check",
-      help: "Bij de start van het jaar vul je de vragen van een verbetertraject in. Het onderwerp kies je vrij — laat je gerust inspireren door de checklist of een peer review. Wij helpen je op weg met een sjabloon." },
-    { id: "navorming", label: "40 navormingseenheden behalen", when: "Vóór 31 dec", type: "ne",
-      help: "Verzamel 40 NE via geaccrediteerde navorming. De 5 Colleo-avondsessies leveren elk 8 NE — samen exact 40. Je voortgang vult automatisch aan zodra je een sessie afrondt." },
-    { id: "pr_vrij", label: "Peer review — vrij thema", when: "Vóór 31 dec", type: "check",
-      help: "Eén intercollegiaal overleg met een onderwerp naar eigen keuze (niet het vastgelegde jaarthema). Colleo organiseert deze peer reviews; de data vind je in je bevestigingsmail." },
-    { id: "pr_vast", label: "Peer review — vastgelegd thema", when: "Vóór 31 dec", type: "check",
-      help: "Eén peer review met het door Pro-Q-Kine vastgelegde jaarthema, of de e-learning met vastgelegd thema. Ook dit organiseren wij voor jou." },
-    { id: "evaluatie", label: "Evaluatie van het verbetertraject", when: "Vanaf 1 nov", type: "check",
-      help: "Op het einde van het jaar (beschikbaar vanaf 1 november) vul je de evaluatie van je verbetertraject in via het Pro-Q-Kine evaluatieformulier." },
+    { id: "verbetertraject", label: "Verbetertraject invullen", when: "Vóór eind maart", type: "check", by: "zelf",
+      help: "Doe je zelf. Je vult een verbetertraject in via je Pro-Q-Kine-portfolio (tabblad Evaluaties → Verbetertraject). Het onderwerp kies je vrij en een uitgebreide uitleg is niet nodig. Wij bezorgen je een stap-voor-stap handleiding met een voorbeeld." },
+    { id: "navorming", label: "40 navormingseenheden behalen", when: "Vóór 31 dec", type: "ne", by: "colleo",
+      help: "Hiervoor zorgt Colleo. De 5 geaccrediteerde avondsessies leveren elk 8 NE, samen 40 NE. Let op: je voegt de navormingen zelf toe in je Pro-Q-Kine-portfolio. Wij hebben daar technisch geen toegang toe." },
+    { id: "pr_vrij", label: "Peer review — vrij thema", when: "Vóór 31 dec", type: "check", by: "colleo",
+      help: "Hiervoor zorgt Colleo: we organiseren een peer review met een vrij thema. De registratie in je Pro-Q-Kine-portfolio doe je zelf." },
+    { id: "pr_vast", label: "Peer review — vastgelegd thema", when: "Vóór 31 dec", type: "check", by: "colleo",
+      help: "Hiervoor zorgt Colleo: we organiseren een peer review met het door Pro-Q-Kine vastgelegde jaarthema. De registratie in je Pro-Q-Kine-portfolio doe je zelf." },
+    { id: "evaluatie", label: "Evaluatie van het verbetertraject", when: "Vanaf november", type: "check", by: "zelf",
+      help: "Doe je zelf. Op het einde van het jaar (vanaf november) vul je de evaluatie van je verbetertraject in via je Pro-Q-Kine-portfolio. Je kijkt terug op de doelen die je in het voorjaar stelde." },
   ];
 
-  // ── periodecriteria: éénmalig per periode (ten laatste 31 dec 2027) ──
+  // ── periodecriteria: éénmalig per periode 2025–2027 (ten laatste 31 dec 2027) ──
   const periodecriteria = [
-    { id: "checklist", label: "Checklist 'Praktijk' invullen", type: "check", managed: true,
-      help: "Eénmalig per periode vul je de Pro-Q-Kine checklist 'Praktijk' in. Colleo begeleidt en regelt dit mee voor jou." },
-    { id: "patienten", label: "10 patiëntenbevragingen", type: "count", target: 10, managed: true,
-      help: "Eénmalig per periode stuur je een patiëntenbevraging uit; je hebt minstens 10 ingevulde enquêtes nodig. Colleo regelt het uitsturen en de opvolging voor jou." },
+    { id: "checklist", label: "Checklist 'Praktijk' invullen", type: "check", by: "zelf",
+      help: "Doe je zelf, één keer per periode 2025–2027. Je vindt de checklist in je Pro-Q-Kine-portfolio (tabblad Evaluaties → Checklist 'Praktijk'). Wil je je premie voor 2026, vul de checklist dan uiterlijk in 2026 in. Wij bezorgen je een handleiding." },
+    { id: "patienten", label: "10 patiëntenbevragingen", type: "count", target: 10, by: "zelf",
+      help: "Doe je zelf, één keer per periode 2025–2027. Via je Pro-Q-Kine-portfolio (tabblad Evaluaties → Patiëntenbevraging) nodig je patiënten uit met hun e-mailadres. Je hebt minstens 10 ingevulde bevragingen nodig. Tip: ook behandelde familieleden of vrienden mogen de bevraging invullen." },
   ];
 
   // ── storage ──
