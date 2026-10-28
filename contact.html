@@ -462,11 +462,12 @@ p { margin: 0; text-wrap: pretty; }
   <div class="wrap contact-grid">
     <!-- form -->
     <div class="form-card">
-      <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="contact"><p hidden><input name="bot-field"></p>
+      <form id="contactForm" name="contact"><input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
         <div class="field"><label for="cname">Naam</label><input id="cname" name="naam" required placeholder="Voor- en achternaam" autocomplete="name" /></div>
         <div class="field"><label for="cmail">E-mailadres</label><input id="cmail" name="email" type="email" required placeholder="jij@praktijk.be" autocomplete="email" /></div>
         <div class="field"><label for="cmsg">Je boodschap</label><textarea id="cmsg" name="bericht" required placeholder="Waarmee kunnen we je helpen?"></textarea></div>
         <button class="btn btn-primary btn-block" type="submit" style="margin-top:6px">Verstuur bericht <span class="arr" id="sendArr"></span></button>
+        <p id="formErr" style="display:none;color:#c0392b;margin-top:12px">Versturen mislukt. Probeer opnieuw of mail ons rechtstreeks op <a href="mailto:info@colleo.be">info@colleo.be</a>.</p>
         <p class="form-privacy">We gebruiken je gegevens enkel om je bericht te beantwoorden. Lees onze <a href="privacy.html">privacyverklaring</a>.</p>
         
       </form>
@@ -566,9 +567,14 @@ p { margin: 0; text-wrap: pretty; }
   const form = document.getElementById('contactForm');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); form.style.display = 'none'; document.getElementById('success').style.display = 'block'; })
-      .catch(function () { alert('Versturen mislukt. Mail ons rechtstreeks.'); });
+    var fd = new FormData(form);
+    if (fd.get('botcheck')) return;
+    var btn = form.querySelector('button[type=submit]'); btn.disabled = true;
+    var fout = document.getElementById('formErr'); fout.style.display = 'none';
+    window.ColleoBetalen.contact({ naam: fd.get('naam'), email: fd.get('email'), bericht: fd.get('bericht') })
+      .then(function () { form.style.display = 'none'; document.getElementById('success').style.display = 'block'; })
+      .catch(function () { fout.style.display = 'block'; })
+      .then(function () { btn.disabled = false; });
   });
   document.getElementById('again').addEventListener('click', function () {
     form.reset();
@@ -601,5 +607,6 @@ p { margin: 0; text-wrap: pretty; }
   new MutationObserver(ensure).observe(document.body, { childList: true, subtree: true });
 })();
 </script>
+<script src="js/betalen.js"></script>
 </body>
 </html>

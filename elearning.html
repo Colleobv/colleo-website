@@ -641,8 +641,9 @@ window.ELEARNINGS = [
             <div class="row"><span class="k">Afronding</span><span class="v">Eindtoets, slagen vanaf 70%</span></div>
             <div class="row" style="border:none"><span class="k">Prijs</span><span class="v big">${'\u20ac' + esc(e.prijs)}</span></div>
             ${e.module
-              ? `<a class="btn btn-accent btn-block" href="${esc(e.module)}" style="margin-top:18px">Start de module ${icon('arrow', 18)}</a>
-                 <p class="note">Je volgt de module op je eigen tempo en sluit af met een eindtoets. Via e-learning behaal je maximaal 24 navormingseenheden per jaar.</p>`
+              ? `<button class="btn btn-accent btn-block" type="button" id="koopBtn" style="margin-top:18px">Koop de module ${icon('arrow', 18)}</button>
+                 <p class="note">Je volgt de module op je eigen tempo en sluit af met een eindtoets. Via e-learning behaal je maximaal 24 navormingseenheden per jaar.</p>
+                 <p class="note" style="margin-top:8px">Al gekocht? <a href="${esc(e.module)}" style="text-decoration:underline">Open de module</a></p>`
               : `<a class="btn btn-accent btn-block" href="contact.html" style="margin-top:18px">Hou me op de hoogte ${icon('arrow', 18)}</a>
                  <p class="note">Deze e-learning wordt binnenkort gelanceerd. Laat je gegevens na via contact en we verwittigen je zodra ze beschikbaar is.</p>`}
           </div>
@@ -663,6 +664,88 @@ window.ELEARNINGS = [
 
   const nav = document.getElementById('nav');
   addEventListener('scroll', function () { nav.classList.toggle('scrolled', scrollY > 12); }, { passive: true });
+</script>
+
+<div class="modal-back" id="koopModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="koopTitel">
+    <button class="close" type="button" id="koopSluit" aria-label="Sluiten">&times;</button>
+    <h3 id="koopTitel">Koop deze e-learning</h3>
+    <p class="sub" id="koopSub"></p>
+    <form id="koopForm">
+      <div class="field"><label for="kNaam">Naam</label><input id="kNaam" name="naam" required placeholder="Voor- en achternaam" autocomplete="name"></div>
+      <div class="field"><label for="kMail">E-mailadres</label><input id="kMail" name="email" type="email" required placeholder="jij@praktijk.be" autocomplete="email"></div>
+      <div class="field"><label for="kRiziv">RIZIV-nummer</label><input id="kRiziv" name="riziv" required placeholder="0-00000-00-000"></div>
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="summary"><span class="k">Prijs (incl. btw)</span><span class="v" id="koopPrijs"></span></div>
+      <p id="koopErr" style="display:none;color:#c0392b;margin-top:12px">Er ging iets mis. Probeer opnieuw of mail ons op <a href="mailto:info@colleo.be">info@colleo.be</a>.</p>
+      <button class="btn btn-primary btn-block" type="submit" id="koopGo" style="margin-top:18px">Verder naar betalen</button>
+    </form>
+    <div class="success" id="koopOk" hidden>
+      <h3>Bedankt!</h3>
+      <p class="sub" style="margin-top:10px">We hebben je aanvraag ontvangen en mailen je binnen twee werkdagen de betaalinstructies en je toegang.</p>
+    </div>
+    <p class="form-privacy">Na deze stap betaal je veilig via Mollie (Bancontact, Payconiq, kaart …). Door te kopen ga je akkoord met onze <a href="voorwaarden.html" target="_blank">algemene voorwaarden</a> en <a href="privacy.html" target="_blank">privacyverklaring</a>.</p>
+  </div>
+</div>
+<style>
+.modal-back { position: fixed; inset: 0; z-index: 100; background: rgba(20,28,46,0.55); backdrop-filter: blur(4px); display: grid; place-items: center; padding: 20px; animation: fade .2s ease; }
+@keyframes fade { from { opacity: 0; } }
+.modal {
+  background: var(--surface); border-radius: var(--r-card); width: min(480px, 100%);
+  box-shadow: var(--shadow-lg); padding: clamp(26px, 4vw, 40px); position: relative; animation: pop .25s cubic-bezier(.2,.8,.2,1);
+  max-height: calc(100vh - 40px); overflow: auto;
+}
+@keyframes pop { from { opacity: 0; transform: translateY(12px) scale(.98); } }
+.modal .close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--bg-2); color: var(--ink); display: grid; place-items: center; }
+.modal .close:hover { background: var(--hairline); }
+.modal h3 { font-size: 1.7rem; }
+.modal .sub { color: var(--muted); margin-top: 8px; }
+.field { margin-top: 18px; }
+.field label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 7px; color: var(--ink); }
+.field input {
+  width: 100%; padding: 13px 15px; border-radius: var(--r-sm); border: 1.5px solid var(--hairline);
+  font-family: inherit; font-size: 1rem; background: var(--bg); color: var(--ink); transition: border-color .15s, box-shadow .15s;
+}
+.field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+.modal .summary { margin-top: 18px; background: var(--bg-2); border-radius: var(--r-sm); padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
+.modal .summary .k { color: var(--muted); font-size: 0.92rem; }
+.modal .summary .v { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--navy); }
+.success { text-align: center; padding: 14px 0; }
+.success .badge { width: 70px; height: 70px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 25%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; margin: 0 auto 20px; }
+
+.form-privacy { font-size: 0.82rem; color: var(--muted, #6b7280); margin-top: 12px; line-height: 1.5; }
+.form-privacy a { text-decoration: underline; }
+.modal .close { font-size: 1.4rem; line-height: 1; cursor: pointer; }
+.modal-back[hidden], .success[hidden] { display: none; }
+</style>
+<script src="js/betalen.js"></script>
+<script>
+(function () {
+  var params = new URLSearchParams(window.__qs || location.search);
+  var id = params.get('id');
+  var e = (window.ELEARNINGS || []).find(function (x) { return x.id === id; }) || window.ELEARNINGS[0];
+  var knop = document.getElementById('koopBtn');
+  if (!knop) return;
+  var back = document.getElementById('koopModal'), form = document.getElementById('koopForm');
+  document.getElementById('koopSub').textContent = e.titel + ' · ' + e.tijd + ' · ' + e.punten + ' Pro-Q-Kine punten';
+  document.getElementById('koopPrijs').textContent = '\u20ac' + e.prijs;
+  function open() { back.hidden = false; document.getElementById('kNaam').focus(); }
+  function sluit() { back.hidden = true; }
+  knop.addEventListener('click', open);
+  document.getElementById('koopSluit').addEventListener('click', sluit);
+  back.addEventListener('mousedown', function (ev) { if (ev.target === back) sluit(); });
+  addEventListener('keydown', function (ev) { if (ev.key === 'Escape') sluit(); });
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var fd = new FormData(form);
+    if (fd.get('botcheck')) return;
+    var go = document.getElementById('koopGo'), err = document.getElementById('koopErr');
+    go.disabled = true; go.textContent = 'Even geduld\u2026'; err.style.display = 'none';
+    window.ColleoBetalen.schrijfIn(e.id, { naam: fd.get('naam'), email: fd.get('email'), riziv: fd.get('riziv') })
+      .then(function (res) { if (!res.betalen) { form.hidden = true; document.getElementById('koopOk').hidden = false; document.getElementById('koopTitel').hidden = true; document.getElementById('koopSub').hidden = true; back.querySelector('.form-privacy').hidden = true; } })
+      .catch(function () { err.style.display = 'block'; go.disabled = false; go.textContent = 'Verder naar betalen'; });
+  });
+})();
 </script>
 <script id="colleo-nav-js">
 (function () {
