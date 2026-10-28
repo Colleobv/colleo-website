@@ -221,6 +221,15 @@ tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--bg) 60%,var(--sur
 .wid select{font:inherit;padding:6px 10px;border-radius:10px;border:1.5px solid var(--hairline);background:var(--surface)}
 .wid svg{width:100%;height:auto;display:block}
 @media (max-width:560px){.mix{grid-template-columns:repeat(2,1fr)}}
+.pic .zoom{display:block;width:100%;border:0;padding:0;background:none;cursor:zoom-in}
+.pic img{width:100%;height:auto;display:block;border-radius:10px}
+.lb{position:fixed;inset:0;z-index:100;background:rgba(15,22,36,.88);display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+.lb.open{display:flex}
+.lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lbx{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:0;background:#fff;color:#1e2d4a;font-size:18px}
+.pyr{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:26px}
+.pyr div{color:#fff;text-align:center;padding:11px 14px;border-radius:10px;font-size:.92rem;font-weight:600}
+.pyr-ax{font-size:.82rem;color:var(--muted)!important;background:none!important;margin-top:4px}
 </style>
 </head>
 <body>
@@ -482,6 +491,11 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
     if (k.quote) h += '<blockquote class="quote"><span class="qi">' + icon('quote', 26) + '</span><p>' + esc(k.quote.t) + '</p><cite>' + esc(k.quote.src) + '</cite></blockquote>';
     if (k.p) h += '<div class="body">' + k.p.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>';
     if (k.svg && SVGS[k.svg]) h += SVGS[k.svg]();
+    if (k.img) [].concat(k.img).forEach(function (im) { im = typeof im === 'string' ? { src: im } : im; h += '<figure class="fig pic"><button class="zoom" data-src="' + esc(im.src) + '" aria-label="Vergroot afbeelding"><img src="' + esc(im.src) + '" alt="' + esc(im.cap || k.h || '') + '" loading="lazy"></button>' + (im.cap ? '<figcaption>' + esc(im.cap) + ' · klik om te vergroten</figcaption>' : '<figcaption>Klik om te vergroten</figcaption>') + '</figure>'; });
+    if (k.piramide) {
+      const cols = ['#7a2e3a', '#8a5a1a', '#1e2d4a', '#2f5d7a', '#0f5e50'], n = k.piramide.length;
+      h += '<div class="pyr">' + k.piramide.map(function (l, i) { return '<div style="width:' + (44 + i * (56 / (n - 1))) + '%;background:' + cols[i % 5] + '">' + esc(l) + '</div>'; }).join('') + '<div class="pyr-ax">▲ meer risico en meer verwacht rendement</div></div>';
+    }
     if (k.stat) h += '<div class="factcard"><div class="big">' + esc(k.stat.big) + '</div><div class="ft">' + esc(k.stat.txt) + '</div></div>';
     if (k.stats) h += '<div class="stats">' + k.stats.map(function (x) { return '<div class="stat"><div class="big">' + esc(x.big) + '</div><div class="st">' + esc(x.txt) + '</div></div>'; }).join('') + '</div>';
     if (k.lijst) h += '<ul class="checks">' + k.lijst.map(function (l) { return '<li><span class="ck">' + icon('check', 15) + '</span><span>' + esc(l) + '</span></li>'; }).join('') + '</ul>';
@@ -496,6 +510,7 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
   }
 
   function videoHtml(v) {
+    if (v.youtube && v.start == null && v.fragment) return '<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(v.youtube) + '?rel=0&modestbranding=1" title="' + esc(v.titel) + '" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div><p class="small">Tijdelijk tonen we hier de volledige opname. Spoel naar het stuk over <b>' + esc(v.fragment) + '</b>.</p>';
     if (!v.youtube) return '<div class="video empty"><div>' + icon('play', 40) + '<p>Deze video wordt binnenkort toegevoegd.</p><p class="vd">' + esc(v.duur || '') + '</p></div></div>';
     const q = ['rel=0', 'modestbranding=1']; if (v.start) q.push('start=' + v.start); if (v.end) q.push('end=' + v.end);
     return '<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(v.youtube) + '?' + q.join('&') + '" title="' + esc(v.titel) + '" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>';
@@ -582,6 +597,7 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
 
   function renderWidget(s) {
     const W = s.step;
+    if (W.soort === 'compound' || W.soort === 'fire') return renderCalc(s);
     pane.innerHTML = head(s) + '<p class="lede">' + esc(W.intro) + '</p><div class="card wid">' +
       '<label class="wl">Baseline (' + esc(W.eenheid) + ')<input type="range" id="wb" min="1000" max="10000" step="' + W.stap + '" value="' + W.start + '"><output id="wo"></output></label>' +
       '<label class="wl">Opbouw per week<select id="wp"><option value="5">5%</option><option value="10" selected>10%</option><option value="15">15%</option></select></label>' +
@@ -598,6 +614,42 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
       document.getElementById('wc').innerHTML = svg + '<p class="small" style="margin-top:6px">Na ' + n + ' weken: <b>' + vals[n - 1].toLocaleString('nl-BE') + '</b> ' + esc(W.eenheid) + ' (+' + Math.round((vals[n - 1] / vals[0] - 1) * 100) + '%).</p>';
     }
     wb.addEventListener('input', draw); wp.addEventListener('change', draw); draw();
+    setNext('Volgende', true);
+  }
+
+  function eur(v) { return '€' + Math.round(v).toLocaleString('nl-BE'); }
+  function fv(m, r, y) { const i = r / 100 / 12, n = y * 12; return i ? m * ((Math.pow(1 + i, n) - 1) / i) : m * n; }
+  function renderCalc(s) {
+    const W = s.step, F = W.soort === 'fire';
+    const fields = F ? [['uit', 'Maandelijkse uitgaven (€)', 500, 8000, 100, 3000], ['inleg', 'Maandelijks beleggen (€)', 50, 5000, 50, 750], ['rend', 'Gemiddeld rendement (%/jaar)', 1, 10, 0.5, 6], ['start', 'Al belegd vermogen (€)', 0, 500000, 5000, 0]]
+                     : [['inleg', 'Maandelijkse inleg (€)', 25, 3000, 25, 500], ['rend', 'Gemiddeld rendement (%/jaar)', 0, 10, 0.5, 7], ['jaar', 'Looptijd (jaar)', 1, 45, 1, 30]];
+    pane.innerHTML = head(s) + '<p class="lede">' + esc(W.intro) + '</p><div class="card wid">' + fields.map(function (f) { return '<label class="wl">' + f[1] + '<input type="range" id="w_' + f[0] + '" min="' + f[2] + '" max="' + f[3] + '" step="' + f[4] + '" value="' + f[5] + '"><output id="o_' + f[0] + '"></output></label>'; }).join('') + '<div id="wc"></div></div>' + callout('warn', 'Let op', W.let || 'Een rekenvoorbeeld met een vast gemiddeld rendement. In werkelijkheid schommelen rendementen, en kosten en belastingen zijn niet meegerekend. Rendementen uit het verleden bieden geen garantie voor de toekomst.');
+    const g = function (k) { return +document.getElementById('w_' + k).value; };
+    function draw() {
+      fields.forEach(function (f) { const v = g(f[0]); document.getElementById('o_' + f[0]).textContent = f[0] === 'rend' ? v.toLocaleString('nl-BE') + '%' : (f[0] === 'jaar' ? v : v.toLocaleString('nl-BE')); });
+      let pts = [], html = '';
+      if (!F) {
+        const m = g('inleg'), r = g('rend'), y = g('jaar');
+        for (let t = 0; t <= y; t++) pts.push([t, m * 12 * t, fv(m, r, t)]);
+        const tot = fv(m, r, y), inl = m * 12 * y;
+        html = '<div class="stats"><div class="stat"><div class="big">' + eur(tot) + '</div><div class="st">eindwaarde na ' + y + ' jaar</div></div><div class="stat"><div class="big">' + eur(inl) + '</div><div class="st">zelf ingelegd</div></div><div class="stat"><div class="big">' + eur(tot - inl) + '</div><div class="st">rendement op rendement</div></div></div>';
+      } else {
+        const doel = g('uit') * 12 * 25, m = g('inleg'), r = g('rend'), st0 = g('start'); let t = 0, v = st0;
+        while (v < doel && t < 60) { pts.push([t, doel, v]); t++; v = st0 * Math.pow(1 + r / 100, t) + fv(m, r, t); }
+        pts.push([t, doel, v]);
+        html = '<div class="stats"><div class="stat"><div class="big">' + eur(doel) + '</div><div class="st">doelkapitaal (25 × jaaruitgaven)</div></div><div class="stat"><div class="big">' + (t >= 60 ? '60+ jaar' : '± ' + t + ' jaar') + '</div><div class="st">tot je het doel bereikt</div></div><div class="stat"><div class="big">' + eur(doel * 0.04 / 12) + '</div><div class="st">per maand bij 4% opname</div></div></div>';
+      }
+      const X = pts[pts.length - 1][0] || 1, Y = Math.max.apply(null, pts.map(function (p) { return Math.max(p[1], p[2]); })) * 1.08 || 1;
+      const px = function (t) { return 50 + t / X * 570; }, py = function (v) { return 200 - v / Y * 180; };
+      const line = function (k) { return pts.map(function (p, i) { return (i ? 'L' : 'M') + px(p[0]).toFixed(1) + ' ' + py(p[k]).toFixed(1); }).join(' '); };
+      let svg = '<svg viewBox="0 0 640 230" role="img" aria-label="Grafiek"><line x1="50" y1="200" x2="620" y2="200" stroke="#c9cfd9"/>';
+      svg += F ? '<path d="' + line(1) + '" stroke="#d98b8b" stroke-width="2.5" stroke-dasharray="6 5" fill="none"/>' : '<path d="' + line(1) + ' L' + px(X) + ' 200 L50 200 Z" fill="#c9cfd9" opacity=".6"/>';
+      svg += '<path d="' + line(2) + '" stroke="#3ecfb2" stroke-width="3.5" fill="none"/>';
+      [0, .5, 1].forEach(function (f) { svg += '<text x="' + px(X * f) + '" y="220" font-size="12" text-anchor="middle" fill="#5b6577">' + Math.round(X * f) + ' j</text>'; });
+      svg += '<text x="46" y="' + (py(Y / 1.08) + 4) + '" font-size="11" text-anchor="end" fill="#5b6577">' + eur(Y / 1.08) + '</text></svg>';
+      document.getElementById('wc').innerHTML = svg + '<p class="small" style="margin-top:4px">' + (F ? '<span style="color:#b04a4a">- - doelkapitaal</span> · <span style="color:#0f5e50">— jouw vermogen</span>' : '<span style="color:#5b6577">grijs: zelf ingelegd</span> · <span style="color:#0f5e50">groen: totale waarde</span>') + '</p>' + html;
+    }
+    fields.forEach(function (f) { document.getElementById('w_' + f[0]).addEventListener('input', draw); }); draw();
     setNext('Volgende', true);
   }
 
@@ -668,6 +720,10 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
     setNext('Volgende', false);
   }
 
+  const lb = document.createElement('div'); lb.className = 'lb'; lb.innerHTML = '<button class="lbx" aria-label="Sluiten">✕</button><img alt="">'; document.body.appendChild(lb);
+  lb.addEventListener('click', function () { lb.classList.remove('open'); });
+  pane.addEventListener('click', function (e) { const z = e.target.closest('.zoom'); if (!z) return; lb.querySelector('img').src = z.dataset.src; lb.classList.add('open'); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape') lb.classList.remove('open'); });
   render();
 })();
 </script>
