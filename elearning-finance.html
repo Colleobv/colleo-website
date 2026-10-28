@@ -2,1182 +2,434 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8" />
-<meta name="robots" content="noindex" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
 <title>Colleo — Finance for physios</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<style>/* ===== Colleo — design system ===== */
-:root {
-  /* Brand */
-  --navy: #1e2d4a;          /* primary (tweakable) */
-  --accent: #3ecfb2;        /* accent (tweakable) */
-  --accent-ink: #0f5e50;    /* readable text-on-light derived from accent */
-
-  /* Warm neutrals */
-  --bg: #f7f3ec;
-  --bg-2: #efe9df;
-  --surface: #ffffff;
-  --ink: #1b2436;
-  --muted: #5b6577;
-  --hairline: rgba(30, 45, 74, 0.12);
-  --hairline-soft: rgba(30, 45, 74, 0.07);
-
-  /* Type */
-  --font-display: "Bricolage Grotesque", Georgia, serif;
-  --font-body: "Hanken Grotesk", system-ui, sans-serif;
-
-  /* Shape */
-  --r-card: 22px;
-  --r-pill: 999px;
-  --r-sm: 12px;
-
-  /* Shadow */
-  --shadow-sm: 0 1px 2px rgba(27, 36, 54, 0.04), 0 2px 8px rgba(27, 36, 54, 0.05);
-  --shadow-md: 0 12px 30px -12px rgba(27, 36, 54, 0.22);
-  --shadow-lg: 0 30px 70px -30px rgba(27, 36, 54, 0.40);
-
-  /* Layout */
-  --maxw: 1180px;
-  --gutter: clamp(20px, 5vw, 64px);
-}
-
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 92px; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-img { max-width: 100%; display: block; }
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; }
-
-h1, h2, h3 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.04;
-  margin: 0;
-  color: var(--navy);
-  text-wrap: balance;
-}
-p { margin: 0; text-wrap: pretty; }
-
-.wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
-.section { padding-block: clamp(64px, 9vw, 130px); }
-
-/* eyebrow */
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 9px;
-  font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em;
-  text-transform: uppercase; color: var(--accent-ink);
-}
-.eyebrow::before {
-  content: ""; width: 22px; height: 2px; border-radius: 2px;
-  background: var(--accent);
-}
-.eyebrow.center::after {
-  content: ""; width: 22px; height: 2px; border-radius: 2px; background: var(--accent);
-}
-
-/* buttons */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  border: none; border-radius: var(--r-pill);
-  padding: 16px 26px; font-size: 1.02rem; font-weight: 600;
-  transition: transform .16s ease, box-shadow .16s ease, background .16s ease, color .16s ease;
-  white-space: nowrap;
-}
-.btn-primary { background: var(--navy); color: #fff; box-shadow: var(--shadow-md); }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-.btn-accent { background: var(--accent); color: var(--navy); box-shadow: var(--shadow-md); }
-.btn-accent:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-.btn-ghost {
-  background: transparent; color: var(--navy);
-  border: 1.5px solid var(--hairline); padding: 14.5px 24px;
-}
-.btn-ghost:hover { border-color: var(--navy); background: rgba(30,45,74,0.04); }
-.btn-block { width: 100%; }
-.btn .arr { transition: transform .16s ease; }
-.btn:hover .arr { transform: translateX(3px); }
-
-/* nav */
-.nav {
-  position: sticky; top: 0; z-index: 50;
-  backdrop-filter: blur(10px);
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
-  border-bottom: 1px solid transparent;
-  transition: border-color .2s ease, background .2s ease;
-}
-.nav.scrolled { border-color: var(--hairline-soft); background: color-mix(in srgb, var(--bg) 92%, transparent); }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
-.brand { display: flex; align-items: center; gap: 11px; font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--navy); letter-spacing: -0.03em; }
-.brand .dot { width: 30px; height: 30px; border-radius: 9px; background: var(--navy); display: grid; place-items: center; color: var(--accent); font-size: 1.05rem; }
-.nav-links { display: flex; align-items: center; gap: 34px; }
-.nav-links a { font-weight: 500; color: var(--muted); font-size: 0.98rem; transition: color .15s; }
-.nav-links a:hover { color: var(--navy); }
-.nav-cta { display: flex; align-items: center; gap: 16px; }
-.nav-login { font-weight: 600; font-size: 0.96rem; color: var(--navy); padding: 8px 4px; }
-.nav-login:hover { color: var(--accent-ink); }
-@media (max-width: 520px) { .nav-login { display: none; } }
-@media (max-width: 860px) { .nav-links { display: none; } }
-
-/* hero */
-.hero { position: relative; overflow: hidden; }
-.hero-grid {
-  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(32px, 5vw, 72px);
-  align-items: center; padding-top: clamp(48px, 7vw, 90px); padding-bottom: clamp(56px, 8vw, 110px);
-}
-.hero h1 { font-size: clamp(2.7rem, 5.6vw, 4.5rem); }
-.hero h1 .hl { color: var(--accent-ink); position: relative; white-space: nowrap; }
-.hero .lede { margin-top: 26px; font-size: clamp(1.08rem, 1.6vw, 1.28rem); color: var(--muted); max-width: 33ch; }
-.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
-.hero-note { margin-top: 18px; font-size: 0.92rem; color: var(--muted); display: flex; align-items: center; gap: 8px; }
-.hero-note .check { color: var(--accent-ink); }
-
-/* hero visual */
-.hero-visual { position: relative; }
-.premie-card {
-  background: var(--navy); color: #fff; border-radius: var(--r-card);
-  padding: 30px 30px 26px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
-}
-.premie-card::after {
-  content: ""; position: absolute; inset: auto -40px -60px auto; width: 200px; height: 200px;
-  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 55%, transparent), transparent 70%);
-}
-.premie-card .lbl { font-size: 0.82rem; letter-spacing: 0.05em; text-transform: uppercase; color: color-mix(in srgb, #fff 70%, transparent); }
-.premie-card .big { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.6rem, 5vw, 3.4rem); line-height: 1; margin-top: 8px; }
-.premie-card .big small { font-size: 1.1rem; font-weight: 600; color: var(--accent); }
-.premie-row { display: flex; justify-content: space-between; gap: 16px; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.16); position: relative; z-index: 1; }
-.premie-row .col .k { font-size: 0.8rem; color: color-mix(in srgb, #fff 65%, transparent); }
-.premie-row .col .v { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; margin-top: 3px; }
-.premie-row .col .v.pos { color: var(--accent); }
-
-.float-card {
-  position: absolute; left: -28px; bottom: -58px; background: var(--surface);
-  border-radius: 16px; box-shadow: var(--shadow-md); padding: 15px 18px;
-  display: flex; align-items: center; gap: 13px; max-width: 240px;
-}
-.float-card .ic { width: 40px; height: 40px; border-radius: 11px; background: color-mix(in srgb, var(--accent) 22%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; flex: none; }
-.float-card .t { font-weight: 700; font-size: 0.95rem; color: var(--navy); }
-.float-card .s { font-size: 0.82rem; color: var(--muted); }
-@media (max-width: 860px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-visual { margin-top: 22px; }
-  .float-card { position: static; margin: 16px 0 0; max-width: none; width: fit-content; }
-}
-
-/* stat strip */
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--hairline-soft); border-radius: var(--r-card); overflow: hidden; border: 1px solid var(--hairline-soft); margin-top: 8px; }
-.stat { background: var(--bg); padding: 26px 22px; text-align: center; }
-.stat .num { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--navy); line-height: 1; }
-.stat .num em { font-style: normal; color: var(--accent-ink); }
-.stat .cap { font-size: 0.88rem; color: var(--muted); margin-top: 8px; }
-@media (max-width: 680px) { .stats { grid-template-columns: repeat(2, 1fr); } }
-
-/* generic section header */
-.sec-head { max-width: 640px; margin-bottom: clamp(36px, 5vw, 60px); }
-.sec-head.center { margin-inline: auto; text-align: center; }
-.sec-head h2 { font-size: clamp(2rem, 3.8vw, 3rem); margin-top: 16px; }
-.sec-head p { margin-top: 18px; font-size: 1.12rem; color: var(--muted); }
-
-/* why cards */
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-.card {
-  background: var(--surface); border-radius: var(--r-card); padding: 32px;
-  box-shadow: var(--shadow-sm); border: 1px solid var(--hairline-soft);
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.card .ic { width: 52px; height: 52px; border-radius: 14px; background: color-mix(in srgb, var(--accent) 20%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; margin-bottom: 20px; }
-.card h3 { font-size: 1.4rem; }
-.card p { margin-top: 11px; color: var(--muted); font-size: 1rem; }
-@media (max-width: 860px) { .cards { grid-template-columns: 1fr; } }
-
-/* programma */
-.prog { background: var(--bg-2); }
-.prog-list { display: flex; flex-direction: column; gap: 14px; }
-.prog-row {
-  display: grid; grid-template-columns: 76px 1fr auto; gap: 26px; align-items: center;
-  background: var(--surface); border-radius: 18px; padding: 24px 28px;
-  border: 1px solid var(--hairline-soft); box-shadow: var(--shadow-sm);
-  transition: transform .16s ease, box-shadow .16s ease;
-}
-.prog-row:hover { transform: translateX(4px); box-shadow: var(--shadow-md); }
-.prog-row .idx { font-family: var(--font-display); font-weight: 700; font-size: 1.9rem; color: var(--accent-ink); }
-.prog-row .body .topic { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; color: var(--navy); }
-.prog-row .body .desc { color: var(--muted); margin-top: 4px; font-size: 0.98rem; }
-.prog-row .meta { text-align: right; }
-.prog-row .meta .date { font-weight: 700; color: var(--navy); white-space: nowrap; }
-.prog-row .meta .ne { font-size: 0.85rem; color: var(--accent-ink); font-weight: 600; margin-top: 3px; }
-@media (max-width: 720px) {
-  .prog-row { grid-template-columns: 50px 1fr; }
-  .prog-row .meta { grid-column: 1 / -1; text-align: left; padding-top: 12px; border-top: 1px solid var(--hairline-soft); display: flex; gap: 16px; align-items: baseline; }
-  .prog-row .meta .ne { margin-top: 0; }
-}
-
-/* voordeel */
-.voordeel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(34px, 5vw, 70px); align-items: center; }
-.calc { background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow-md); border: 1px solid var(--hairline-soft); padding: clamp(28px, 4vw, 42px); }
-.calc-row { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--hairline-soft); }
-.calc-row:first-of-type { padding-top: 0; }
-.calc-row .lbl { color: var(--muted); font-size: 1rem; }
-.calc-row .lbl b { display: block; color: var(--ink); font-weight: 600; font-size: 1.08rem; }
-.calc-row .amt { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; color: var(--navy); white-space: nowrap; }
-.calc-row .amt.cost { color: var(--muted); }
-.calc-row .amt.cost::before { content: "−"; margin-right: 2px; }
-.calc-row .amt.gain { color: var(--accent-ink); }
-.calc-row .amt.gain::before { content: "+"; margin-right: 1px; }
-.calc-total { display: flex; align-items: center; justify-content: space-between; margin-top: 22px; padding: 22px 24px; background: var(--navy); color: #fff; border-radius: 16px; }
-.calc-total .lbl { font-weight: 600; font-size: 1.05rem; }
-.calc-total .amt { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.9rem, 3.5vw, 2.5rem); color: var(--accent); }
-.bars { display: flex; align-items: flex-end; gap: 22px; height: 220px; margin-top: 8px; }
-.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 12px; height: 100%; justify-content: flex-end; }
-.bar { width: 100%; border-radius: 12px 12px 0 0; position: relative; transition: height .6s cubic-bezier(.2,.7,.2,1); }
-.bar.cost { background: var(--bg-2); border: 1px solid var(--hairline); }
-.bar.gain { background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 75%, var(--navy))); }
-.bar-col .cap { font-size: 0.9rem; color: var(--muted); text-align: center; }
-.bar-col .cap b { display: block; color: var(--navy); font-family: var(--font-display); font-size: 1.15rem; }
-@media (max-width: 860px) { .voordeel-grid { grid-template-columns: 1fr; } }
-
-/* aanpak steps */
-.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; counter-reset: step; }
-.step { position: relative; }
-.step .n { width: 46px; height: 46px; border-radius: 50%; background: var(--surface); border: 1.5px solid var(--hairline); color: var(--navy); font-family: var(--font-display); font-weight: 700; display: grid; place-items: center; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
-.step h3 { font-size: 1.22rem; }
-.step p { color: var(--muted); margin-top: 8px; font-size: 0.98rem; }
-.step:not(:last-child) .n::after { content: ""; position: absolute; left: 46px; top: 23px; width: calc(100% - 46px - 20px); height: 1.5px; background: var(--hairline); }
-@media (max-width: 860px) { .steps { grid-template-columns: 1fr 1fr; } .step .n::after { display: none; } }
-@media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
-
-/* merged aanpak + voordeel */
-.merge-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(34px, 5vw, 70px); align-items: start; }
-@media (max-width: 880px) { .merge-grid { grid-template-columns: 1fr; } }
-.steps-vert { display: flex; flex-direction: column; }
-.vstep { position: relative; display: grid; grid-template-columns: 48px 1fr; gap: 20px; padding-bottom: 30px; }
-.vstep:last-child { padding-bottom: 0; }
-.vstep .n { width: 48px; height: 48px; border-radius: 50%; background: var(--surface); border: 1.5px solid var(--hairline); color: var(--navy); font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; display: grid; place-items: center; box-shadow: var(--shadow-sm); z-index: 1; }
-.vstep:not(:last-child)::before { content: ""; position: absolute; left: 23.5px; top: 48px; bottom: 6px; width: 1.5px; background: var(--hairline); }
-.vstep .vbody h3 { font-size: 1.22rem; }
-.vstep .vbody p { color: var(--muted); margin-top: 5px; font-size: 0.99rem; }
-.calc-extras { display: grid; gap: 14px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--hairline-soft); }
-.calc-extra { display: flex; gap: 13px; align-items: flex-start; }
-.calc-extra .ce-ic { width: 40px; height: 40px; flex: none; border-radius: 11px; background: color-mix(in srgb, var(--accent) 18%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; }
-.calc-extra .ce-t { font-weight: 700; color: var(--navy); font-size: 1rem; }
-.calc-extra .ce-s { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
-
-/* e-learnings */
-.el-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
-@media (max-width: 880px) { .el-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 580px) { .el-grid { grid-template-columns: 1fr; } }
-.el-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: var(--r-card); padding: 26px; box-shadow: var(--shadow-sm); transition: transform .18s ease, box-shadow .18s ease; color: inherit; }
-.el-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.el-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; color: var(--accent-ink); font-weight: 600; font-size: 0.92rem; }
-.el-more svg { transition: transform .16s ease; }
-.el-card:hover .el-more svg { transform: translateX(4px); }
-.el-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.el-badge { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 18%, var(--surface)); padding: 5px 11px; border-radius: 999px; }
-.el-pts { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
-.el-card h3 { font-size: 1.25rem; overflow-wrap: anywhere; }
-.el-card p { color: var(--muted); margin-top: 10px; font-size: 0.98rem; flex: 1; }
-.el-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--hairline-soft); }
-.el-meta { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: 0.92rem; }
-.el-price { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--navy); text-align: right; line-height: 1; }
-.el-price small { display: block; font-family: var(--font-body); font-weight: 500; font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
-.el-note { text-align: center; margin-top: 30px; color: var(--muted); font-size: 1rem; }
-.el-note a { color: var(--accent-ink); font-weight: 600; }
-
-/* final cta */
-.cta-band { background: var(--navy); color: #fff; border-radius: clamp(22px, 4vw, 36px); padding: clamp(44px, 7vw, 84px) clamp(28px, 6vw, 80px); text-align: center; position: relative; overflow: hidden; }
-.cta-band::before { content: ""; position: absolute; inset: -50% 30% auto -20%; height: 400px; background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 40%, transparent), transparent 65%); pointer-events: none; }
-.cta-band h2 { color: #fff; font-size: clamp(2.1rem, 4.5vw, 3.4rem); position: relative; }
-.cta-band p { color: color-mix(in srgb, #fff 78%, transparent); font-size: 1.15rem; margin-top: 18px; max-width: 52ch; margin-inline: auto; position: relative; }
-.cta-band .hero-cta { justify-content: center; position: relative; }
-.cta-band .hero-note { justify-content: center; color: color-mix(in srgb, #fff 70%, transparent); }
-.cta-band .hero-note .check { color: var(--accent); }
-
-/* footer */
-.footer { padding-block: 54px; border-top: 1px solid var(--hairline); }
-.footer-inner { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center; }
-.footer .muted { color: var(--muted); font-size: 0.92rem; }
-.footer-links { display: flex; flex-wrap: wrap; gap: 10px 26px; }
-.footer-links a { color: var(--muted); font-size: 0.94rem; }
-.footer-links a:hover { color: var(--navy); }
-
-/* reveal on scroll */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
-.reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
-
-/* modal */
-.modal-back { position: fixed; inset: 0; z-index: 100; background: rgba(20,28,46,0.55); backdrop-filter: blur(4px); display: grid; place-items: center; padding: 20px; animation: fade .2s ease; }
-@keyframes fade { from { opacity: 0; } }
-.modal {
-  background: var(--surface); border-radius: var(--r-card); width: min(480px, 100%);
-  box-shadow: var(--shadow-lg); padding: clamp(26px, 4vw, 40px); position: relative; animation: pop .25s cubic-bezier(.2,.8,.2,1);
-  max-height: calc(100vh - 40px); overflow: auto;
-}
-@keyframes pop { from { opacity: 0; transform: translateY(12px) scale(.98); } }
-.modal .close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--bg-2); color: var(--ink); display: grid; place-items: center; }
-.modal .close:hover { background: var(--hairline); }
-.modal h3 { font-size: 1.7rem; }
-.modal .sub { color: var(--muted); margin-top: 8px; }
-.field { margin-top: 18px; }
-.field label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 7px; color: var(--ink); }
-.field input {
-  width: 100%; padding: 13px 15px; border-radius: var(--r-sm); border: 1.5px solid var(--hairline);
-  font-family: inherit; font-size: 1rem; background: var(--bg); color: var(--ink); transition: border-color .15s, box-shadow .15s;
-}
-.field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
-.modal .summary { margin-top: 18px; background: var(--bg-2); border-radius: var(--r-sm); padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
-.modal .summary .k { color: var(--muted); font-size: 0.92rem; }
-.modal .summary .v { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--navy); }
-.success { text-align: center; padding: 14px 0; }
-.success .badge { width: 70px; height: 70px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 25%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; margin: 0 auto 20px; }
-
-/* ===== Over ons page ===== */
-.page-hero { padding-top: clamp(48px, 7vw, 86px); padding-bottom: clamp(36px, 5vw, 56px); }
-
-/* ===== eerste-keer band (home) ===== */
-.firsttime { background: var(--bg-2); border-radius: var(--r-card); padding: clamp(36px, 6vw, 68px); text-align: center; max-width: 800px; margin-inline: auto; position: relative; overflow: hidden; }
-.firsttime .ft-ic { width: 60px; height: 60px; border-radius: 16px; background: color-mix(in srgb, var(--accent) 22%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; margin: 0 auto 22px; }
-.firsttime .eyebrow { justify-content: center; }
-.firsttime h2 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); margin-top: 14px; }
-.firsttime p { color: var(--muted); font-size: 1.12rem; margin-top: 18px; max-width: 60ch; margin-inline: auto; }
-.firsttime p .wink { color: var(--accent-ink); font-style: italic; }
-.firsttime .btn { margin-top: 28px; }
-
-.page-hero .eyebrow { margin-bottom: 18px; }
-.page-hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); max-width: 18ch; }
-.page-hero .lede { margin-top: 24px; font-size: clamp(1.1rem, 1.7vw, 1.35rem); color: var(--muted); max-width: 46ch; }
-
-/* image placeholder (striped, monospace label) */
-.imgph { position: relative; border-radius: var(--r-card); overflow: hidden; border: 1px solid var(--hairline);
-  background: repeating-linear-gradient(135deg, var(--bg-2) 0 16px, color-mix(in srgb, var(--bg-2) 55%, var(--surface)) 16px 32px);
-  display: grid; place-items: center; min-height: 260px; box-shadow: var(--shadow-sm); }
-.imgph .lab { font-family: ui-monospace, monospace; font-size: 0.82rem; color: var(--muted); background: color-mix(in srgb, var(--surface) 86%, transparent); padding: 7px 13px; border-radius: 8px; }
-.imgph.has-img { background: none; border: none; }
-.imgph.has-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-/* story */
-.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(34px, 5vw, 72px); align-items: center; }
-.story-grid .imgph { min-height: 420px; height: 100%; }
-.story h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
-.story p { color: var(--muted); font-size: 1.1rem; margin-top: 18px; }
-.story p strong { color: var(--ink); font-weight: 600; }
-@media (max-width: 860px) { .story-grid { grid-template-columns: 1fr; } .story-grid .imgph { min-height: 280px; order: -1; } }
-
-/* pull quote */
-.pullquote { text-align: center; padding-block: clamp(56px, 8vw, 96px); }
-.pullquote blockquote { margin: 0; font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; font-size: clamp(2.2rem, 5.2vw, 4rem); color: var(--navy); max-width: 16ch; margin-inline: auto; }
-.pullquote blockquote .accent { color: var(--accent-ink); }
-.pullquote .by { margin-top: 24px; color: var(--muted); font-size: 1rem; }
-
-/* values */
-.values-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
-.value { display: flex; gap: 20px; background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: var(--r-card); padding: 30px; box-shadow: var(--shadow-sm); }
-.value .ic { width: 50px; height: 50px; flex: none; border-radius: 14px; background: color-mix(in srgb, var(--accent) 20%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; }
-.value h3 { font-size: 1.3rem; }
-.value p { color: var(--muted); margin-top: 9px; font-size: 1rem; }
-@media (max-width: 720px) { .values-grid { grid-template-columns: 1fr; } }
-
-/* team */
-.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-.member .imgph { aspect-ratio: 1 / 1; min-height: 0; border-radius: var(--r-card); }
-.member .nm { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--navy); margin-top: 16px; }
-.member .ro { color: var(--accent-ink); font-weight: 600; font-size: 0.92rem; margin-top: 2px; }
-.team-note { margin-top: 26px; font-size: 0.92rem; color: var(--muted); background: var(--bg-2); border-radius: var(--r-sm); padding: 13px 16px; display: inline-block; }
-@media (max-width: 720px) { .team-grid { grid-template-columns: 1fr; max-width: 360px; } }
-
-
-/* ===== e-learning overzicht ===== */
-.el-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
-@media (max-width: 880px) { .el-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 580px) { .el-grid { grid-template-columns: 1fr; } }
-.el-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: var(--r-card); padding: 26px; box-shadow: var(--shadow-sm); transition: transform .18s ease, box-shadow .18s ease; color: inherit; }
-.el-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.el-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; color: var(--accent-ink); font-weight: 600; font-size: 0.92rem; }
-.el-more svg { transition: transform .16s ease; }
-.el-card:hover .el-more svg { transform: translateX(4px); }
-.el-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.el-badge { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 18%, var(--surface)); padding: 5px 11px; border-radius: 999px; }
-.el-pts { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
-.el-card h3 { font-size: 1.25rem; overflow-wrap: anywhere; }
-.el-card p { color: var(--muted); margin-top: 10px; font-size: 0.98rem; flex: 1; }
-.el-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--hairline-soft); }
-.el-meta { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: 0.92rem; }
-.el-price { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--navy); text-align: right; line-height: 1; }
-.el-price small { display: block; font-family: var(--font-body); font-weight: 500; font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
-.el-note { text-align: center; margin-top: 30px; color: var(--muted); font-size: 1rem; }
-.el-note a { color: var(--accent-ink); font-weight: 600; }
-.el-img { margin: -26px -26px 20px; overflow: hidden; border-radius: var(--r-card) var(--r-card) 0 0; background: var(--bg-2); }
-.el-img img { width: 100%; height: auto; display: block; }
-
-.el-badge.live { background: var(--navy); color: var(--accent); }
-
-.el-rule { margin-top: 26px; max-width: 760px; background: #fdf6e8; border: 1px solid #f1dcb0; border-radius: var(--r-sm); padding: 16px 20px; color: var(--ink); font-size: 0.97rem; }
-.el-rule ul { margin: 8px 0 0; padding-left: 20px; }
-.el-rule li + li { margin-top: 4px; }
-
-/* ===== e-learning speler ===== */
-.m-wrap > * { min-width: 0; }
-.m-wrap { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; padding-bottom: clamp(60px, 8vw, 110px); }
-.m-side { position: sticky; top: 96px; background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: var(--r-card); box-shadow: var(--shadow-sm); padding: 20px; max-height: calc(100vh - 120px); overflow: auto; }
-.m-prog { margin-bottom: 14px; }
-.m-prog .bar { height: 8px; border-radius: 99px; background: var(--bg-2); overflow: hidden; }
-.m-prog .bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 99px; transition: width .3s ease; }
-.m-prog .pct { margin-top: 8px; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
-.mn-group { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin: 14px 0 6px; }
-.mn-item { display: flex; gap: 10px; align-items: center; width: 100%; text-align: left; background: none; border: none; padding: 8px; border-radius: 10px; color: var(--ink); font: inherit; font-size: 0.92rem; cursor: pointer; }
-.mn-item:hover { background: var(--bg); }
-.mn-item.cur { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
-.mn-ic { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--bg-2); color: var(--muted); }
-.mn-item.done .mn-ic { background: var(--accent); color: var(--navy); }
-.mn-item.cur .mn-ic { background: var(--navy); color: #fff; }
-.mn-t small { display: block; font-size: 0.72rem; color: var(--muted); font-weight: 600; }
-.m-stage { background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: var(--r-card); box-shadow: var(--shadow-sm); padding: clamp(22px, 3.5vw, 44px); min-height: 420px; }
-.m-stage.in { animation: mIn .25s ease; }
-@keyframes mIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.m-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.m-type { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 18%, var(--surface)); padding: 5px 11px; border-radius: 99px; }
-.m-count { font-size: 0.85rem; color: var(--muted); }
-.m-title { font-size: clamp(1.5rem, 2.6vw, 2rem); margin-top: 14px; }
-.m-intro { color: var(--muted); font-size: 1.05rem; margin-top: 10px; max-width: 62ch; }
-.m-hint { color: var(--muted); font-size: 0.92rem; margin-top: 14px; }
-.m-video { margin-top: 22px; aspect-ratio: 16 / 9; border-radius: var(--r-sm); overflow: hidden; background: var(--navy); }
-.m-video iframe { width: 100%; height: 100%; border: 0; display: block; }
-.m-video.empty { display: grid; place-items: center; text-align: center; color: color-mix(in srgb, #fff 75%, transparent); }
-.m-video.empty p { margin-top: 10px; font-size: 0.95rem; }
-.m-card { margin-top: 22px; border: 1px solid var(--hairline-soft); background: var(--bg); border-radius: var(--r-sm); padding: clamp(20px, 3vw, 32px); min-height: 260px; }
-.m-card h3 { font-size: 1.35rem; color: var(--navy); }
-.m-card h3.warn-h { color: #7a4a00; }
-.m-card p { margin-top: 12px; color: var(--ink); font-size: 1.02rem; max-width: 66ch; }
-.m-card ul, .m-card ol { margin: 12px 0 0; padding-left: 20px; }
-.m-card li { margin-top: 6px; }
-.m-steps { counter-reset: s; list-style: none; padding-left: 0 !important; }
-.m-steps li { counter-increment: s; display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: 12px; padding: 12px 14px; }
-.m-steps li::before { content: counter(s); flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--navy); color: var(--accent); display: grid; place-items: center; font-weight: 700; font-size: 0.85rem; }
-.m-two, .m-three { display: grid; gap: 12px; margin-top: 16px; }
-.m-two { grid-template-columns: 1fr 1fr; }
-.m-three { grid-template-columns: repeat(3, 1fr); }
-.m-two > div, .m-three > div { background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: 12px; padding: 14px 16px; }
-.m-two .k, .m-three .k { font-weight: 700; color: var(--navy); }
-.m-three .s { font-size: 0.85rem; color: var(--muted); }
-.m-two ul, .m-three ul { margin-top: 6px; font-size: 0.95rem; }
-.m-table { margin-top: 16px; overflow-x: auto; }
-.m-table table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 12px; overflow: hidden; font-size: 0.95rem; }
-.m-table th, .m-table td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--hairline-soft); }
-.m-table th { background: var(--bg-2); color: var(--navy); font-weight: 700; }
-.m-table tr:last-child td { border-bottom: none; font-weight: 600; }
-.m-pyr { margin-top: 18px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.m-pyr > div:not(.m-pyr-ax) { background: var(--navy); color: #fff; text-align: center; padding: 9px 12px; border-radius: 8px; font-size: 0.9rem; }
-.m-pyr > div:nth-child(1) { background: #7a2e3a; }
-.m-pyr > div:nth-child(2) { background: #8a5a1a; }
-.m-pyr > div:nth-child(3) { background: var(--navy); }
-.m-pyr > div:nth-child(4) { background: #2f5d7a; }
-.m-pyr > div:nth-child(5) { background: var(--accent-ink); }
-.m-pyr-ax { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
-.m-tip { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; background: color-mix(in srgb, var(--accent) 14%, var(--surface)); color: var(--ink); border-radius: 12px; padding: 12px 14px; font-size: 0.95rem; }
-.m-tip svg { flex: none; color: var(--accent-ink); margin-top: 2px; }
-.m-tip.warn { background: #fdf0d8; }
-.m-tip.warn svg { color: #7a4a00; }
-.m-cardnav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; }
-.m-dots { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--muted); }
-.m-dots span { margin-left: 6px; }
-.m-dot { width: 10px; height: 10px; border-radius: 50%; border: none; background: var(--hairline); padding: 0; cursor: pointer; }
-.m-dot.seen { background: color-mix(in srgb, var(--accent) 60%, var(--surface)); }
-.m-dot.cur { background: var(--navy); width: 24px; border-radius: 99px; }
-.linkbtn { background: none; border: none; color: var(--muted); font: inherit; font-weight: 600; font-size: 0.9rem; padding: 8px 4px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
-.linkbtn:hover { color: var(--navy); }
-.linkbtn[disabled] { visibility: hidden; }
-.btn-sm { padding: 10px 18px; font-size: 0.92rem; }
-.btn[disabled] { opacity: 0.45; pointer-events: none; }
-.m-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--hairline-soft); }
-.m-q { margin-top: 20px; border: 1px solid var(--hairline-soft); border-radius: var(--r-sm); padding: 18px 20px; background: var(--bg); }
-.m-q.ok { border-color: color-mix(in srgb, var(--accent) 60%, var(--surface)); }
-.m-q .qn { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
-.m-q h3 { font-size: 1.12rem; margin-top: 4px; }
-.m-opts { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
-.m-opt { text-align: left; background: var(--surface); border: 1.5px solid var(--hairline); border-radius: 10px; padding: 11px 14px; font: inherit; font-size: 0.97rem; color: var(--ink); cursor: pointer; transition: border-color .15s; }
-.m-opt:hover { border-color: var(--navy); }
-.m-opt.right { border-color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 16%, var(--surface)); }
-.m-opt.wrong { border-color: #c0392b; background: #fdecec; }
-.m-fb { margin-top: 10px; font-size: 0.93rem; }
-.m-fb.good { color: var(--accent-ink); }
-.m-fb.bad { color: #8a1f1f; }
-.m-ok { display: flex; gap: 10px; align-items: center; margin-top: 20px; background: color-mix(in srgb, var(--accent) 18%, var(--surface)); color: var(--accent-ink); font-weight: 600; border-radius: 12px; padding: 14px 16px; }
-.m-end { margin-top: 24px; text-align: center; background: var(--navy); color: #fff; border-radius: var(--r-card); padding: clamp(26px, 4vw, 44px); }
-.m-end-ic { width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: var(--navy); display: grid; place-items: center; margin: 0 auto; }
-.m-end h3 { color: #fff; font-size: 1.6rem; margin-top: 14px; }
-.m-end p { color: color-mix(in srgb, #fff 80%, transparent); margin: 10px auto 0; max-width: 52ch; }
-.m-end-cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-.m-end .btn-ghost { color: #fff; border-color: rgba(255,255,255,.3); }
-@media (max-width: 900px) {
-  .m-wrap { grid-template-columns: 1fr; }
-  .m-side { position: static; max-height: none; }
-  #mNav { display: flex; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
-  .mn-group { display: none; }
-  .mn-item { flex: none; width: auto; }
-  .mn-t small { display: none; }
-}
-@media (max-width: 620px) {
-  .m-two, .m-three { grid-template-columns: 1fr; }
-  .mn-t { display: none; }
-  .m-cardnav { flex-wrap: wrap; }
-}
-
-.t-rules { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; color: var(--muted); font-size: 0.9rem; }
-.t-rules span { display: inline-flex; align-items: center; gap: 6px; }
-.m-opt.sel { border-color: var(--navy); background: color-mix(in srgb, var(--navy) 8%, var(--surface)); font-weight: 600; }
-.t-q.ok { border-color: color-mix(in srgb, var(--accent) 60%, var(--surface)); }
-.t-q.nok { border-color: #e6b0aa; background: #fdf6f5; }
-.t-submit { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 22px; color: var(--muted); font-size: 0.92rem; flex-wrap: wrap; }
-.t-res { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 20px; border-radius: var(--r-sm); padding: 18px 20px; }
-.t-res .big { font-family: var(--font-display); font-weight: 700; font-size: 2.2rem; line-height: 1; }
-.t-res > div:nth-child(2) { flex: 1; min-width: 200px; }
-.t-res.pass { background: color-mix(in srgb, var(--accent) 18%, var(--surface)); color: var(--accent-ink); }
-.t-res.fail { background: #fdecec; color: #8a1f1f; }
-
-.t-lock { display: flex; gap: 16px; align-items: flex-start; margin-top: 22px; background: var(--bg); border: 1px solid var(--hairline-soft); border-radius: var(--r-sm); padding: 22px; }
-.t-lock svg { flex: none; color: var(--muted); }
-.t-lock p { color: var(--muted); margin: 6px 0 14px; }
-
-.m-hero { padding-top: clamp(28px, 4vw, 56px); padding-bottom: clamp(20px, 3vw, 32px); }
-.m-hero .crumb { color: var(--muted); font-size: 0.92rem; }
-.m-hero .crumb a { color: var(--accent-ink); font-weight: 600; }
-.m-hero h1 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); margin-top: 10px; }
-.m-hero .lede { margin-top: 12px; color: var(--muted); font-size: 1.1rem; max-width: 60ch; }
-</style>
 <style>
-  .eld-hero { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; padding-top: clamp(20px, 3vw, 36px); padding-bottom: clamp(40px, 6vw, 72px); }
-  @media (max-width: 900px) { .eld-hero { grid-template-columns: 1fr; } }
-  .eld-hero .img { border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid var(--hairline-soft); }
-  .eld-hero .img img { width: 100%; display: block; }
-  .eld-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-  .eld-chip { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: 999px; padding: 9px 16px; font-weight: 600; font-size: 0.95rem; color: var(--navy); box-shadow: var(--shadow-sm); }
-  .eld-chip svg { color: var(--accent-ink); }
-  .eld-chip.price { background: var(--navy); color: #fff; border-color: var(--navy); }
-  .eld-chip.badge { background: color-mix(in srgb, var(--accent) 18%, var(--surface)); color: var(--accent-ink); border: none; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8rem; }
-  .eld-hero h1 { font-size: clamp(2.2rem, 4.2vw, 3.3rem); margin-top: 16px; }
-  .eld-hero .lede { color: var(--muted); font-size: 1.15rem; margin-top: 18px; }
-  .eld-body { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(30px, 5vw, 64px); align-items: start; }
-  @media (max-width: 900px) { .eld-body { grid-template-columns: 1fr; } }
-  .doel-list { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
-  .doel { display: flex; gap: 15px; align-items: flex-start; }
-  .doel .dc { width: 30px; height: 30px; flex: none; border-radius: 9px; background: color-mix(in srgb, var(--accent) 20%, var(--surface)); color: var(--accent-ink); display: grid; place-items: center; margin-top: 1px; }
-  .doel p { font-size: 1.05rem; color: var(--ink); }
-  .inhoud-list { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
-  .inhoud-item { display: flex; gap: 16px; align-items: center; background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: 14px; padding: 16px 20px; box-shadow: var(--shadow-sm); }
-  .inhoud-item .ii { width: 34px; height: 34px; flex: none; border-radius: 9px; background: var(--bg-2); color: var(--navy); font-family: var(--font-display); font-weight: 700; display: grid; place-items: center; }
-  .inhoud-item .it { font-weight: 600; color: var(--navy); }
-  .eld-side { position: sticky; top: 96px; background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: var(--r-card); box-shadow: var(--shadow-md); padding: 28px; }
-  .eld-side h3 { font-size: 1.25rem; }
-  .eld-side .row { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid var(--hairline-soft); }
-  .eld-side .row .k { color: var(--muted); }
-  .eld-side .row .v { font-weight: 700; color: var(--navy); }
-  .eld-side .row .v.big { font-family: var(--font-display); font-size: 1.4rem; }
-  .eld-side .note { font-size: 0.86rem; color: var(--muted); margin-top: 14px; }
-  .sec-head-sm h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
-</style>
-<style id="colleo-nav-fix">
-.brand { flex-shrink: 0; margin-right: 28px; }
-.nav-links a, .nav-cta .btn { white-space: nowrap; }
-.nav-cta { flex-shrink: 0; }
-@media (max-width: 1180px) { .nav-links { gap: 22px; } .nav-links a { font-size: 0.93rem; } }
-.nav-burger { display: none; width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--hairline-soft, rgba(30,45,74,.15)); background: transparent; color: var(--navy, #1e2d4a); cursor: pointer; align-items: center; justify-content: center; margin-left: 10px; }
-.nav-burger svg { width: 20px; height: 20px; }
-@media (max-width: 960px) {
-  .nav-links { display: none !important; }
-  .nav-burger { display: inline-flex; }
-  body.menu-open .nav-links { display: flex !important; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 4px; padding: 12px 20px 18px; background: var(--bg, #f7f2ec); border-bottom: 1px solid var(--hairline-soft, rgba(30,45,74,.12)); box-shadow: 0 12px 24px rgba(30,45,74,.08); }
-  body.menu-open .nav-links a { font-size: 1.05rem; padding: 10px 0; width: 100%; }
+:root{
+ --navy:#1e2d4a;--accent:#3ecfb2;--accent-ink:#0f5e50;
+ --bg:#f7f3ec;--bg-2:#efe9df;--surface:#fff;--ink:#1b2436;--muted:#5b6577;
+ --warn:#7a4a00;--warn-bg:#fdf0d8;--bad:#b04a4a;
+ --hairline:rgba(30,45,74,.12);--hairline-soft:rgba(30,45,74,.07);
+ --font-display:"Bricolage Grotesque",Georgia,serif;--font-body:"Hanken Grotesk",system-ui,sans-serif;
+ --r-card:22px;--r-sm:12px;--r-pill:999px;
+ --shadow-sm:0 1px 2px rgba(27,36,54,.04),0 2px 8px rgba(27,36,54,.05);
+ --shadow-md:0 12px 30px -12px rgba(27,36,54,.22);
+ --shadow-lg:0 30px 70px -30px rgba(27,36,54,.40);
 }
-@media (max-width: 520px) { .nav-cta .btn { padding-left: 16px; padding-right: 16px; } }
-.form-privacy { font-size: 0.82rem; color: var(--muted, #6b7280); margin-top: 12px; line-height: 1.5; }
-.form-privacy a { text-decoration: underline; }
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg)}
+body{color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin:0;color:var(--navy);text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+button{font-family:inherit;cursor:pointer}
+a{color:inherit}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.82rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-ink)}
+.eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;border-radius:var(--r-pill);padding:13px 22px;font-size:1rem;font-weight:600;transition:transform .16s,box-shadow .16s,background .16s,border-color .16s;white-space:nowrap;text-decoration:none}
+.btn-primary{background:var(--navy);color:#fff;box-shadow:var(--shadow-md)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.btn-accent{background:var(--accent);color:var(--navy);box-shadow:var(--shadow-md)}
+.btn-ghost{background:transparent;color:var(--navy);border:1.5px solid var(--hairline)}
+.btn-ghost:hover{border-color:var(--navy)}
+.btn[disabled]{opacity:.35;pointer-events:none}
+.btn svg{flex:none}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--hairline-soft)}
+.top-in{max-width:880px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 clamp(16px,4vw,28px);gap:16px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--font-display);font-weight:700;font-size:1.3rem;color:var(--navy);letter-spacing:-.03em;text-decoration:none}
+.brand .dot{width:30px;height:30px;border-radius:9px;background:var(--navy);display:grid;place-items:center;color:var(--accent);font-size:1rem}
+.brand .sub{font-family:var(--font-body);font-weight:500;font-size:.74rem;color:var(--muted);letter-spacing:0}
+.top-r{display:flex;align-items:center;gap:14px}
+.stepcount{font-size:.85rem;font-weight:600;color:var(--muted);white-space:nowrap}
+.stepcount b{color:var(--navy)}
+.menu-btn{border:1.5px solid var(--hairline);background:var(--surface);border-radius:10px;width:38px;height:38px;display:grid;place-items:center;color:var(--navy)}
+.prog{height:4px;background:var(--bg-2);position:sticky;top:64px;z-index:49}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 70%,var(--navy)));transition:width .4s ease}
+
+/* outline drawer */
+.drawer{position:fixed;inset:0;z-index:80;display:none}
+.drawer.open{display:block}
+.drawer .scrim{position:absolute;inset:0;background:rgba(27,36,54,.35)}
+.drawer .panel{position:absolute;right:0;top:0;bottom:0;width:min(360px,92vw);background:var(--surface);box-shadow:var(--shadow-lg);padding:22px;overflow:auto}
+.drawer h3{font-size:1.2rem}
+.ol-part{margin-top:18px}
+.ol-part .pt{font-size:.74rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.ol-item{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:none;background:none;padding:7px 8px;border-radius:9px;color:var(--ink);font-size:.93rem}
+.ol-item:hover{background:var(--bg)}
+.ol-item.cur{background:color-mix(in srgb,var(--accent) 14%,var(--surface));font-weight:600}
+.ol-item .oi{width:22px;height:22px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--bg-2);color:var(--muted)}
+.ol-item.seen .oi{background:var(--accent);color:var(--navy)}
+
+/* main */
+.main{max-width:760px;margin:0 auto;width:100%;padding:clamp(26px,5vw,52px) clamp(16px,4vw,28px) 140px}
+.pane.in{animation:fade .3s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pane h1{font-size:clamp(2rem,5vw,3rem);margin-top:14px}
+.pane h2{font-size:clamp(1.7rem,3.6vw,2.4rem);margin-top:14px}
+.lede{font-size:1.12rem;color:var(--muted);margin-top:16px}
+.body{margin-top:22px}
+.body p+p{margin-top:14px}
+.body>p{color:var(--ink)}
+
+/* components */
+.card{background:var(--surface);border:1px solid var(--hairline-soft);border-radius:var(--r-card);box-shadow:var(--shadow-sm);padding:clamp(20px,3vw,28px);margin-top:22px}
+.callout{display:flex;gap:14px;align-items:flex-start;background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-radius:16px;padding:17px 19px;margin-top:22px}
+.callout .cic{width:40px;height:40px;flex:none;border-radius:11px;background:var(--surface);color:var(--accent-ink);display:grid;place-items:center}
+.callout .ct{font-weight:700;color:var(--navy)}
+.callout .cs{color:var(--ink);font-size:.97rem;margin-top:2px}
+.callout.warn{background:var(--warn-bg)}
+.callout.warn .cic{color:var(--warn)}
+.factcard{background:var(--navy);color:#fff;border-radius:var(--r-card);padding:26px 28px;box-shadow:var(--shadow-md);position:relative;overflow:hidden;margin-top:22px;display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.factcard::after{content:"";position:absolute;inset:auto -40px -55px auto;width:190px;height:190px;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 50%,transparent),transparent 70%)}
+.factcard .big{font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,6vw,3.2rem);line-height:1;color:var(--accent);position:relative}
+.factcard .ft{position:relative;flex:1;min-width:200px;color:color-mix(in srgb,#fff 88%,transparent)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:22px}
+.stat{background:var(--navy);border-radius:18px;padding:20px;color:#fff;position:relative;overflow:hidden}
+.stat .big{font-family:var(--font-display);font-weight:700;font-size:1.9rem;line-height:1.05;color:var(--accent)}
+.stat .st{font-size:.92rem;margin-top:8px;color:color-mix(in srgb,#fff 82%,transparent)}
+.checks{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:10px}
+.checks li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--hairline-soft);border-radius:14px;padding:13px 16px;box-shadow:var(--shadow-sm)}
+.checks .ck{width:28px;height:28px;border-radius:50%;background:color-mix(in srgb,var(--accent) 20%,var(--surface));color:var(--accent-ink);display:grid;place-items:center}
+.vsteps{display:flex;flex-direction:column;margin-top:22px}
+.vstep{position:relative;display:grid;grid-template-columns:46px 1fr;gap:18px;padding-bottom:22px;align-items:start}
+.vstep:last-child{padding-bottom:0}
+.vstep .n{width:46px;height:46px;border-radius:50%;background:var(--surface);border:1.5px solid var(--hairline);color:var(--navy);font-family:var(--font-display);font-weight:700;display:grid;place-items:center;box-shadow:var(--shadow-sm);z-index:1}
+.vstep:not(:last-child)::before{content:"";position:absolute;left:22.5px;top:46px;bottom:2px;width:1.5px;background:var(--hairline)}
+.vstep h4{font-size:1.1rem;margin-top:10px}
+.vstep p{color:var(--ink);margin-top:11px}
+.vstep h4+p{color:var(--muted);margin-top:4px;font-size:.97rem}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.col{background:var(--surface);border:1px solid var(--hairline-soft);border-radius:18px;padding:18px 20px;box-shadow:var(--shadow-sm)}
+.col h4{font-size:1.08rem;display:flex;align-items:center;gap:9px}
+.col .dotc{width:11px;height:11px;border-radius:50%;flex:none;background:var(--accent)}
+.col.alt .dotc{background:#d98b8b}
+.col ul{margin:10px 0 0;padding-left:18px;font-size:.96rem}
+.col li+li{margin-top:5px}
+.threecol{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.tcard{background:var(--surface);border:1px solid var(--hairline-soft);border-radius:18px;padding:18px;box-shadow:var(--shadow-sm);border-top:4px solid var(--accent)}
+.tcard:nth-child(2){border-top-color:#f2b84b}.tcard:nth-child(3){border-top-color:#d98b8b}
+.tcard h4{font-size:1.1rem}
+.tcard .s{font-size:.85rem;color:var(--muted);margin-top:2px}
+.tcard ul{margin:10px 0 0;padding-left:18px;font-size:.94rem}
+.tablewrap{margin-top:22px;overflow-x:auto;border-radius:18px;border:1px solid var(--hairline-soft);box-shadow:var(--shadow-sm);background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:.96rem}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--hairline-soft);vertical-align:top}
+th{background:var(--navy);color:#fff;font-weight:600}
+tr:last-child td{border-bottom:none}
+tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--bg) 60%,var(--surface))}
+.pyr{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:26px}
+.pyr div{color:#fff;text-align:center;padding:11px 14px;border-radius:10px;font-size:.92rem;font-weight:600;box-shadow:var(--shadow-sm)}
+.pyr-ax{font-size:.82rem;color:var(--muted);margin-top:8px}
+.video{margin-top:22px;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:var(--navy);box-shadow:var(--shadow-md)}
+.video iframe{width:100%;height:100%;border:0;display:block}
+.video.empty{display:grid;place-items:center;text-align:center;color:color-mix(in srgb,#fff 78%,transparent);padding:20px}
+.video.empty p{margin-top:10px}
+.howbox{background:var(--navy);color:#fff;border-radius:var(--r-card);padding:24px 26px;margin-top:26px;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+.howbox::after{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 35%,transparent),transparent 70%)}
+.howbox h3{color:#fff;font-size:1.2rem;position:relative}
+.howbox p{color:color-mix(in srgb,#fff 82%,transparent);margin-top:6px;position:relative}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.meta span{display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--hairline-soft);border-radius:999px;padding:7px 13px;font-size:.88rem;font-weight:600;color:var(--navy)}
+.small{font-size:.88rem;color:var(--muted);margin-top:18px}
+
+/* quiz */
+.qnum{font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.opts{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+.opt{display:flex;align-items:center;gap:13px;padding:14px 16px;border:1.5px solid var(--hairline);border-radius:12px;transition:border-color .14s,background .14s;background:var(--surface);text-align:left;font-size:1rem;color:var(--ink);width:100%}
+.opt:hover{border-color:var(--accent)}
+.opt .mk{width:24px;height:24px;border-radius:50%;border:1.8px solid var(--hairline);flex:none;display:grid;place-items:center;color:transparent;font-size:.8rem;font-weight:700}
+.opt.correct{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface))}
+.opt.correct .mk{background:var(--accent);border-color:var(--accent);color:var(--navy)}
+.opt.wrong{border-color:#d98b8b;background:color-mix(in srgb,#d98b8b 12%,var(--surface))}
+.opt.wrong .mk{border-color:#d98b8b;color:var(--bad)}
+.opt.sel{border-color:var(--navy);background:color-mix(in srgb,var(--navy) 6%,var(--surface))}
+.opt.sel .mk{background:var(--navy);border-color:var(--navy);color:#fff}
+.opt[disabled]{cursor:default}
+.explain{margin-top:18px;padding:16px 18px;border-radius:14px;background:var(--bg-2);font-size:.98rem}
+.explain.good{background:color-mix(in srgb,var(--accent) 14%,var(--surface));color:var(--accent-ink)}
+.explain.bad{background:#fbeaea;color:#8a1f1f}
+.tq{margin-top:20px;background:var(--surface);border:1px solid var(--hairline-soft);border-radius:18px;padding:18px 20px;box-shadow:var(--shadow-sm)}
+.tq h4{font-size:1.08rem;margin-top:4px}
+.tq .opts{margin-top:14px}
+.tq.ok{border-color:color-mix(in srgb,var(--accent) 60%,var(--surface))}
+.tq.nok{border-color:#e6b0aa}
+.tq .fb{margin-top:10px;font-size:.92rem;font-weight:600}
+.tq.ok .fb{color:var(--accent-ink)}.tq.nok .fb{color:var(--bad)}
+.tsubmit{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:22px;color:var(--muted);font-size:.92rem}
+.result{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:22px;border-radius:18px;padding:20px 22px}
+.result .big{font-family:var(--font-display);font-weight:700;font-size:2.6rem;line-height:1}
+.result>div:nth-child(2){flex:1;min-width:200px}
+.result.pass{background:color-mix(in srgb,var(--accent) 18%,var(--surface));color:var(--accent-ink)}
+.result.fail{background:#fdecec;color:#8a1f1f}
+.lock{display:flex;gap:16px;align-items:flex-start;margin-top:22px}
+.cert{margin-top:26px;background:var(--surface);border:1px solid var(--hairline-soft);border-radius:var(--r-card);box-shadow:var(--shadow-md);padding:28px;text-align:center;position:relative;overflow:hidden}
+.cert::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:linear-gradient(90deg,var(--accent),var(--navy))}
+.cert .seal{width:64px;height:64px;border-radius:50%;background:var(--navy);color:var(--accent);display:grid;place-items:center;margin:4px auto 0}
+.cert h3{margin-top:12px;font-size:1.4rem}
+.cert .cm{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.cert .cm span{background:var(--bg);border-radius:999px;padding:6px 12px;font-size:.88rem;font-weight:600;color:var(--navy)}
+
+/* bottom nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--hairline-soft)}
+.nav-in{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px clamp(16px,4vw,28px)}
+.dots{display:flex;gap:7px;align-items:center;min-width:0}
+.dotp{width:9px;height:9px;border-radius:50%;background:var(--hairline);border:none;padding:0;transition:all .2s}
+.dotp.done{background:color-mix(in srgb,var(--accent) 60%,var(--surface))}
+.dotp.cur{background:var(--accent);width:22px;border-radius:99px}
+@media (max-width:640px){
+ .twocol,.threecol{grid-template-columns:1fr}
+ .brand .sub{display:none}
+}
+@media (max-width:480px){
+ .nav-in{gap:8px;padding:12px}
+ .nav-in .btn{padding-left:14px;padding-right:14px}
+ .dots{gap:5px}
+}
 </style>
 </head>
 <body>
-<nav class="nav" id="nav">
-  <div class="wrap nav-inner">
-    <a class="brand" href="index.html"><span class="dot">C</span>Colleo</a>
-    <div class="nav-links">
-      <a href="programma.html">Programma</a>
-      <a href="elearnings.html" style="color:var(--navy)">E-learnings</a>
-      <a href="over-ons.html">Over ons</a>
-      <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="nav-cta">
-      <a class="nav-login" href="login.html">Inloggen</a>
-      <a class="btn btn-primary" href="index.html#voordeel">Schrijf je in <span class="arr" id="navArr"></span></a>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="elearnings.html" title="Terug naar alle e-learnings"><span class="dot">C</span>Colleo <span class="sub">e-learning</span></a>
+    <div class="top-r">
+      <span class="stepcount" id="count"></span>
+      <button class="menu-btn" id="menuBtn" aria-label="Overzicht van de module"></button>
     </div>
   </div>
-</nav>
-<header class="wrap m-hero" id="mTop">
-  <div class="crumb"><a href="elearnings.html">E-learnings</a> <span aria-hidden="true">›</span> Finance for physios</div>
-  <h1>Finance for physios</h1>
-  <p class="lede">Van structuurkeuze tot beleggingsportefeuille. Wissel af tussen de opname van de sessie, korte geschreven samenvattingen en checks, en sluit af met een eindtoets.</p>
 </header>
-<main class="wrap m-wrap">
-  <aside class="m-side">
-    <div class="m-prog"><div class="bar"><i id="mBar"></i></div><div class="pct" id="mPct">0% voltooid</div></div>
-    <nav id="mNav" aria-label="Stappen van de module"></nav>
-  </aside>
-  <section class="m-stage" id="mStage" aria-live="polite"></section>
-</main>
-<footer class="footer">
-  <div class="wrap footer-inner">
-    <a class="brand" href="index.html"><span class="dot">C</span>Colleo</a>
-    <div class="footer-links">
-      <a href="programma.html">Programma</a>
-      <a href="elearnings.html">E-learnings</a>
-      <a href="over-ons.html">Over ons</a>
-      <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html">Inloggen</a>
-      <a href="voorwaarden.html">Voorwaarden</a>
-      <a href="privacy.html">Privacy</a>
-    </div>
-    <div class="muted">Colleo BV · BE 1043.280.629 · Berchem</div>
-  </div>
-</footer>
-<script>/* Colleo — tiny shared UI helpers for portal pages */
+<div class="prog"><i id="bar"></i></div>
+<div class="drawer" id="drawer"><div class="scrim" data-close></div><aside class="panel" aria-label="Overzicht"><div style="display:flex;justify-content:space-between;align-items:center"><h3>Overzicht</h3><button class="menu-btn" data-close aria-label="Sluiten">✕</button></div><div id="outline"></div></aside></div>
+<main class="main"><section class="pane" id="pane" aria-live="polite"></section></main>
+<nav class="nav"><div class="nav-in">
+  <button class="btn btn-ghost" id="prev"></button>
+  <div class="dots" id="dots"></div>
+  <button class="btn btn-primary" id="next"></button>
+</div></nav>
+<script>
+window.MODULE = {"id": "finance", "titel": "Finance for physios", "ondertitel": "Van structuurkeuze tot beleggingsportefeuille", "stappen": [{"type": "lezen", "titel": "Welkom", "kaarten": [{"h": "Welkom bij Finance for physios", "p": ["Als kinesitherapeut ben je vooral met je vak bezig. Maar als zelfstandige ben je ook ondernemer, en de keuzes die je financieel maakt hebben een grote impact op je inkomen, je pensioen en je vrijheid later.", "Deze module is de opname van onze avondsessie, aangevuld met geschreven uitleg en korte checks. Je doorloopt vier blokken en sluit af met een eindtoets."], "lijst": ["Blok 1: juridische structuren (eenmanszaak of BV)", "Blok 2: investeren via je vennootschap", "Blok 3: de personal finance piramide", "Blok 4: voorbeeldportefeuilles, financiële onafhankelijkheid en je actieplan"]}, {"h": "Zo werkt deze module", "p": ["Elk blok start met een stuk video. Daarna klik je door een paar korte kaarten met de kern op papier, en sluit je af met een paar vragen om te checken of alles duidelijk is.", "Je voortgang wordt bewaard in deze browser. Je kan dus gerust pauzeren en later verdergaan."]}, {"h": "Belangrijk om te weten", "p": ["Deze module geeft algemene informatie en geen persoonlijk financieel, fiscaal of juridisch advies. Bedragen en tarieven zijn de cijfers van 2025 zoals besproken in de sessie, en regels veranderen regelmatig.", "Bespreek je eigen situatie altijd met je boekhouder, fiscalist of een erkend financieel adviseur."], "let": true}]}, {"type": "video", "blok": 1, "titel": "Blok 1 · Juridische structuren", "youtube": "XC7tChnkB0A", "intro": "Eenmanszaak of vennootschap? Wat zijn de verschillen, wanneer loont een BV, en hoe haal je op een voordelige manier geld uit je vennootschap?"}, {"type": "lezen", "blok": 1, "titel": "Blok 1 · De kern", "kaarten": [{"h": "Eenmanszaak", "p": ["De meest voorkomende startvorm voor kinesisten: eenvoudig en goedkoop, maar fiscaal beperkt."], "twee": [{"k": "Voordelen", "l": ["Geen notaris of minimumkapitaal nodig", "Lage administratieve kosten", "Verlies aftrekbaar van andere inkomsten"]}, {"k": "Nadelen", "l": ["Onbeperkt persoonlijk aansprakelijk", "Progressieve personenbelasting tot 50%", "Belast op je volledige winst, ook wat je niet opneemt"]}], "tip": "Vuistregel uit de sessie: een eenmanszaak is meestal voordelig tot ongeveer €50.000 netto winst per jaar."}, {"h": "BV (besloten vennootschap)", "p": ["De meest gebruikte vennootschapsvorm voor zelfstandigen met een hogere winst."], "twee": [{"k": "Voordelen", "l": ["Beperkte aansprakelijkheid: je privévermogen is beschermd", "Verlaagd tarief vennootschapsbelasting (20%) op een eerste schijf winst, onder voorwaarden", "Combinatie van loon en dividend mogelijk", "Pensioenopbouw via IPT"]}, {"k": "Nadelen", "l": ["Oprichtingskosten bij de notaris", "Verplichte externe boekhouding", "Minimumbezoldiging nodig voor het lage tarief", "Jaarrekening is publiek"]}], "tip": "Vuistregel uit de sessie: een BV wordt interessant vanaf ongeveer €60.000 tot €70.000 bruto winst per jaar. Laat dit altijd doorrekenen voor je eigen situatie."}, {"h": "Rekenvoorbeeld: €100.000 winst", "p": ["Een vereenvoudigd voorbeeld uit de sessie, met de cijfers van 2025."], "tabel": {"kop": ["", "Eenmanszaak", "BV"], "rijen": [["Netto in handen", "± €48.000", "± €29.500 (loon)"], ["Reserve in de vennootschap", "–", "± €40.000"], ["Totaal beschikbaar", "± €48.000", "± €69.500"]]}, "tip": "Het verschil zit vooral in de reserve die in de BV blijft. Die kan je later aan een lager tarief uitkeren, of intussen laten renderen.", "stats": [{"big": "± €48.000", "txt": "beschikbaar als eenmanszaak"}, {"big": "± €69.500", "txt": "beschikbaar via een BV (loon + reserve)"}]}, {"h": "Geld uit je BV halen", "p": ["Een gewoon dividend wordt belast aan 30% roerende voorheffing. Er bestaan voordeligere routes:"], "lijst": ["VVPR-bis: lager tarief op dividenden na een aantal jaar", "Liquidatiereserve: winst reserveren en later aan een laag tarief uitkeren", "Voordelen alle aard: bv. wagen, laptop of gsm via de vennootschap", "Huur: de BV huurt een deel van je woning als praktijkruimte"], "tip": "Elke route heeft voorwaarden. Laat je boekhouder de juiste mix bepalen."}, {"h": "Pensioen opbouwen als zelfstandige", "lijst": ["VAPZ: voor alle zelfstandigen, ook met een eenmanszaak. Premies zijn aftrekbaar als beroepskost.", "POZ: nieuw sinds 2024, enkel voor zelfstandigen zonder vennootschap. Combineerbaar met VAPZ.", "IPT: enkel via een vennootschap. De vennootschap betaalt de premie als kost."], "tip": "Tip uit de sessie: kies bij VAPZ voor de sociale variant. Die geeft je extra pensioenrechten."}]}, {"type": "check", "blok": 1, "titel": "Blok 1 · Check", "vragen": [{"q": "Wat is een belangrijk nadeel van een eenmanszaak?", "a": ["Je hebt een notaris nodig om te starten", "Je bent onbeperkt persoonlijk aansprakelijk", "Je mag geen VAPZ afsluiten"], "c": 1, "u": "Bij een eenmanszaak is er geen aparte rechtspersoon. Je staat dus met je privévermogen in voor de schulden van je praktijk."}, {"q": "Vanaf welke winst wordt een BV volgens de vuistregel uit de sessie interessant?", "a": ["Vanaf ongeveer €20.000", "Vanaf ongeveer €60.000 tot €70.000 bruto", "Pas vanaf €200.000"], "c": 1, "u": "Onder dat niveau wegen de extra kosten van een BV (notaris, boekhouding) meestal niet op tegen het fiscale voordeel."}, {"q": "Welk pensioenproduct kan enkel via een vennootschap?", "a": ["VAPZ", "POZ", "IPT"], "c": 2, "u": "De IPT (individuele pensioentoezegging) wordt betaald door de vennootschap. POZ is net bedoeld voor zelfstandigen zonder vennootschap."}]}, {"type": "video", "blok": 2, "titel": "Blok 2 · Investeren via je vennootschap", "youtube": "wv4EMkTabWU", "intro": "Waarom beleggen met geld in je BV interessant kan zijn, hoe winst op beleggingen in de BV belast wordt, en welke constructies er bestaan voor vastgoed en pensioen."}, {"type": "lezen", "blok": 2, "titel": "Blok 2 · De kern", "kaarten": [{"h": "Waarom investeren via je BV?", "p": ["Geld in je vennootschap is minder zwaar belast dan geld dat je privé opneemt. Je kan dus met een groter bedrag beginnen.", "Voorbeeld uit de sessie: op €100.000 bruto houd je als eenmanszaak na personenbelasting ongeveer €48.000 over om te beleggen. Via een BV blijft er na vennootschapsbelasting ongeveer €80.000 over."], "tip": "Let op: winst op beleggingen in je BV is wel belast, aan het tarief van de vennootschapsbelasting.", "stats": [{"big": "± €48.000", "txt": "te beleggen als eenmanszaak (op €100.000 bruto)"}, {"big": "± €80.000", "txt": "te beleggen via een BV"}]}, {"h": "DBI-bevek", "p": ["Een DBI-bevek is een fonds dat belegt in aandelen en waarvan de inkomsten in je vennootschap grotendeels vrijgesteld zijn (Definitief Belaste Inkomsten).", "Daardoor ligt de effectieve belasting in de BV veel lager dan bij een gewone ETF. De beheerkosten liggen wel hoger, en je houdt de fondsen best lang aan."], "tip": "Interessant voor wie op lange termijn wil beleggen met geld dat in de BV blijft."}, {"h": "Vastgoed: opstal en vruchtgebruik", "twee": [{"k": "Recht van opstal", "l": ["Jij bezit de grond privé", "De BV bouwt erop en schrijft de bouwkosten af", "Na afloop wordt het gebouw van jou"]}, {"k": "Vruchtgebruik", "l": ["Jij koopt de naakte eigendom privé", "De BV koopt het vruchtgebruik en schrijft het af", "Na afloop krijg jij de volle eigendom"]}], "tip": "Beide constructies zijn legaal maar worden streng gecontroleerd. Een correcte waardering via notaris en boekhouder is essentieel."}, {"h": "IPT: pensioen via je BV", "p": ["Met een IPT bouwt je vennootschap een aanvullend pensioen voor je op. De premie is een aftrekbare kost voor de BV. Het maximum wordt bepaald door de 80%-regel, die rekening houdt met je loon en je loopbaan.", "Een deel van het opgebouwde kapitaal kan je onder voorwaarden vooraf opnemen om privévastgoed te kopen, te bouwen of te renoveren (een voorafname)."], "tip": "Een IPT veronderstelt dat je jezelf een loon uitkeert. Bespreek de combinatie loon, IPT en dividend met je boekhouder."}]}, {"type": "check", "blok": 2, "titel": "Blok 2 · Check", "vragen": [{"q": "Waarom kan investeren via je BV voordelig zijn?", "a": ["Beleggingswinst in een BV is altijd onbelast", "Je belegt met geld dat minder zwaar belast werd, dus met een groter bedrag", "Je hoeft geen boekhouding te voeren"], "c": 1, "u": "Het voordeel zit in het startbedrag. Winst op beleggingen in de BV blijft wel belast."}, {"q": "Wat is een kenmerk van een DBI-bevek in je vennootschap?", "a": ["De inkomsten zijn grotendeels vrijgesteld", "De beheerkosten zijn lager dan bij een ETF", "Je moet ze binnen een maand verkopen"], "c": 0, "u": "Dat is het grote voordeel. Daartegenover staan iets hogere beheerkosten."}, {"q": "Wat moet je zeker doen bij opstal of vruchtgebruik?", "a": ["Niets, het is volledig automatisch", "Een correcte waardering laten maken via notaris en boekhouder", "Het pand meteen doorverkopen"], "c": 1, "u": "De fiscus controleert deze constructies streng, vooral de waardering."}]}, {"type": "video", "blok": 3, "titel": "Blok 3 · De personal finance piramide", "youtube": "iqlkt7payqs", "intro": "Van spaarrekening tot alternatieve beleggingen: hoe bouw je stap voor stap een gezond vermogen op, en waar moet je op letten?"}, {"type": "lezen", "blok": 3, "titel": "Blok 3 · De kern", "kaarten": [{"h": "De beleggingspiramide", "p": ["Begin altijd onderaan. Hoe hoger in de piramide, hoe meer risico en hoe hoger het verwachte rendement."], "piramide": ["Alternatieven: goud, crypto, private equity, collectibles", "Vastgoed", "Aandelen en ETF's", "Obligaties en fondsen", "Sparen en noodreserve"]}, {"h": "Eerst een noodreserve", "p": ["Houd 3 tot 6 maanden netto inkomen opzij op een spaarrekening voor je begint te beleggen. Zo hoef je nooit te verkopen op een slecht moment.", "Op lange termijn beschermt een spaarrekening je vermogen niet tegen inflatie. Daarvoor heb je beleggingen nodig."], "stat": {"big": "3–6 maanden", "txt": "netto inkomen opzij op een spaarrekening, vóór je begint te beleggen."}}, {"h": "Actief fonds of ETF?", "p": ["Een ETF volgt automatisch een index, zoals alle grote bedrijven wereldwijd. Een actief fonds wordt beheerd door een fondsbeheerder."], "tabel": {"kop": ["", "Actief fonds (bank)", "ETF"], "rijen": [["Jaarlijkse kosten", "1,5 – 2,5%", "0,07 – 0,25%"], ["Rendement", "Meestal lager dan de index", "Gelijk aan de index"], ["Spreiding", "Afhankelijk van het fonds", "Honderden tot duizenden bedrijven"]]}, "tip": "Kosten lijken klein maar tellen over 20 jaar enorm op. Een verschil van 1 à 2% per jaar kan tienduizenden euro's schelen."}, {"h": "Waar let je op bij een ETF?", "lijst": ["Lage kosten (TER), bij voorkeur onder 0,30%", "Accumulerend: dividenden worden automatisch herbelegd", "Gevestigd in Ierland: fiscaal het gunstigst voor Belgen", "Groot fonds (meer dan €1 miljard beheerd vermogen)", "Fysieke replicatie: het fonds bezit de aandelen echt"]}, {"h": "Tijd in de markt, niet timing", "p": ["De markt timen lukt bijna niemand, ook professionals niet. De beste beursdagen vallen vaak vlak na een crash. Wie dan niet belegd is, mist het herstel.", "De strategie uit de sessie: elke maand automatisch een vast bedrag beleggen, en niet panikeren bij dalingen."], "tip": "Samengestelde interest doet het werk: hoe vroeger je begint, hoe meer je rendement zelf rendement opbrengt."}, {"h": "Hogere lagen: vastgoed en alternatieven", "lijst": ["Vastgoed: direct (zelf een pand), via beursgenoteerde vastgoedfondsen of via crowdlending", "Goud en edelmetalen: bescherming in crisistijd, maar geen inkomsten", "Crypto: hoogste risico. Volgens de sessie maximaal 3 à 5% van je portefeuille", "Private equity, bos, kunst en andere collectibles: illiquide, nooit de kern van je vermogen"], "let": true, "tip": "Beleg enkel in wat je begrijpt, en nooit meer dan je kan verliezen in de risicovolle lagen."}, {"h": "Fiscale producten en de meerwaardebelasting", "lijst": ["Pensioensparen: jaarlijks belastingvoordeel, bijna altijd de moeite", "Langetermijnsparen: extra belastingvoordeel, maar check of je fiscale korf niet al vol zit", "Meerwaardebelasting: vanaf 2026 een belasting van 10% op gerealiseerde meerwaarden op financiële activa, met een jaarlijkse vrijstelling"], "tip": "De details, zoals de vrijstelling en de uitzonderingen, bespreek je best met je fiscalist."}]}, {"type": "check", "blok": 3, "titel": "Blok 3 · Check", "vragen": [{"q": "Wat doe je best vóór je begint te beleggen?", "a": ["Alles in crypto steken", "Een noodreserve van 3 tot 6 maanden inkomen aanleggen", "Wachten op een crash"], "c": 1, "u": "Een buffer zorgt ervoor dat je nooit moet verkopen op een slecht moment."}, {"q": "Wat is het grootste verschil tussen een actief bankfonds en een ETF?", "a": ["Een ETF heeft veel lagere kosten", "Een actief fonds verslaat altijd de markt", "Een ETF belegt maar in één bedrijf"], "c": 0, "u": "Over lange termijn maken die lagere kosten een groot verschil in je eindkapitaal."}, {"q": "Wat is de aanbevolen strategie uit de sessie?", "a": ["Proberen het beste instapmoment te vinden", "Maandelijks automatisch beleggen en niet panikeren", "Bij elke daling alles verkopen"], "c": 1, "u": "Tijd in de markt verslaat timing. De beste dagen vallen vaak vlak na een crash."}]}, {"type": "video", "blok": 4, "titel": "Blok 4 · Portefeuilles, financiële onafhankelijkheid en actieplan", "youtube": "jQKiUF8UQ10", "intro": "Hoe ziet een portefeuille eruit naargelang je profiel, wanneer ben je financieel onafhankelijk, en waar begin je morgen?"}, {"type": "lezen", "blok": 4, "titel": "Blok 4 · De kern", "kaarten": [{"h": "Drie voorbeeldportefeuilles", "p": ["Er is geen portefeuille die voor iedereen klopt. Je keuze hangt af van je leeftijd, je tijdshorizon en hoeveel risico je aankan."], "drie": [{"k": "Conservatief", "s": "Dicht bij pensioen", "l": ["Wereldwijde ETF als basis", "Flink deel obligaties", "Pensioensparen en cash"]}, {"k": "Gebalanceerd", "s": "Middellange termijn", "l": ["Grootste deel wereldwijde ETF", "Wat vastgoed en obligaties", "Pensioenproducten"]}, {"k": "Groei", "s": "Jong, lange horizon", "l": ["Vooral aandelen-ETF's", "Groeimarkten", "Klein deel risicovol"]}]}, {"h": "De 4%-regel", "p": ["Financieel onafhankelijk ben je wanneer je beleggingen genoeg opbrengen om van te leven. De vuistregel: je hebt ongeveer 25 keer je jaarlijkse uitgaven nodig, en je neemt jaarlijks maximaal 4% op.", "Voorbeeld: heb je €3.000 per maand nodig, dan is dat €36.000 per jaar. Je doelkapitaal is dan ongeveer €900.000."], "tip": "Het doel is niet het grootste vermogen, maar keuzevrijheid: minder werken, anders werken of eerder stoppen.", "stats": [{"big": "× 25", "txt": "je jaarlijkse uitgaven = je doelkapitaal"}, {"big": "4%", "txt": "maximaal op te nemen per jaar"}]}, {"h": "Jouw actieplan in 5 stappen", "genummerd": ["Leg een noodreserve aan van 3 tot 6 maanden netto inkomen.", "Start met pensioensparen en, als zelfstandige, met VAPZ.", "Laat je juridische structuur evalueren bij een hogere winst.", "Begin met maandelijks beleggen in brede, goedkope ETF's.", "Spreid geleidelijk verder, en houd risicovolle beleggingen beperkt."]}]}, {"type": "check", "blok": 4, "titel": "Blok 4 · Check", "vragen": [{"q": "Volgens de 4%-regel: hoeveel kapitaal heb je ongeveer nodig als je €24.000 per jaar uitgeeft?", "a": ["€240.000", "€600.000", "€1.200.000"], "c": 1, "u": "25 keer je jaarlijkse uitgaven: 25 × €24.000 = €600.000."}, {"q": "Wat is de eerste stap in het actieplan?", "a": ["Een BV oprichten", "Een noodreserve aanleggen", "Crypto kopen"], "c": 1, "u": "Eerst een buffer, dan pas beleggen."}, {"q": "Van wie krijg je advies over je persoonlijke situatie?", "a": ["Van deze e-learning", "Van je boekhouder, fiscalist of erkend financieel adviseur", "Van sociale media"], "c": 1, "u": "Deze module geeft algemene informatie. Je persoonlijke situatie bespreek je met een professional."}]}, {"type": "toets", "titel": "Eindtoets", "slagen": 70, "vragen": [{"q": "Wat is een belangrijk nadeel van een eenmanszaak?", "a": ["Je hebt een notaris nodig om te starten", "Je bent onbeperkt persoonlijk aansprakelijk", "Je mag geen beroepskosten inbrengen"], "c": 1}, {"q": "Wanneer wordt een BV volgens de vuistregel uit de module interessant?", "a": ["Vanaf ongeveer €20.000 winst", "Vanaf ongeveer €60.000 tot €70.000 bruto winst", "Pas vanaf €250.000 winst"], "c": 1}, {"q": "Waaruit bestaat in het rekenvoorbeeld het grootste voordeel van de BV?", "a": ["Een hoger netto loon in handen", "De reserve die in de vennootschap blijft", "Het wegvallen van alle sociale bijdragen"], "c": 1}, {"q": "Welk pensioenproduct is enkel mogelijk via een vennootschap?", "a": ["VAPZ", "POZ", "IPT"], "c": 2}, {"q": "Voor wie is de POZ bedoeld?", "a": ["Voor zelfstandigen zonder vennootschap", "Enkel voor werknemers", "Enkel voor bedrijfsleiders met een BV"], "c": 0}, {"q": "Wat is het kenmerk van een DBI-bevek in je vennootschap?", "a": ["De inkomsten zijn grotendeels vrijgesteld", "Ze heeft lagere kosten dan een ETF", "Ze moet binnen het jaar verkocht worden"], "c": 0}, {"q": "Wat doe je best vóór je begint te beleggen?", "a": ["Een noodreserve van 3 tot 6 maanden netto inkomen aanleggen", "Een lening aangaan", "Wachten op de volgende beurscrash"], "c": 0}, {"q": "Waarom verkiest de module een brede ETF boven een actief bankfonds?", "a": ["Een ETF garandeert winst", "Een ETF heeft veel lagere kosten en volgt de markt", "Een actief fonds is verboden in België"], "c": 1}, {"q": "Wat betekent 'tijd in de markt verslaat timing'?", "a": ["Regelmatig en lang belegd blijven werkt beter dan het perfecte instapmoment zoeken", "Je moet elke dag kopen en verkopen", "Je belegt best enkel na een crash"], "c": 0}, {"q": "Volgens de 4%-regel: hoeveel kapitaal heb je ongeveer nodig bij €30.000 uitgaven per jaar?", "a": ["€300.000", "€750.000", "€1.500.000"], "c": 1}]}]};
+window.META = {"titel": "Finance for physios", "lede": "Van structuurkeuze tot beleggingsportefeuille: alles wat je als zelfstandige kinesitherapeut moet weten over je financiën.", "duur": "± 5 uur", "punten": "10 Pro-Q-Kine punten", "blokinfo": ["Eenmanszaak of BV, rekenvoorbeeld, pensioen als zelfstandige.", "Waarom en hoe beleggen via je BV, DBI-bevek, vastgoedconstructies, IPT.", "Van noodreserve tot ETF's, vastgoed en alternatieven.", "Drie voorbeeldportefeuilles, de 4%-regel en je actieplan."], "doelen": ["Je kent de verschillen tussen een eenmanszaak en een BV, en weet wanneer een vennootschap interessant wordt.", "Je kent de pensioenproducten voor zelfstandigen: VAPZ, POZ en IPT.", "Je begrijpt hoe je stap voor stap een gespreid vermogen opbouwt, van noodreserve tot ETF's.", "Je kan een eerste persoonlijk actieplan opstellen."]};
+</script>
+<script>
 (function () {
-  const P = 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
-  const ICONS = {
-    arrow: `<path ${P} d="M5 12h14M13 6l6 6-6 6"/>`,
-    arrowL: `<path ${P} d="M19 12H5M11 6l-6 6 6 6"/>`,
-    check: `<path ${P} d="m5 13 4 4 10-11"/>`,
-    play: `<path fill="currentColor" d="M8 5.5v13l11-6.5z"/>`,
-    doc: `<path ${P} d="M7 3h7l5 5v13H7z"/><path ${P} d="M14 3v5h5M10 13h6M10 17h6"/>`,
-    download: `<path ${P} d="M12 4v10m0 0 4-4m-4 4-4-4M5 19h14"/>`,
-    lock: `<rect ${P} x="5" y="11" width="14" height="9" rx="2"/><path ${P} d="M8 11V8a4 4 0 0 1 8 0v3"/>`,
-    medal: `<circle ${P} cx="12" cy="14" r="6"/><path ${P} d="M9 9 7 3h10l-2 6"/><path ${P} d="m12 11.5 1 2 2 .3-1.5 1.5.4 2.2L12 17.5l-1.9 1.2.4-2.2L9 15l2-.5 1-2Z"/>`,
-    chevron: `<path ${P} d="m9 6 6 6-6 6"/>`,
-    logout: `<path ${P} d="M15 12H4m0 0 4-4m-4 4 4 4M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/>`,
-    clock: `<circle ${P} cx="12" cy="12" r="9"/><path ${P} d="M12 7v5l3 2"/>`,
-    calendar: `<rect ${P} x="3.5" y="5" width="17" height="16" rx="2.5"/><path ${P} d="M3.5 10h17M8 3v4M16 3v4"/>`,
-    book: `<path ${P} d="M4 5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2zM19 18v3H6a2 2 0 0 1-2-2"/>`,
-    phone: `<path ${P} d="M6.5 3h3l1.5 5-2 1.5a12 12 0 0 0 5 5l1.5-2 5 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5a2 2 0 0 1 2-2z"/>`,
-    list: `<path ${P} d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>`,
-    spark: `<path ${P} d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>`,
+  const M = window.MODULE, META = window.META;
+  const P = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+  const I = {
+    arrow: '<path ' + P + ' d="M5 12h14M13 6l6 6-6 6"/>', arrowL: '<path ' + P + ' d="M19 12H5M11 6l-6 6 6 6"/>',
+    check: '<path ' + P + ' d="m5 13 4 4 10-11"/>', x: '<path ' + P + ' d="M6 6l12 12M18 6 6 18"/>',
+    play: '<path fill="currentColor" d="M8 5.5v13l11-6.5z"/>', bulb: '<path ' + P + ' d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/>',
+    alert: '<path ' + P + ' d="M12 9v4M12 17h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>',
+    list: '<path ' + P + ' d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>', clock: '<circle ' + P + ' cx="12" cy="12" r="9"/><path ' + P + ' d="M12 7v5l3 2"/>',
+    medal: '<circle ' + P + ' cx="12" cy="15" r="5"/><path ' + P + ' d="M8.5 10.5 6 3h4l2 4 2-4h4l-2.5 7.5"/>', lock: '<rect ' + P + ' x="5" y="11" width="14" height="10" rx="2"/><path ' + P + ' d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+    menu: '<path ' + P + ' d="M4 7h16M4 12h16M4 17h10"/>', target: '<circle ' + P + ' cx="12" cy="12" r="9"/><circle ' + P + ' cx="12" cy="12" r="5"/><circle fill="currentColor" cx="12" cy="12" r="1.5"/>'
   };
-  function icon(name, size) {
-    size = size || 22;
-    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ''}</svg>`;
-  }
-  let toastEl = null, toastT = null;
-  function toast(msg, iconName) {
-    if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'toast'; document.body.appendChild(toastEl); }
-    toastEl.innerHTML = (iconName ? `<span class="ti">${icon(iconName, 20)}</span>` : '') + `<span>${msg}</span>`;
-    requestAnimationFrame(() => toastEl.classList.add('show'));
-    clearTimeout(toastT);
-    toastT = setTimeout(() => toastEl.classList.remove('show'), 2600);
-  }
-  function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
-  window.UI = { icon, toast, esc };
-})();
-</script>
-<script>
-/* Colleo — e-learning "Finance for physios" (stappen: video · lezen · check) */
-window.MODULE = {
-  id: "finance",
-  titel: "Finance for physios",
-  ondertitel: "Van structuurkeuze tot beleggingsportefeuille",
-  // Vul per blok de YouTube-video-ID in (het stuk na "v=" of na "youtu.be/").
-  // Optioneel: start/end in seconden om een stuk van een video te tonen.
-  stappen: [
-    { type: "lezen", titel: "Welkom", kaarten: [
-      { h: "Welkom bij Finance for physios", p: [
-        "Als kinesitherapeut ben je vooral met je vak bezig. Maar als zelfstandige ben je ook ondernemer, en de keuzes die je financieel maakt hebben een grote impact op je inkomen, je pensioen en je vrijheid later.",
-        "Deze module is de opname van onze avondsessie, aangevuld met geschreven uitleg en korte checks. Je doorloopt vier blokken en sluit af met een eindtoets."
-      ], lijst: [
-        "Blok 1: juridische structuren (eenmanszaak of BV)",
-        "Blok 2: investeren via je vennootschap",
-        "Blok 3: de personal finance piramide",
-        "Blok 4: voorbeeldportefeuilles, financiële onafhankelijkheid en je actieplan"
-      ] },
-      { h: "Zo werkt deze module", p: [
-        "Elk blok start met een stuk video. Daarna klik je door een paar korte kaarten met de kern op papier, en sluit je af met een paar vragen om te checken of alles duidelijk is.",
-        "Je voortgang wordt bewaard in deze browser. Je kan dus gerust pauzeren en later verdergaan."
-      ] },
-      { h: "Belangrijk om te weten", p: [
-        "Deze module geeft algemene informatie en geen persoonlijk financieel, fiscaal of juridisch advies. Bedragen en tarieven zijn de cijfers van 2025 zoals besproken in de sessie, en regels veranderen regelmatig.",
-        "Bespreek je eigen situatie altijd met je boekhouder, fiscalist of een erkend financieel adviseur."
-      ], let: true }
-    ] },
+  const icon = function (n, s) { s = s || 20; return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" aria-hidden="true">' + I[n] + '</svg>'; };
+  const esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
 
-    // ───────── BLOK 1 ─────────
-    { type: "video", blok: 1, titel: "Blok 1 · Juridische structuren", youtube: "XC7tChnkB0A",
-      intro: "Eenmanszaak of vennootschap? Wat zijn de verschillen, wanneer loont een BV, en hoe haal je op een voordelige manier geld uit je vennootschap?" },
-    { type: "lezen", blok: 1, titel: "Blok 1 · De kern", kaarten: [
-      { h: "Eenmanszaak", p: ["De meest voorkomende startvorm voor kinesisten: eenvoudig en goedkoop, maar fiscaal beperkt."],
-        twee: [
-          { k: "Voordelen", l: ["Geen notaris of minimumkapitaal nodig", "Lage administratieve kosten", "Verlies aftrekbaar van andere inkomsten"] },
-          { k: "Nadelen", l: ["Onbeperkt persoonlijk aansprakelijk", "Progressieve personenbelasting tot 50%", "Belast op je volledige winst, ook wat je niet opneemt"] }
-        ], tip: "Vuistregel uit de sessie: een eenmanszaak is meestal voordelig tot ongeveer €50.000 netto winst per jaar." },
-      { h: "BV (besloten vennootschap)", p: ["De meest gebruikte vennootschapsvorm voor zelfstandigen met een hogere winst."],
-        twee: [
-          { k: "Voordelen", l: ["Beperkte aansprakelijkheid: je privévermogen is beschermd", "Verlaagd tarief vennootschapsbelasting (20%) op een eerste schijf winst, onder voorwaarden", "Combinatie van loon en dividend mogelijk", "Pensioenopbouw via IPT"] },
-          { k: "Nadelen", l: ["Oprichtingskosten bij de notaris", "Verplichte externe boekhouding", "Minimumbezoldiging nodig voor het lage tarief", "Jaarrekening is publiek"] }
-        ], tip: "Vuistregel uit de sessie: een BV wordt interessant vanaf ongeveer €60.000 tot €70.000 bruto winst per jaar. Laat dit altijd doorrekenen voor je eigen situatie." },
-      { h: "Rekenvoorbeeld: €100.000 winst", p: ["Een vereenvoudigd voorbeeld uit de sessie, met de cijfers van 2025."],
-        tabel: { kop: ["", "Eenmanszaak", "BV"], rijen: [
-          ["Netto in handen", "± €48.000", "± €29.500 (loon)"],
-          ["Reserve in de vennootschap", "–", "± €40.000"],
-          ["Totaal beschikbaar", "± €48.000", "± €69.500"]
-        ] }, tip: "Het verschil zit vooral in de reserve die in de BV blijft. Die kan je later aan een lager tarief uitkeren, of intussen laten renderen." },
-      { h: "Geld uit je BV halen", p: ["Een gewoon dividend wordt belast aan 30% roerende voorheffing. Er bestaan voordeligere routes:"],
-        lijst: [
-          "VVPR-bis: lager tarief op dividenden na een aantal jaar",
-          "Liquidatiereserve: winst reserveren en later aan een laag tarief uitkeren",
-          "Voordelen alle aard: bv. wagen, laptop of gsm via de vennootschap",
-          "Huur: de BV huurt een deel van je woning als praktijkruimte"
-        ], tip: "Elke route heeft voorwaarden. Laat je boekhouder de juiste mix bepalen." },
-      { h: "Pensioen opbouwen als zelfstandige", lijst: [
-          "VAPZ: voor alle zelfstandigen, ook met een eenmanszaak. Premies zijn aftrekbaar als beroepskost.",
-          "POZ: nieuw sinds 2024, enkel voor zelfstandigen zonder vennootschap. Combineerbaar met VAPZ.",
-          "IPT: enkel via een vennootschap. De vennootschap betaalt de premie als kost."
-        ], tip: "Tip uit de sessie: kies bij VAPZ voor de sociale variant. Die geeft je extra pensioenrechten." }
-    ] },
-    { type: "check", blok: 1, titel: "Blok 1 · Check", vragen: [
-      { q: "Wat is een belangrijk nadeel van een eenmanszaak?", a: ["Je hebt een notaris nodig om te starten", "Je bent onbeperkt persoonlijk aansprakelijk", "Je mag geen VAPZ afsluiten"], c: 1,
-        u: "Bij een eenmanszaak is er geen aparte rechtspersoon. Je staat dus met je privévermogen in voor de schulden van je praktijk." },
-      { q: "Vanaf welke winst wordt een BV volgens de vuistregel uit de sessie interessant?", a: ["Vanaf ongeveer €20.000", "Vanaf ongeveer €60.000 tot €70.000 bruto", "Pas vanaf €200.000"], c: 1,
-        u: "Onder dat niveau wegen de extra kosten van een BV (notaris, boekhouding) meestal niet op tegen het fiscale voordeel." },
-      { q: "Welk pensioenproduct kan enkel via een vennootschap?", a: ["VAPZ", "POZ", "IPT"], c: 2,
-        u: "De IPT (individuele pensioentoezegging) wordt betaald door de vennootschap. POZ is net bedoeld voor zelfstandigen zonder vennootschap." }
-    ] },
+  // ── flatten module into screens ──
+  const S = [];
+  const parts = [{ key: 'start', label: 'Start' }];
+  const blocks = {};
+  M.stappen.forEach(function (st) { if (st.blok && !blocks[st.blok]) { blocks[st.blok] = st.titel.replace(/^Blok \d+ · /, ''); } });
+  Object.keys(blocks).forEach(function (b) { parts.push({ key: 'b' + b, label: 'Blok ' + b + ' · ' + blocks[b] }); });
+  parts.push({ key: 'toets', label: 'Eindtoets' });
+  S.push({ t: 'intro', part: 'start', title: 'Welkom' });
+  if (META.doelen) S.push({ t: 'doelen', part: 'start', title: 'Leerdoelen' });
+  M.stappen.forEach(function (st, si) {
+    if (!st.blok && st.type === 'lezen') { st.kaarten.slice(1).forEach(function (k) { if (k.let) S.push({ t: 'card', part: 'start', card: k, eyebrow: 'Vooraf', title: k.h }); }); return; }
+    const part = st.type === 'toets' ? 'toets' : 'b' + st.blok;
+    const eb = st.blok ? 'Blok ' + st.blok + ' · ' + blocks[st.blok] : '';
+    if (st.type === 'video') S.push({ t: 'video', part: part, step: st, eyebrow: eb + ' · Kijken', title: st.titel.replace(/^Blok \d+ · /, '') });
+    if (st.type === 'lezen') st.kaarten.forEach(function (k) { S.push({ t: 'card', part: part, card: k, eyebrow: eb, title: k.h }); });
+    if (st.type === 'check') st.vragen.forEach(function (v, qi) { S.push({ t: 'q', part: part, v: v, id: si + '_' + qi, n: qi + 1, of: st.vragen.length, eyebrow: eb + ' · Kennisvraag', title: v.q }); });
+    if (st.type === 'toets') S.push({ t: 'toets', part: 'toets', step: st, eyebrow: 'Afsluiten', title: 'Eindtoets' });
+  });
+  S.push({ t: 'end', part: 'toets', eyebrow: 'Afsluiten', title: 'Afronding' });
 
-    // ───────── BLOK 2 ─────────
-    { type: "video", blok: 2, titel: "Blok 2 · Investeren via je vennootschap", youtube: "wv4EMkTabWU",
-      intro: "Waarom beleggen met geld in je BV interessant kan zijn, hoe winst op beleggingen in de BV belast wordt, en welke constructies er bestaan voor vastgoed en pensioen." },
-    { type: "lezen", blok: 2, titel: "Blok 2 · De kern", kaarten: [
-      { h: "Waarom investeren via je BV?", p: [
-        "Geld in je vennootschap is minder zwaar belast dan geld dat je privé opneemt. Je kan dus met een groter bedrag beginnen.",
-        "Voorbeeld uit de sessie: op €100.000 bruto houd je als eenmanszaak na personenbelasting ongeveer €48.000 over om te beleggen. Via een BV blijft er na vennootschapsbelasting ongeveer €80.000 over."
-      ], tip: "Let op: winst op beleggingen in je BV is wel belast, aan het tarief van de vennootschapsbelasting." },
-      { h: "DBI-bevek", p: [
-        "Een DBI-bevek is een fonds dat belegt in aandelen en waarvan de inkomsten in je vennootschap grotendeels vrijgesteld zijn (Definitief Belaste Inkomsten).",
-        "Daardoor ligt de effectieve belasting in de BV veel lager dan bij een gewone ETF. De beheerkosten liggen wel hoger, en je houdt de fondsen best lang aan."
-      ], tip: "Interessant voor wie op lange termijn wil beleggen met geld dat in de BV blijft." },
-      { h: "Vastgoed: opstal en vruchtgebruik", twee: [
-          { k: "Recht van opstal", l: ["Jij bezit de grond privé", "De BV bouwt erop en schrijft de bouwkosten af", "Na afloop wordt het gebouw van jou"] },
-          { k: "Vruchtgebruik", l: ["Jij koopt de naakte eigendom privé", "De BV koopt het vruchtgebruik en schrijft het af", "Na afloop krijg jij de volle eigendom"] }
-        ], tip: "Beide constructies zijn legaal maar worden streng gecontroleerd. Een correcte waardering via notaris en boekhouder is essentieel." },
-      { h: "IPT: pensioen via je BV", p: [
-        "Met een IPT bouwt je vennootschap een aanvullend pensioen voor je op. De premie is een aftrekbare kost voor de BV. Het maximum wordt bepaald door de 80%-regel, die rekening houdt met je loon en je loopbaan.",
-        "Een deel van het opgebouwde kapitaal kan je onder voorwaarden vooraf opnemen om privévastgoed te kopen, te bouwen of te renoveren (een voorafname)."
-      ], tip: "Een IPT veronderstelt dat je jezelf een loon uitkeert. Bespreek de combinatie loon, IPT en dividend met je boekhouder." }
-    ] },
-    { type: "check", blok: 2, titel: "Blok 2 · Check", vragen: [
-      { q: "Waarom kan investeren via je BV voordelig zijn?", a: ["Beleggingswinst in een BV is altijd onbelast", "Je belegt met geld dat minder zwaar belast werd, dus met een groter bedrag", "Je hoeft geen boekhouding te voeren"], c: 1,
-        u: "Het voordeel zit in het startbedrag. Winst op beleggingen in de BV blijft wel belast." },
-      { q: "Wat is een kenmerk van een DBI-bevek in je vennootschap?", a: ["De inkomsten zijn grotendeels vrijgesteld", "De beheerkosten zijn lager dan bij een ETF", "Je moet ze binnen een maand verkopen"], c: 0,
-        u: "Dat is het grote voordeel. Daartegenover staan iets hogere beheerkosten." },
-      { q: "Wat moet je zeker doen bij opstal of vruchtgebruik?", a: ["Niets, het is volledig automatisch", "Een correcte waardering laten maken via notaris en boekhouder", "Het pand meteen doorverkopen"], c: 1,
-        u: "De fiscus controleert deze constructies streng, vooral de waardering." }
-    ] },
-
-    // ───────── BLOK 3 ─────────
-    { type: "video", blok: 3, titel: "Blok 3 · De personal finance piramide", youtube: "iqlkt7payqs",
-      intro: "Van spaarrekening tot alternatieve beleggingen: hoe bouw je stap voor stap een gezond vermogen op, en waar moet je op letten?" },
-    { type: "lezen", blok: 3, titel: "Blok 3 · De kern", kaarten: [
-      { h: "De beleggingspiramide", p: ["Begin altijd onderaan. Hoe hoger in de piramide, hoe meer risico en hoe hoger het verwachte rendement."], piramide: [
-          "Alternatieven: goud, crypto, private equity, collectibles",
-          "Vastgoed",
-          "Aandelen en ETF's",
-          "Obligaties en fondsen",
-          "Sparen en noodreserve"
-        ] },
-      { h: "Eerst een noodreserve", p: [
-        "Houd 3 tot 6 maanden netto inkomen opzij op een spaarrekening voor je begint te beleggen. Zo hoef je nooit te verkopen op een slecht moment.",
-        "Op lange termijn beschermt een spaarrekening je vermogen niet tegen inflatie. Daarvoor heb je beleggingen nodig."
-      ] },
-      { h: "Actief fonds of ETF?", p: ["Een ETF volgt automatisch een index, zoals alle grote bedrijven wereldwijd. Een actief fonds wordt beheerd door een fondsbeheerder."],
-        tabel: { kop: ["", "Actief fonds (bank)", "ETF"], rijen: [
-          ["Jaarlijkse kosten", "1,5 – 2,5%", "0,07 – 0,25%"],
-          ["Rendement", "Meestal lager dan de index", "Gelijk aan de index"],
-          ["Spreiding", "Afhankelijk van het fonds", "Honderden tot duizenden bedrijven"]
-        ] }, tip: "Kosten lijken klein maar tellen over 20 jaar enorm op. Een verschil van 1 à 2% per jaar kan tienduizenden euro's schelen." },
-      { h: "Waar let je op bij een ETF?", lijst: [
-          "Lage kosten (TER), bij voorkeur onder 0,30%",
-          "Accumulerend: dividenden worden automatisch herbelegd",
-          "Gevestigd in Ierland: fiscaal het gunstigst voor Belgen",
-          "Groot fonds (meer dan €1 miljard beheerd vermogen)",
-          "Fysieke replicatie: het fonds bezit de aandelen echt"
-        ] },
-      { h: "Tijd in de markt, niet timing", p: [
-        "De markt timen lukt bijna niemand, ook professionals niet. De beste beursdagen vallen vaak vlak na een crash. Wie dan niet belegd is, mist het herstel.",
-        "De strategie uit de sessie: elke maand automatisch een vast bedrag beleggen, en niet panikeren bij dalingen."
-      ], tip: "Samengestelde interest doet het werk: hoe vroeger je begint, hoe meer je rendement zelf rendement opbrengt." },
-      { h: "Hogere lagen: vastgoed en alternatieven", lijst: [
-          "Vastgoed: direct (zelf een pand), via beursgenoteerde vastgoedfondsen of via crowdlending",
-          "Goud en edelmetalen: bescherming in crisistijd, maar geen inkomsten",
-          "Crypto: hoogste risico. Volgens de sessie maximaal 3 à 5% van je portefeuille",
-          "Private equity, bos, kunst en andere collectibles: illiquide, nooit de kern van je vermogen"
-        ], let: true, tip: "Beleg enkel in wat je begrijpt, en nooit meer dan je kan verliezen in de risicovolle lagen." },
-      { h: "Fiscale producten en de meerwaardebelasting", lijst: [
-          "Pensioensparen: jaarlijks belastingvoordeel, bijna altijd de moeite",
-          "Langetermijnsparen: extra belastingvoordeel, maar check of je fiscale korf niet al vol zit",
-          "Meerwaardebelasting: vanaf 2026 een belasting van 10% op gerealiseerde meerwaarden op financiële activa, met een jaarlijkse vrijstelling"
-        ], tip: "De details, zoals de vrijstelling en de uitzonderingen, bespreek je best met je fiscalist." }
-    ] },
-    { type: "check", blok: 3, titel: "Blok 3 · Check", vragen: [
-      { q: "Wat doe je best vóór je begint te beleggen?", a: ["Alles in crypto steken", "Een noodreserve van 3 tot 6 maanden inkomen aanleggen", "Wachten op een crash"], c: 1,
-        u: "Een buffer zorgt ervoor dat je nooit moet verkopen op een slecht moment." },
-      { q: "Wat is het grootste verschil tussen een actief bankfonds en een ETF?", a: ["Een ETF heeft veel lagere kosten", "Een actief fonds verslaat altijd de markt", "Een ETF belegt maar in één bedrijf"], c: 0,
-        u: "Over lange termijn maken die lagere kosten een groot verschil in je eindkapitaal." },
-      { q: "Wat is de aanbevolen strategie uit de sessie?", a: ["Proberen het beste instapmoment te vinden", "Maandelijks automatisch beleggen en niet panikeren", "Bij elke daling alles verkopen"], c: 1,
-        u: "Tijd in de markt verslaat timing. De beste dagen vallen vaak vlak na een crash." }
-    ] },
-
-    // ───────── BLOK 4 ─────────
-    { type: "video", blok: 4, titel: "Blok 4 · Portefeuilles, financiële onafhankelijkheid en actieplan", youtube: "jQKiUF8UQ10",
-      intro: "Hoe ziet een portefeuille eruit naargelang je profiel, wanneer ben je financieel onafhankelijk, en waar begin je morgen?" },
-    { type: "lezen", blok: 4, titel: "Blok 4 · De kern", kaarten: [
-      { h: "Drie voorbeeldportefeuilles", p: ["Er is geen portefeuille die voor iedereen klopt. Je keuze hangt af van je leeftijd, je tijdshorizon en hoeveel risico je aankan."],
-        drie: [
-          { k: "Conservatief", s: "Dicht bij pensioen", l: ["Wereldwijde ETF als basis", "Flink deel obligaties", "Pensioensparen en cash"] },
-          { k: "Gebalanceerd", s: "Middellange termijn", l: ["Grootste deel wereldwijde ETF", "Wat vastgoed en obligaties", "Pensioenproducten"] },
-          { k: "Groei", s: "Jong, lange horizon", l: ["Vooral aandelen-ETF's", "Groeimarkten", "Klein deel risicovol"] }
-        ] },
-      { h: "De 4%-regel", p: [
-        "Financieel onafhankelijk ben je wanneer je beleggingen genoeg opbrengen om van te leven. De vuistregel: je hebt ongeveer 25 keer je jaarlijkse uitgaven nodig, en je neemt jaarlijks maximaal 4% op.",
-        "Voorbeeld: heb je €3.000 per maand nodig, dan is dat €36.000 per jaar. Je doelkapitaal is dan ongeveer €900.000."
-      ], tip: "Het doel is niet het grootste vermogen, maar keuzevrijheid: minder werken, anders werken of eerder stoppen." },
-      { h: "Jouw actieplan in 5 stappen", genummerd: [
-          "Leg een noodreserve aan van 3 tot 6 maanden netto inkomen.",
-          "Start met pensioensparen en, als zelfstandige, met VAPZ.",
-          "Laat je juridische structuur evalueren bij een hogere winst.",
-          "Begin met maandelijks beleggen in brede, goedkope ETF's.",
-          "Spreid geleidelijk verder, en houd risicovolle beleggingen beperkt."
-        ] }
-    ] },
-    { type: "check", blok: 4, titel: "Blok 4 · Check", vragen: [
-      { q: "Volgens de 4%-regel: hoeveel kapitaal heb je ongeveer nodig als je €24.000 per jaar uitgeeft?", a: ["€240.000", "€600.000", "€1.200.000"], c: 1,
-        u: "25 keer je jaarlijkse uitgaven: 25 × €24.000 = €600.000." },
-      { q: "Wat is de eerste stap in het actieplan?", a: ["Een BV oprichten", "Een noodreserve aanleggen", "Crypto kopen"], c: 1,
-        u: "Eerst een buffer, dan pas beleggen." },
-      { q: "Van wie krijg je advies over je persoonlijke situatie?", a: ["Van deze e-learning", "Van je boekhouder, fiscalist of erkend financieel adviseur", "Van sociale media"], c: 1,
-        u: "Deze module geeft algemene informatie. Je persoonlijke situatie bespreek je met een professional." }
-    ] },
-    {"type": "toets", "titel": "Eindtoets", "slagen": 70, "vragen": [{"q": "Wat is een belangrijk nadeel van een eenmanszaak?", "a": ["Je hebt een notaris nodig om te starten", "Je bent onbeperkt persoonlijk aansprakelijk", "Je mag geen beroepskosten inbrengen"], "c": 1}, {"q": "Wanneer wordt een BV volgens de vuistregel uit de module interessant?", "a": ["Vanaf ongeveer €20.000 winst", "Vanaf ongeveer €60.000 tot €70.000 bruto winst", "Pas vanaf €250.000 winst"], "c": 1}, {"q": "Waaruit bestaat in het rekenvoorbeeld het grootste voordeel van de BV?", "a": ["Een hoger netto loon in handen", "De reserve die in de vennootschap blijft", "Het wegvallen van alle sociale bijdragen"], "c": 1}, {"q": "Welk pensioenproduct is enkel mogelijk via een vennootschap?", "a": ["VAPZ", "POZ", "IPT"], "c": 2}, {"q": "Voor wie is de POZ bedoeld?", "a": ["Voor zelfstandigen zonder vennootschap", "Enkel voor werknemers", "Enkel voor bedrijfsleiders met een BV"], "c": 0}, {"q": "Wat is het kenmerk van een DBI-bevek in je vennootschap?", "a": ["De inkomsten zijn grotendeels vrijgesteld", "Ze heeft lagere kosten dan een ETF", "Ze moet binnen het jaar verkocht worden"], "c": 0}, {"q": "Wat doe je best vóór je begint te beleggen?", "a": ["Een noodreserve van 3 tot 6 maanden netto inkomen aanleggen", "Een lening aangaan", "Wachten op de volgende beurscrash"], "c": 0}, {"q": "Waarom verkiest de module een brede ETF boven een actief bankfonds?", "a": ["Een ETF garandeert winst", "Een ETF heeft veel lagere kosten en volgt de markt", "Een actief fonds is verboden in België"], "c": 1}, {"q": "Wat betekent 'tijd in de markt verslaat timing'?", "a": ["Regelmatig en lang belegd blijven werkt beter dan het perfecte instapmoment zoeken", "Je moet elke dag kopen en verkopen", "Je belegt best enkel na een crash"], "c": 0}, {"q": "Volgens de 4%-regel: hoeveel kapitaal heb je ongeveer nodig bij €30.000 uitgaven per jaar?", "a": ["€300.000", "€750.000", "€1.500.000"], "c": 1}]}
-  ]
-};
-
-</script>
-<script>
-(function () {
-  const M = window.MODULE, icon = UI.icon, esc = UI.esc;
-  const KEY = 'colleo_module_' + M.id;
-  const steps = M.stappen;
-
+  // ── state ──
+  const KEY = 'colleo_mod2_' + M.id;
   function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
-  function save(st) { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
-  let st = load();
-  st.done = st.done || {};
-  let cur = Math.min(st.cur || 0, steps.length - 1);
-  let card = 0;
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+  let st = load(); st.seen = st.seen || {}; st.ans = st.ans || {};
+  let cur = Math.min(st.cur || 0, S.length - 1);
 
-  const elNav = document.getElementById('mNav');
-  const elStage = document.getElementById('mStage');
-  const elBar = document.getElementById('mBar');
-  const elPct = document.getElementById('mPct');
+  const pane = document.getElementById('pane'), prev = document.getElementById('prev'), next = document.getElementById('next');
+  prev.innerHTML = icon('arrowL', 18) + ' Vorige';
+  document.getElementById('menuBtn').innerHTML = icon('menu', 18);
 
-  const TYPE = { video: ['play', 'Kijken'], lezen: ['book', 'Lezen'], check: ['check', 'Check'], toets: ['medal', 'Eindtoets'] };
-
-  function progress() {
-    const n = steps.filter(function (_, i) { return st.done[i]; }).length;
-    const pct = Math.round(n / steps.length * 100);
-    elBar.style.width = pct + '%';
-    elPct.textContent = pct + '% voltooid';
-  }
-
-  function renderNav() {
-    let html = '', lastBlok = null;
-    steps.forEach(function (s, i) {
-      const b = s.type === 'toets' ? 'T' : (s.blok || 0);
-      if (b !== lastBlok) { html += '<div class="mn-group">' + (b === 'T' ? 'Afsluiten' : (b ? 'Blok ' + b : 'Start')) + '</div>'; lastBlok = b; }
-      const t = TYPE[s.type];
-      html += '<button class="mn-item' + (i === cur ? ' cur' : '') + (st.done[i] ? ' done' : '') + '" data-i="' + i + '">' +
-        '<span class="mn-ic">' + icon(st.done[i] ? 'check' : t[0], 15) + '</span>' +
-        '<span class="mn-t"><small>' + t[1] + '</small>' + esc(s.titel.replace(/^Blok \d · /, '')) + '</span></button>';
+  function partIndex(k) { return parts.findIndex(function (p) { return p.key === k; }); }
+  function chrome() {
+    document.getElementById('count').innerHTML = 'Stap <b>' + (cur + 1) + '</b> / ' + S.length;
+    document.getElementById('bar').style.width = Math.round(cur / (S.length - 1) * 100) + '%';
+    const pi = partIndex(S[cur].part);
+    document.getElementById('dots').innerHTML = parts.map(function (p, i) {
+      return '<button class="dotp' + (i === pi ? ' cur' : (i < pi ? ' done' : '')) + '" data-p="' + p.key + '" title="' + esc(p.label) + '" aria-label="' + esc(p.label) + '"></button>';
+    }).join('');
+    document.querySelectorAll('.dotp').forEach(function (d) { d.addEventListener('click', function () { go(S.findIndex(function (s) { return s.part === d.dataset.p; })); }); });
+    prev.disabled = cur === 0;
+    let o = '';
+    parts.forEach(function (p) {
+      o += '<div class="ol-part"><div class="pt">' + esc(p.label) + '</div>';
+      S.forEach(function (s, i) { if (s.part === p.key) o += '<button class="ol-item' + (i === cur ? ' cur' : '') + (st.seen[i] ? ' seen' : '') + '" data-i="' + i + '"><span class="oi">' + (st.seen[i] ? icon('check', 13) : '') + '</span>' + esc(s.title) + '</button>'; });
+      o += '</div>';
     });
-    elNav.innerHTML = html;
-    elNav.querySelectorAll('.mn-item').forEach(function (b) {
-      b.addEventListener('click', function () { go(+b.dataset.i); });
-    });
+    document.getElementById('outline').innerHTML = o;
+    document.querySelectorAll('.ol-item').forEach(function (b) { b.addEventListener('click', function () { closeDrawer(); go(+b.dataset.i); }); });
   }
+  function setNext(label, enabled) { next.innerHTML = label + ' ' + icon('arrow', 18); next.disabled = !enabled; next.style.visibility = cur === S.length - 1 ? 'hidden' : 'visible'; }
+  function go(i) { if (i < 0 || i >= S.length) return; st.seen[cur] = true; cur = i; st.cur = cur; save(); render(); scrollTo({ top: 0, behavior: 'smooth' }); }
+  prev.addEventListener('click', function () { go(cur - 1); });
+  next.addEventListener('click', function () { go(cur + 1); });
+  const drawer = document.getElementById('drawer');
+  function closeDrawer() { drawer.classList.remove('open'); }
+  document.getElementById('menuBtn').addEventListener('click', function () { drawer.classList.add('open'); });
+  drawer.querySelectorAll('[data-close]').forEach(function (e) { e.addEventListener('click', closeDrawer); });
+  addEventListener('keydown', function (e) { if (e.target.tagName === 'INPUT') return; if (e.key === 'ArrowRight' && !next.disabled) go(cur + 1); if (e.key === 'ArrowLeft') go(cur - 1); if (e.key === 'Escape') closeDrawer(); });
 
-  function markDone(i) { st.done[i] = true; save(st); progress(); renderNav(); }
+  function head(s, h1) { return (s.eyebrow ? '<span class="eyebrow">' + esc(s.eyebrow) + '</span>' : '') + (h1 ? '<h1>' : '<h2>') + esc(s.title) + (h1 ? '</h1>' : '</h2>'); }
 
-  function go(i) {
-    cur = Math.max(0, Math.min(steps.length - 1, i));
-    card = 0; st.cur = cur; save(st);
-    render(); renderNav();
-    document.getElementById('mTop').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function footer(canNext, nextLabel) {
-    return '<div class="m-foot">' +
-      (cur > 0 ? '<button class="btn btn-ghost" id="mPrev">' + icon('arrowL', 18) + ' Vorige</button>' : '<span></span>') +
-      (cur < steps.length - 1
-        ? '<button class="btn btn-primary" id="mNext"' + (canNext ? '' : ' disabled') + '>' + (nextLabel || 'Volgende') + ' ' + icon('arrow', 18) + '</button>'
-        : '') +
-      '</div>';
-  }
-  function bindFoot(onNext) {
-    const p = document.getElementById('mPrev'), n = document.getElementById('mNext');
-    if (p) p.addEventListener('click', function () { go(cur - 1); });
-    if (n) n.addEventListener('click', function () { if (onNext) onNext(); go(cur + 1); });
-  }
-
-  function head(s) {
-    const t = TYPE[s.type];
-    return '<div class="m-head"><span class="m-type">' + icon(t[0], 15) + ' ' + t[1] + '</span>' +
-      '<span class="m-count">Stap ' + (cur + 1) + ' van ' + steps.length + '</span></div>' +
-      '<h2 class="m-title">' + esc(s.titel) + '</h2>';
-  }
-
-  // ── video ──
-  function renderVideo(s) {
-    let player;
-    if (s.youtube) {
-      const q = ['rel=0', 'modestbranding=1'];
-      if (s.start) q.push('start=' + s.start);
-      if (s.end) q.push('end=' + s.end);
-      player = '<div class="m-video"><iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(s.youtube) + '?' + q.join('&') +
-        '" title="' + esc(s.titel) + '" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>';
-    } else {
-      player = '<div class="m-video empty"><div>' + icon('play', 40) + '<p>De video van dit blok wordt binnenkort toegevoegd.</p></div></div>';
-    }
-    elStage.innerHTML = head(s) + '<p class="m-intro">' + esc(s.intro) + '</p>' + player +
-      '<p class="m-hint">Bekeken? Ga verder naar de geschreven samenvatting van dit blok.</p>' +
-      footer(true, 'Ik heb dit bekeken');
-    bindFoot(function () { markDone(cur); });
-  }
-
-  // ── lezen (doorklikken) ──
-  function cardHtml(k) {
-    let h = '<h3>' + esc(k.h) + '</h3>';
-    (k.p || []).forEach(function (p) { h += '<p>' + esc(p) + '</p>'; });
-    if (k.lijst) h += '<ul>' + k.lijst.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul>';
-    if (k.genummerd) h += '<ol class="m-steps">' + k.genummerd.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ol>';
-    if (k.twee) h += '<div class="m-two">' + k.twee.map(function (c) {
-      return '<div><div class="k">' + esc(c.k) + '</div><ul>' + c.l.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul></div>';
-    }).join('') + '</div>';
-    if (k.drie) h += '<div class="m-three">' + k.drie.map(function (c) {
-      return '<div><div class="k">' + esc(c.k) + '</div><div class="s">' + esc(c.s) + '</div><ul>' + c.l.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul></div>';
-    }).join('') + '</div>';
-    if (k.tabel) h += '<div class="m-table"><table><thead><tr>' + k.tabel.kop.map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('') +
-      '</tr></thead><tbody>' + k.tabel.rijen.map(function (r) { return '<tr>' + r.map(function (c) { return '<td>' + esc(c) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+  function cardBody(k) {
+    let h = '';
+    if (k.p) h += '<div class="body">' + k.p.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>';
+    if (k.stat) h += '<div class="factcard"><div class="big">' + esc(k.stat.big) + '</div><div class="ft">' + esc(k.stat.txt) + '</div></div>';
+    if (k.stats) h += '<div class="stats">' + k.stats.map(function (x) { return '<div class="stat"><div class="big">' + esc(x.big) + '</div><div class="st">' + esc(x.txt) + '</div></div>'; }).join('') + '</div>';
+    if (k.lijst) h += '<ul class="checks">' + k.lijst.map(function (l) { return '<li><span class="ck">' + icon('check', 15) + '</span><span>' + esc(l) + '</span></li>'; }).join('') + '</ul>';
+    if (k.genummerd) h += '<div class="vsteps">' + k.genummerd.map(function (l, i) { return '<div class="vstep"><div class="n">' + (i + 1) + '</div><p>' + esc(l) + '</p></div>'; }).join('') + '</div>';
+    if (k.twee) h += '<div class="twocol">' + k.twee.map(function (c, i) { return '<div class="col' + (i ? ' alt' : '') + '"><h4><span class="dotc"></span>' + esc(c.k) + '</h4><ul>' + c.l.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul></div>'; }).join('') + '</div>';
+    if (k.drie) h += '<div class="threecol">' + k.drie.map(function (c) { return '<div class="tcard"><h4>' + esc(c.k) + '</h4><div class="s">' + esc(c.s) + '</div><ul>' + c.l.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul></div>'; }).join('') + '</div>';
+    if (k.tabel) h += '<div class="tablewrap"><table><thead><tr>' + k.tabel.kop.map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>' + k.tabel.rijen.map(function (r) { return '<tr>' + r.map(function (c) { return '<td>' + esc(c) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
     if (k.piramide) {
-      const n = k.piramide.length;
-      h += '<div class="m-pyr">' + k.piramide.map(function (l, i) {
-        return '<div style="width:' + (46 + i * (54 / (n - 1))) + '%"><span>' + esc(l) + '</span></div>';
-      }).join('') + '<div class="m-pyr-ax"><span>Meer risico en rendement ▲</span></div></div>';
+      const cols = ['#7a2e3a', '#8a5a1a', '#1e2d4a', '#2f5d7a', '#0f5e50'], n = k.piramide.length;
+      h += '<div class="pyr">' + k.piramide.map(function (l, i) { return '<div style="width:' + (44 + i * (56 / (n - 1))) + '%;background:' + cols[i % 5] + '">' + esc(l) + '</div>'; }).join('') + '<div class="pyr-ax">▲ meer risico en meer verwacht rendement</div></div>';
     }
-    if (k.tip) h += '<div class="m-tip' + (k.let ? ' warn' : '') + '">' + icon(k.let ? 'doc' : 'spark', 18) + '<span>' + esc(k.tip) + '</span></div>';
-    else if (k.let) h = h.replace('<h3>', '<h3 class="warn-h">');
+    if (k.tip) h += '<div class="callout' + (k.let ? ' warn' : '') + '"><div class="cic">' + icon(k.let ? 'alert' : 'bulb', 20) + '</div><div><div class="ct">' + (k.let ? 'Let op' : 'Onthoud') + '</div><div class="cs">' + esc(k.tip) + '</div></div></div>';
+    else if (k.let) h += '<div class="callout warn"><div class="cic">' + icon('alert', 20) + '</div><div><div class="ct">Let op</div><div class="cs">Algemene informatie, geen persoonlijk advies.</div></div></div>';
     return h;
   }
-  function renderLezen(s) {
-    const n = s.kaarten.length, k = s.kaarten[card];
-    const dots = s.kaarten.map(function (_, i) { return '<button class="m-dot' + (i === card ? ' cur' : '') + (i < card ? ' seen' : '') + '" data-c="' + i + '" aria-label="Kaart ' + (i + 1) + '"></button>'; }).join('');
-    const last = card === n - 1;
-    elStage.innerHTML = head(s) +
-      '<div class="m-card">' + cardHtml(k) + '</div>' +
-      '<div class="m-cardnav">' +
-        '<button class="linkbtn" id="cPrev"' + (card === 0 ? ' disabled' : '') + '>' + icon('arrowL', 16) + ' Vorige kaart</button>' +
-        '<div class="m-dots">' + dots + '<span>' + (card + 1) + ' / ' + n + '</span></div>' +
-        (last ? '<span></span>' : '<button class="btn btn-primary btn-sm" id="cNext">Volgende kaart ' + icon('arrow', 16) + '</button>') +
-      '</div>' +
-      (last ? footer(true, 'Verder') : '<div class="m-foot">' + (cur > 0 ? '<button class="btn btn-ghost" id="mPrev">' + icon('arrowL', 18) + ' Vorige stap</button>' : '<span></span>') + '</div>');
-    const cp = document.getElementById('cPrev'), cn = document.getElementById('cNext');
-    if (cp) cp.addEventListener('click', function () { card--; render(); });
-    if (cn) cn.addEventListener('click', function () { card++; render(); });
-    elStage.querySelectorAll('.m-dot').forEach(function (d) { d.addEventListener('click', function () { card = +d.dataset.c; render(); }); });
-    if (last) bindFoot(function () { markDone(cur); });
-    else { const p = document.getElementById('mPrev'); if (p) p.addEventListener('click', function () { go(cur - 1); }); }
+
+  function videoHtml(v) {
+    if (!v.youtube) return '<div class="video empty"><div>' + icon('play', 40) + '<p>De video van dit blok wordt binnenkort toegevoegd.</p></div></div>';
+    const q = ['rel=0', 'modestbranding=1']; if (v.start) q.push('start=' + v.start); if (v.end) q.push('end=' + v.end);
+    return '<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(v.youtube) + '?' + q.join('&') + '" title="' + esc(v.titel) + '" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>';
   }
 
-  // ── check ──
-  function renderCheck(s) {
-    const answers = {};
-    let html = head(s) + '<p class="m-intro">' + (s.eind ? 'Nog drie vragen en je hebt de module afgerond.' : 'Even checken of de kern van dit blok duidelijk is. Kies telkens een antwoord.') + '</p>';
-    s.vragen.forEach(function (v, qi) {
-      html += '<div class="m-q" data-q="' + qi + '"><div class="qn">Vraag ' + (qi + 1) + '</div><h3>' + esc(v.q) + '</h3><div class="m-opts">' +
-        v.a.map(function (a, ai) { return '<button class="m-opt" data-a="' + ai + '">' + esc(a) + '</button>'; }).join('') +
-        '</div><div class="m-fb" hidden></div></div>';
-    });
-    const done = !!st.done[cur];
-    html += '<div id="mResult"></div>' + footer(done, s.eind ? 'Afronden' : 'Volgend blok');
-    if (s.eind) html = html.replace('<div class="m-foot">', '<div class="m-foot">');
-    elStage.innerHTML = html;
+  function render() {
+    const s = S[cur];
+    pane.classList.remove('in'); void pane.offsetWidth; pane.classList.add('in');
+    chrome();
+    if (s.t === 'intro') {
+      const blist = Object.keys(blocks).map(function (b, i) { return '<div class="vstep"><div class="n">' + (i + 1) + '</div><div><h4>' + esc(blocks[b]) + '</h4>' + (META.blokinfo && META.blokinfo[i] ? '<p>' + esc(META.blokinfo[i]) + '</p>' : '') + '</div></div>'; }).join('');
+      pane.innerHTML = '<span class="eyebrow">E-learning · Bijscholing kinesitherapie</span><h1>' + esc(META.titel) + '</h1><p class="lede">' + esc(META.lede) + '</p>' +
+        '<div class="meta"><span>' + icon('clock', 16) + ' ' + esc(META.duur) + '</span><span>' + icon('medal', 16) + ' ' + esc(META.punten) + '</span><span>' + icon('list', 16) + ' Eindtoets, slagen vanaf 70%</span></div>' +
+        '<div class="howbox"><h3>Zo werkt deze module</h3><p>Per blok kijk je eerst een stuk van de opgenomen sessie. Daarna klik je door de kern op papier en beantwoord je een paar kennisvragen. Je sluit af met een eindtoets. Je voortgang wordt in deze browser bewaard, dus je kan altijd pauzeren.</p></div>' +
+        '<div class="vsteps" style="margin-top:28px">' + blist + '<div class="vstep"><div class="n">' + icon('medal', 20) + '</div><div><h4>Eindtoets</h4><p>10 vragen, je slaagt vanaf 70%.</p></div></div></div>' +
+        '<p class="small">Klik op <b>Volgende</b> om te starten. Via het menu rechtsboven spring je naar elk onderdeel.</p>';
+      setNext(cur === 0 && !st.seen[0] ? 'Start' : 'Volgende', true);
+    } else if (s.t === 'doelen') {
+      pane.innerHTML = '<span class="eyebrow">Vooraf</span><h2>Wat je na deze module kan</h2><p class="lede">Lees de leerdoelen even door. Ze geven richting aan wat volgt.</p>' +
+        '<div class="vsteps">' + META.doelen.map(function (d) { return '<div class="vstep"><div class="n">' + icon('target', 20) + '</div><p>' + esc(d) + '</p></div>'; }).join('') + '</div>';
+      setNext('Volgende', true);
+    } else if (s.t === 'card') {
+      pane.innerHTML = head(s) + cardBody(s.card);
+      setNext('Volgende', true);
+    } else if (s.t === 'video') {
+      pane.innerHTML = head(s) + '<p class="lede">' + esc(s.step.intro) + '</p>' + videoHtml(s.step) +
+        '<div class="callout"><div class="cic">' + icon('bulb', 20) + '</div><div><div class="ct">Tip</div><div class="cs">Kijk de video volledig. Daarna vind je de kern van dit blok op papier, gevolgd door een paar kennisvragen.</div></div></div>';
+      setNext('Ik heb dit bekeken', true);
+    } else if (s.t === 'q') renderQ(s);
+    else if (s.t === 'toets') renderToets(s);
+    else renderEnd(s);
+  }
 
-    function check() {
-      const ok = s.vragen.every(function (v, qi) { return answers[qi] === v.c; });
-      const n = document.getElementById('mNext');
-      if (ok) {
-        markDone(cur);
-        document.getElementById('mResult').innerHTML = '<div class="m-ok">' + icon('check', 20) + '<span>' + (s.eind ? 'Proficiat, je hebt alle vragen juist!' : 'Alles juist. Op naar het volgende blok!') + '</span></div>';
-        if (n) n.disabled = false;
-        if (s.eind) showEnd();
-      }
+  function renderQ(s) {
+    const v = s.v, prevA = st.ans[s.id];
+    pane.innerHTML = head(s) + '<div class="qnum">Vraag ' + s.n + ' van ' + s.of + '</div>' +
+      '<div class="opts">' + v.a.map(function (a, i) { return '<button class="opt" data-i="' + i + '"><span class="mk">' + String.fromCharCode(65 + i) + '</span><span>' + esc(a) + '</span></button>'; }).join('') + '</div><div id="ex"></div>';
+    const opts = pane.querySelectorAll('.opt');
+    function show(i) {
+      opts.forEach(function (o, j) { o.disabled = true; if (j === v.c) { o.classList.add('correct'); o.querySelector('.mk').innerHTML = icon('check', 14); } else if (j === i) { o.classList.add('wrong'); o.querySelector('.mk').innerHTML = icon('x', 14); } });
+      const ok = i === v.c;
+      document.getElementById('ex').innerHTML = '<div class="explain ' + (ok ? 'good' : 'bad') + '"><b>' + (ok ? 'Juist. ' : 'Niet helemaal. ') + '</b>' + esc(v.u || '') + '</div>';
+      setNext('Volgende', true);
     }
-    elStage.querySelectorAll('.m-q').forEach(function (qEl) {
-      const qi = +qEl.dataset.q, v = s.vragen[qi], fb = qEl.querySelector('.m-fb');
-      qEl.querySelectorAll('.m-opt').forEach(function (b) {
-        b.addEventListener('click', function () {
-          if (answers[qi] === v.c) return;
-          const ai = +b.dataset.a;
-          qEl.querySelectorAll('.m-opt').forEach(function (o) { o.classList.remove('wrong'); });
-          if (ai === v.c) {
-            answers[qi] = ai; b.classList.add('right'); qEl.classList.add('ok');
-            fb.className = 'm-fb good'; fb.innerHTML = '<strong>Juist.</strong> ' + esc(v.u);
-          } else {
-            b.classList.add('wrong');
-            fb.className = 'm-fb bad'; fb.innerHTML = '<strong>Niet helemaal.</strong> Probeer nog eens.';
-          }
-          fb.hidden = false; check();
-        });
-      });
-    });
-    bindFoot(null);
-    if (s.eind && done) showEnd();
+    opts.forEach(function (o) { o.addEventListener('click', function () { const i = +o.dataset.i; st.ans[s.id] = i; save(); show(i); }); });
+    if (prevA != null) show(prevA); else setNext('Volgende', false);
   }
 
-
-  // ── eindtoets ──
   function renderToets(s) {
-    const pass = s.slagen || 70, n = s.vragen.length;
-    const todo = steps.map(function (_, i) { return i; }).filter(function (i) { return i < cur && steps[i].type !== 'lezen' && !st.done[i]; });
+    const T = s.step, n = T.vragen.length, pass = T.slagen || 70;
+    const qIdx = S.map(function (x, i) { return x.t === 'q' ? i : -1; }).filter(function (i) { return i >= 0; });
+    const vIdx = S.map(function (x, i) { return x.t === 'video' ? i : -1; }).filter(function (i) { return i >= 0; });
+    const todo = qIdx.filter(function (i) { return st.ans[S[i].id] == null; }).concat(vIdx.filter(function (i) { return !st.seen[i]; })).sort(function (a, b) { return a - b; });
     if (todo.length) {
-      elStage.innerHTML = head(s) + '<div class="t-lock">' + icon('lock', 26) + '<div><strong>Nog even geduld</strong><p>Doorloop eerst alle video\u2019s en checks van de module. Daarna kan je de eindtoets afleggen. Nog ' + todo.length + (todo.length === 1 ? ' stap' : ' stappen') + ' te gaan.</p>' +
-        '<button class="btn btn-primary" id="tGo">Ga naar de volgende stap ' + icon('arrow', 18) + '</button></div></div>' +
-        '<div class="m-foot">' + (cur > 0 ? '<button class="btn btn-ghost" id="mPrev">' + icon('arrowL', 18) + ' Vorige</button>' : '<span></span>') + '</div>';
-      document.getElementById('tGo').addEventListener('click', function () { go(todo[0]); });
-      const pv = document.getElementById('mPrev'); if (pv) pv.addEventListener('click', function () { go(cur - 1); });
-      return;
+      pane.innerHTML = head(s) + '<div class="card lock"><div class="cic" style="color:var(--muted)">' + icon('lock', 26) + '</div><div><h3 style="font-size:1.15rem">Nog even geduld</h3><p style="color:var(--muted);margin:6px 0 14px">Doorloop eerst alle video’s en kennisvragen. Daarna kan je de eindtoets afleggen. Nog ' + todo.length + (todo.length === 1 ? ' onderdeel' : ' onderdelen') + ' te gaan.</p><button class="btn btn-primary" id="goTodo">Ga verder waar je was ' + icon('arrow', 18) + '</button></div></div>';
+      document.getElementById('goTodo').addEventListener('click', function () { go(todo[0]); });
+      setNext('Volgende', false); return;
     }
-    const prevRes = st.toets;
-    let html = head(s) +
-      '<p class="m-intro">' + esc(s.intro || ('Deze eindtoets bestaat uit ' + n + ' vragen. Je slaagt vanaf ' + pass + '%. Pas na het indienen zie je je score.')) + '</p>' +
-      '<div class="t-rules"><span>' + icon('list', 16) + ' ' + n + ' vragen</span><span>' + icon('medal', 16) + ' Slagen vanaf ' + pass + '%</span><span>' + icon('clock', 16) + ' Onbeperkt opnieuw proberen</span></div>';
-    if (prevRes && prevRes.geslaagd) {
-      html += '<div class="m-ok">' + icon('check', 20) + '<span>Je slaagde op ' + esc(prevRes.datum) + ' met ' + prevRes.score + '%. Je mag de toets gerust opnieuw maken.</span></div>';
-    }
-    s.vragen.forEach(function (v, qi) {
-      html += '<div class="m-q t-q" data-q="' + qi + '"><div class="qn">Vraag ' + (qi + 1) + ' van ' + n + '</div><h3>' + esc(v.q) + '</h3><div class="m-opts">' +
-        v.a.map(function (a, ai) { return '<button class="m-opt" data-a="' + ai + '" aria-pressed="false">' + esc(a) + '</button>'; }).join('') +
-        '</div><div class="m-fb" hidden></div></div>';
+    let h = head(s) + '<p class="lede">' + n + ' vragen over de hele module. Je slaagt vanaf ' + pass + '%. Pas na het indienen zie je je score.</p>';
+    if (st.toets && st.toets.geslaagd) h += '<div class="result pass"><div class="big">' + st.toets.score + '%</div><div><b>Al geslaagd</b> op ' + esc(st.toets.datum) + '. Je mag de toets opnieuw maken.</div></div>';
+    T.vragen.forEach(function (v, qi) {
+      h += '<div class="tq" data-q="' + qi + '"><div class="qnum">Vraag ' + (qi + 1) + ' van ' + n + '</div><h4>' + esc(v.q) + '</h4><div class="opts">' +
+        v.a.map(function (a, i) { return '<button class="opt" data-i="' + i + '"><span class="mk">' + String.fromCharCode(65 + i) + '</span><span>' + esc(a) + '</span></button>'; }).join('') + '</div><div class="fb"></div></div>';
     });
-    html += '<div class="t-submit"><span id="tCount">0 / ' + n + ' beantwoord</span><button class="btn btn-primary" id="tSend" disabled>Toets indienen ' + icon('arrow', 18) + '</button></div>' +
-      '<div id="tResult"></div>' +
-      '<div class="m-foot">' + (cur > 0 ? '<button class="btn btn-ghost" id="mPrev">' + icon('arrowL', 18) + ' Vorige</button>' : '<span></span>') + '</div>';
-    elStage.innerHTML = html;
-    const p = document.getElementById('mPrev'); if (p) p.addEventListener('click', function () { go(cur - 1); });
-
-    const ans = {}; let locked = false;
-    const send = document.getElementById('tSend'), cnt = document.getElementById('tCount');
-    elStage.querySelectorAll('.t-q').forEach(function (qEl) {
-      const qi = +qEl.dataset.q;
-      qEl.querySelectorAll('.m-opt').forEach(function (b) {
-        b.addEventListener('click', function () {
+    h += '<div class="tsubmit"><span id="cnt">0 / ' + n + ' beantwoord</span><button class="btn btn-primary" id="send" disabled>Toets indienen ' + icon('arrow', 18) + '</button></div><div id="res"></div>';
+    pane.innerHTML = h;
+    setNext('Naar de afronding', !!(st.toets && st.toets.geslaagd));
+    const ans = {}; let locked = false; const send = document.getElementById('send');
+    pane.querySelectorAll('.tq').forEach(function (q) {
+      const qi = +q.dataset.q;
+      q.querySelectorAll('.opt').forEach(function (o) {
+        o.addEventListener('click', function () {
           if (locked) return;
-          qEl.querySelectorAll('.m-opt').forEach(function (o) { o.classList.remove('sel'); o.setAttribute('aria-pressed', 'false'); });
-          b.classList.add('sel'); b.setAttribute('aria-pressed', 'true');
-          ans[qi] = +b.dataset.a;
-          const k = Object.keys(ans).length;
-          cnt.textContent = k + ' / ' + n + ' beantwoord';
-          send.disabled = k < n;
+          q.querySelectorAll('.opt').forEach(function (x) { x.classList.remove('sel'); });
+          o.classList.add('sel'); ans[qi] = +o.dataset.i;
+          const k = Object.keys(ans).length; document.getElementById('cnt').textContent = k + ' / ' + n + ' beantwoord'; send.disabled = k < n;
         });
       });
     });
     send.addEventListener('click', function () {
-      locked = true; send.disabled = true;
-      let good = 0;
-      elStage.querySelectorAll('.t-q').forEach(function (qEl) {
-        const qi = +qEl.dataset.q, v = s.vragen[qi], ok = ans[qi] === v.c;
-        if (ok) good++;
-        qEl.classList.add(ok ? 'ok' : 'nok');
-        const fb = qEl.querySelector('.m-fb');
-        fb.hidden = false;
-        fb.className = 'm-fb ' + (ok ? 'good' : 'bad');
-        fb.innerHTML = ok ? '<strong>Juist.</strong>' : '<strong>Fout.</strong>';
+      locked = true; send.disabled = true; let good = 0;
+      pane.querySelectorAll('.tq').forEach(function (q) {
+        const qi = +q.dataset.q, ok = ans[qi] === T.vragen[qi].c; if (ok) good++;
+        q.classList.add(ok ? 'ok' : 'nok'); q.querySelector('.fb').textContent = ok ? 'Juist' : 'Fout';
+        q.querySelectorAll('.opt').forEach(function (o) { o.disabled = true; });
       });
-      const score = Math.round(good / n * 100), passed = score >= pass;
-      const res = document.getElementById('tResult');
-      if (passed) {
-        const d = new Date().toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' });
-        st.toets = { geslaagd: true, score: score, datum: d }; save(st); markDone(cur);
-        res.innerHTML = '<div class="t-res pass"><div class="big">' + score + '%</div><div><strong>Geslaagd!</strong> Je beantwoordde ' + good + ' van ' + n + ' vragen juist.</div></div>';
-        showEnd();
+      const score = Math.round(good / n * 100), ok = score >= pass, res = document.getElementById('res');
+      if (ok) {
+        st.toets = { geslaagd: true, score: score, datum: new Date().toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' }) }; save();
+        res.innerHTML = '<div class="result pass"><div class="big">' + score + '%</div><div><b>Geslaagd!</b> Je beantwoordde ' + good + ' van ' + n + ' vragen juist.</div><button class="btn btn-primary" id="toEnd">Naar de afronding ' + icon('arrow', 18) + '</button></div>';
+        document.getElementById('toEnd').addEventListener('click', function () { go(cur + 1); });
+        setNext('Naar de afronding', true);
       } else {
-        res.innerHTML = '<div class="t-res fail"><div class="big">' + score + '%</div><div><strong>Nog niet geslaagd.</strong> Je beantwoordde ' + good + ' van ' + n + ' vragen juist; je hebt minstens ' + pass + '% nodig. Herbekijk gerust de blokken en probeer opnieuw.</div>' +
-          '<button class="btn btn-primary" id="tRetry">Opnieuw proberen</button></div>';
-        document.getElementById('tRetry').addEventListener('click', function () { render(); document.getElementById('mTop').scrollIntoView({ behavior: 'smooth' }); });
+        res.innerHTML = '<div class="result fail"><div class="big">' + score + '%</div><div><b>Nog niet geslaagd.</b> ' + good + ' van ' + n + ' juist; je hebt minstens ' + pass + '% nodig. Herbekijk gerust de blokken via het menu en probeer opnieuw.</div><button class="btn btn-primary" id="retry">Opnieuw proberen</button></div>';
+        document.getElementById('retry').addEventListener('click', function () { render(); scrollTo({ top: 0, behavior: 'smooth' }); });
       }
       res.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   }
 
-  function showEnd() {
-    if (document.getElementById('mEnd')) return;
-    const d = document.createElement('div');
-    d.id = 'mEnd'; d.className = 'm-end';
-    d.innerHTML = '<div class="m-end-ic">' + icon('medal', 30) + '</div><h3>Module afgerond</h3>' +
-      '<p>Je hebt <strong>' + esc(M.titel) + '</strong> doorlopen en bent geslaagd voor de eindtoets. Vergeet niet om deze navorming zelf toe te voegen in je Pro-Q-Kine-portfolio.</p>' +
-      '<div class="m-end-cta"><a class="btn btn-primary" href="elearnings.html">Naar alle e-learnings</a><button class="btn btn-ghost" id="mRestart">Opnieuw beginnen</button></div>';
-    elStage.appendChild(d);
-    document.getElementById('mRestart').addEventListener('click', function () { st = { done: {} }; save(st);  progress(); go(0); });
+  function renderEnd(s) {
+    const t = st.toets;
+    if (!t || !t.geslaagd) {
+      pane.innerHTML = head(s) + '<p class="lede">Je bent bijna klaar. Leg eerst de eindtoets af om de module af te ronden.</p><div style="margin-top:22px"><button class="btn btn-primary" id="toToets">Naar de eindtoets ' + icon('arrow', 18) + '</button></div>';
+      document.getElementById('toToets').addEventListener('click', function () { go(cur - 1); });
+      setNext('Volgende', false); return;
+    }
+    pane.innerHTML = '<span class="eyebrow">Afsluiten</span><h1>Proficiat, je hebt de module afgerond</h1>' +
+      '<div class="cert"><div class="seal">' + icon('medal', 30) + '</div><h3>' + esc(META.titel) + '</h3><p style="color:var(--muted);margin-top:6px">Geslaagd voor de eindtoets</p><div class="cm"><span>Score ' + t.score + '%</span><span>' + esc(t.datum) + '</span><span>' + esc(META.punten) + '</span></div></div>' +
+      '<h3 style="margin-top:32px;font-size:1.25rem">Nog twee dingen</h3>' +
+      '<div class="vsteps"><div class="vstep"><div class="n">1</div><div><h4>Voeg de navorming toe in je Pro-Q-Kine-portfolio</h4><p>Dat doe je zelf; wij hebben geen toegang tot je account. Via e-learning haal je maximaal 24 navormingseenheden per jaar.</p></div></div>' +
+      '<div class="vstep"><div class="n">2</div><div><h4>Laat ons weten wat je ervan vond</h4><p>We zijn een jonge organisatie en sturen bij op basis van jullie feedback.</p></div></div></div>' +
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px"><a class="btn btn-primary" href="contact.html">Geef feedback ' + icon('arrow', 18) + '</a><a class="btn btn-ghost" href="elearnings.html">Alle e-learnings</a><button class="btn btn-ghost" id="restart">Opnieuw beginnen</button></div>';
+    document.getElementById('restart').addEventListener('click', function () { st = { seen: {}, ans: {} }; save(); go(0); });
+    setNext('Volgende', false);
   }
 
-  function render() {
-    const s = steps[cur];
-    elStage.classList.remove('in'); void elStage.offsetWidth; elStage.classList.add('in');
-    if (s.type === 'video') renderVideo(s);
-    else if (s.type === 'lezen') renderLezen(s);
-    else if (s.type === 'toets') renderToets(s);
-    else renderCheck(s);
-  }
-
-  document.getElementById('navArr').innerHTML = icon('arrow', 18);
-  progress(); renderNav(); render();
-  const nav = document.getElementById('nav');
-  addEventListener('scroll', function () { nav.classList.toggle('scrolled', scrollY > 12); }, { passive: true });
-})();
-
-</script>
-<script id="colleo-nav-js">
-(function () {
-  var ICON_OPEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
-  var ICON_CLOSE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
-  function ensure() {
-    var cta = document.querySelector('.nav .nav-cta');
-    if (!cta || !document.querySelector('.nav .nav-links') || cta.querySelector('.nav-burger')) return;
-    var b = document.createElement('button');
-    b.className = 'nav-burger'; b.type = 'button'; b.setAttribute('aria-label', 'Menu openen'); b.innerHTML = ICON_OPEN;
-    b.addEventListener('click', function () {
-      var open = document.body.classList.toggle('menu-open');
-      b.innerHTML = open ? ICON_CLOSE : ICON_OPEN; b.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
-    });
-    cta.appendChild(b);
-  }
-  document.addEventListener('click', function (e) {
-    if (e.target.closest && e.target.closest('.nav-links a')) document.body.classList.remove('menu-open');
-  });
-  ensure();
-  new MutationObserver(ensure).observe(document.body, { childList: true, subtree: true });
+  render();
 })();
 </script>
 </body>
