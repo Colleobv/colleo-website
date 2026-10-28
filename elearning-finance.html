@@ -598,6 +598,7 @@ window.META = {"titel": "Finance for physios", "lede": "Van je juridische struct
   function renderWidget(s) {
     const W = s.step;
     if (W.soort === 'compound' || W.soort === 'fire') return renderCalc(s);
+    if (W.soort === 'eiwit') return renderEiwit(s);
     pane.innerHTML = head(s) + '<p class="lede">' + esc(W.intro) + '</p><div class="card wid">' +
       '<label class="wl">Baseline (' + esc(W.eenheid) + ')<input type="range" id="wb" min="1000" max="10000" step="' + W.stap + '" value="' + W.start + '"><output id="wo"></output></label>' +
       '<label class="wl">Opbouw per week<select id="wp"><option value="5">5%</option><option value="10" selected>10%</option><option value="15">15%</option></select></label>' +
@@ -650,6 +651,20 @@ window.META = {"titel": "Finance for physios", "lede": "Van je juridische struct
       document.getElementById('wc').innerHTML = svg + '<p class="small" style="margin-top:4px">' + (F ? '<span style="color:#b04a4a">- - doelkapitaal</span> · <span style="color:#0f5e50">— jouw vermogen</span>' : '<span style="color:#5b6577">grijs: zelf ingelegd</span> · <span style="color:#0f5e50">groen: totale waarde</span>') + '</p>' + html;
     }
     fields.forEach(function (f) { document.getElementById('w_' + f[0]).addEventListener('input', draw); }); draw();
+    setNext('Volgende', true);
+  }
+
+  function renderEiwit(s) {
+    const W = s.step;
+    const SIT = { sport: ['Actief trainende sporter', 1.4, 2.0, 'Verdeel over 3 tot 5 momenten, 20 à 40 g (± 0,25 g/kg) per portie.'], immo: ['Immobilisatie of spierletsel', 1.4, 2.0, 'Door anabole resistentie liefst hogere porties: 30 à 40 g per maaltijd.'], chir: ['Rond chirurgie of prothese', 1.2, 1.5, 'Pre- en postoperatief, verdeeld over 3 tot 5 momenten.'], fract: ['Fractuur', 1.0, 1.5, 'Samen met voldoende calcium en vitamine D.'] };
+    pane.innerHTML = head(s) + '<p class="lede">' + esc(W.intro) + '</p><div class="card wid"><label class="wl">Lichaamsgewicht (kg)<input type="range" id="w_kg" min="20" max="140" step="1" value="72"><output id="o_kg"></output></label><label class="wl">Situatie<select id="w_sit">' + Object.keys(SIT).map(function (k) { return '<option value="' + k + '"' + ((W.start || 'sport') === k ? ' selected' : '') + '>' + SIT[k][0] + '</option>'; }).join('') + '</select></label><div id="wc"></div></div>' + callout('warn', 'Let op', 'Algemene richtwaarden uit internationale richtlijnen, geen individueel voedingsadvies. Bij nierziekte, ondervoeding of specifieke pathologie verwijs je door naar een diëtist of arts.');
+    function draw() {
+      const kg = +document.getElementById('w_kg').value, x = SIT[document.getElementById('w_sit').value];
+      document.getElementById('o_kg').textContent = kg;
+      const lo = Math.round(kg * x[1]), hi = Math.round(kg * x[2]);
+      document.getElementById('wc').innerHTML = '<div class="stats"><div class="stat"><div class="big">' + lo + '–' + hi + ' g</div><div class="st">eiwit per dag (' + x[1].toFixed(1).replace('.', ',') + '–' + x[2].toFixed(1).replace('.', ',') + ' g/kg)</div></div><div class="stat"><div class="big">' + Math.round(lo / 4) + '–' + Math.round(hi / 4) + ' g</div><div class="st">per maaltijd, verdeeld over 4 momenten</div></div></div><p class="small" style="margin-top:12px">' + esc(x[3]) + ' Ter vergelijking: 100 g magere kwark bevat ongeveer 8 à 10 g eiwit, een ei ongeveer 6 g.</p>';
+    }
+    document.getElementById('w_kg').addEventListener('input', draw); document.getElementById('w_sit').addEventListener('change', draw); draw();
     setNext('Volgende', true);
   }
 
