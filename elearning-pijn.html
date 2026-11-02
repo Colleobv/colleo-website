@@ -240,7 +240,7 @@ tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--bg) 60%,var(--sur
 <body>
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="elearnings.html" title="Terug naar alle e-learnings"><span class="dot">C</span>Colleo <span class="sub">e-learning</span></a>
+    <span class="brand"><span class="dot">C</span>Colleo <span class="sub">e-learning</span></span>
     <div class="top-r">
       <span class="stepcount" id="count"></span>
       <button class="menu-btn" id="menuBtn" aria-label="Overzicht van de module"></button>
@@ -742,7 +742,7 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
       '<h3 style="margin-top:32px;font-size:1.25rem">Nog twee dingen</h3>' +
       '<div class="vsteps"><div class="vstep"><div class="n">1</div><div><h4>Voeg de navorming toe in je Pro-Q-Kine-portfolio</h4><p>Dat doe je zelf; wij hebben geen toegang tot je account. Via e-learning haal je maximaal 24 navormingseenheden per jaar.</p></div></div>' +
       '<div class="vstep"><div class="n">2</div><div><h4>Laat ons weten wat je ervan vond</h4><p>We zijn een jonge organisatie en sturen bij op basis van jullie feedback.</p></div></div></div>' +
-      '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px"><a class="btn btn-primary" href="contact.html">Geef feedback ' + icon('arrow', 18) + '</a><a class="btn btn-ghost" href="elearnings.html">Alle e-learnings</a><button class="btn btn-ghost" id="restart">Opnieuw beginnen</button></div>';
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px"><a class="btn btn-primary" href="mailto:info@colleo.be?subject=Feedback%20e-learning%20Complexe%20pijn">Geef feedback ' + icon('arrow', 18) + '</a><button class="btn btn-ghost" id="restart">Opnieuw beginnen</button></div>';
     document.getElementById('restart').addEventListener('click', function () { st = { seen: {}, ans: {}, refl: {}, cas: {} }; save(); go(0); });
     setNext('Volgende', false);
   }
