@@ -216,6 +216,7 @@ tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--bg) 60%,var(--sur
 .casbox .cic{background:var(--navy);color:var(--accent)}
 .ta{width:100%;margin-top:18px;border:1.5px solid var(--hairline);border-radius:14px;padding:14px 16px;font:inherit;font-size:1rem;background:var(--surface);color:var(--ink);resize:vertical}
 .ta:focus{outline:none;border-color:var(--accent)}
+.fbq{margin-top:18px}.fbq label{display:block;font-weight:600;color:var(--navy);margin-bottom:8px}.fbq .opt-l{font-weight:400;color:var(--muted)}.fbsel{width:100%;border:1.5px solid var(--hairline);border-radius:12px;padding:13px 14px;font:inherit;font-size:1rem;background:var(--surface);color:var(--ink)}.fbsel:focus,.fbin:focus{outline:none;border-color:var(--accent)}.fbsel.miss{border-color:#d98b8b}.fbin{width:100%;border:1.5px solid var(--hairline);border-radius:12px;padding:13px 14px;font:inherit;font-size:1rem;background:var(--surface);color:var(--ink)}.fbq .ta{margin-top:0}.fberr{margin-top:14px;color:var(--bad);font-size:.95rem}
 .tameta{display:flex;justify-content:space-between;font-size:.84rem;color:var(--muted);margin-top:6px}
 .prevrefl{margin-top:16px;border-left:3px solid var(--accent);padding:6px 14px}
 .prevrefl .pl{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
@@ -445,6 +446,7 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
     if (st.type === 'widget') S.push({ t: 'widget', part: part, step: st, eyebrow: eb + ' · Doe het zelf', title: st.titel });
     if (st.type === 'toets') S.push({ t: 'toets', part: 'toets', step: st, eyebrow: 'Afsluiten', title: 'Eindtoets' });
   });
+  S.push({ t: 'feedback', part: 'toets', eyebrow: 'Afsluiten', title: 'Jouw feedback' });
   S.push({ t: 'end', part: 'toets', eyebrow: 'Afsluiten', title: 'Afronding' });
   const firstRefl = S.find(function (s) { return s.t === 'refl'; });
 
@@ -459,7 +461,7 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
   prev.innerHTML = icon('arrowL', 18) + ' Vorige';
   document.getElementById('menuBtn').innerHTML = icon('menu', 18);
   function partIndex(k) { return parts.findIndex(function (p) { return p.key === k; }); }
-  const tIcon = { video: 'play', card: 'book', q: 'target', refl: 'pen', casus: 'user', widget: 'chart', toets: 'medal', end: 'medal', intro: 'list', doelen: 'target' };
+  const tIcon = { video: 'play', card: 'book', q: 'target', refl: 'pen', casus: 'user', widget: 'chart', toets: 'medal', feedback: 'pen', end: 'medal', intro: 'list', doelen: 'target' };
   function chrome() {
     document.getElementById('count').innerHTML = 'Stap <b>' + (cur + 1) + '</b> / ' + S.length;
     document.getElementById('bar').style.width = Math.round(cur / (S.length - 1) * 100) + '%';
@@ -548,6 +550,7 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
     else if (s.t === 'casus') renderCasus(s);
     else if (s.t === 'widget') renderWidget(s);
     else if (s.t === 'toets') renderToets(s);
+    else if (s.t === 'feedback') renderFeedback(s);
     else renderEnd(s);
   }
 
@@ -730,6 +733,62 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
     });
   }
 
+  // ── feedback (verstuurd naar info@colleo.be via Web3Forms) ──
+  const FB_KEY = 'WEB3FORMS_KEY';
+  const SCHAAL = ['Zeer goed', 'Goed', 'Neutraal', 'Matig', 'Slecht'];
+  const FBQ = [
+    { id: 'inhoud', q: 'Wat vond je van de inhoud?', a: SCHAAL },
+    { id: 'vormgeving', q: 'Wat vond je van de vormgeving en de opbouw van de e-learning?', a: SCHAAL },
+    { id: 'videos', q: 'Wat vond je van de video’s (uitleg, beeld en geluid)?', a: SCHAAL },
+    { id: 'niveau', q: 'Hoe vond je de moeilijkheidsgraad?', a: ['Te makkelijk', 'Eerder makkelijk', 'Precies goed', 'Eerder moeilijk', 'Te moeilijk'] },
+    { id: 'duur', q: 'Hoe lang heb je ongeveer over de module gedaan?', a: ['Minder dan 2 uur', '2 à 3 uur', '3 à 4 uur', 'Meer dan 4 uur'] },
+    { id: 'kennis', q: 'Is je kennis vergroot door deze module?', a: ['Helemaal akkoord', 'Akkoord', 'Neutraal', 'Niet akkoord', 'Helemaal niet akkoord'] },
+    { id: 'praktijk', q: 'Kan je wat je leerde toepassen in je dagelijkse praktijk?', a: ['Helemaal akkoord', 'Akkoord', 'Neutraal', 'Niet akkoord', 'Helemaal niet akkoord'] },
+    { id: 'aanraden', q: 'Zou je deze e-learning aanraden aan collega’s?', a: ['Ja, zeker', 'Waarschijnlijk wel', 'Twijfel', 'Eerder niet', 'Nee'] },
+    { id: 'score', q: 'Welke score op 10 geef je deze e-learning?', a: ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1'] }
+  ];
+  function renderFeedback(s) {
+    if (!st.toets || !st.toets.geslaagd) {
+      pane.innerHTML = head(s) + '<p class="lede">Leg eerst de eindtoets af. Daarna kan je je feedback geven.</p><div style="margin-top:22px"><button class="btn btn-primary" id="toToets">Naar de eindtoets ' + icon('arrow', 18) + '</button></div>';
+      document.getElementById('toToets').addEventListener('click', function () { go(cur - 1); });
+      setNext('Volgende', false); return;
+    }
+    if (st.feedback) {
+      pane.innerHTML = head(s) + '<div class="result pass"><div class="big">' + icon('check', 30) + '</div><div><b>Bedankt!</b> Je feedback is goed ontvangen.</div></div>';
+      setNext('Naar de afronding', true); return;
+    }
+    let h = head(s) + '<p class="lede">Nog één laatste stap. We zijn een jonge organisatie, voor kiné door kiné, en sturen bij op basis van jullie feedback. Het invullen duurt ongeveer 2 minuten.</p><div class="card">';
+    FBQ.forEach(function (f) {
+      h += '<div class="fbq"><label for="fb_' + f.id + '">' + esc(f.q) + '</label><select class="fbsel" id="fb_' + f.id + '"><option value="">Maak een keuze</option>' + f.a.map(function (a) { return '<option>' + esc(a) + '</option>'; }).join('') + '</select></div>';
+    });
+    h += '<div class="fbq"><label for="fb_goed">Wat vond je het sterkst aan deze e-learning? <span class="opt-l">(optioneel)</span></label><textarea class="ta" id="fb_goed" rows="3"></textarea></div>' +
+      '<div class="fbq"><label for="fb_beter">Wat kan beter, of welk onderwerp mis je? <span class="opt-l">(optioneel)</span></label><textarea class="ta" id="fb_beter" rows="3"></textarea></div>' +
+      '<div class="fbq"><label for="fb_naam">Je naam <span class="opt-l">(optioneel, laat leeg om anoniem te antwoorden)</span></label><input class="fbin" id="fb_naam" type="text" autocomplete="name"></div>' +
+      '<div class="fberr" id="fberr" hidden></div><div style="margin-top:22px"><button class="btn btn-primary" id="fbsend">Feedback versturen ' + icon('arrow', 18) + '</button></div></div>';
+    pane.innerHTML = h;
+    setNext('Naar de afronding', false);
+    const btn = document.getElementById('fbsend'), err = document.getElementById('fberr');
+    btn.addEventListener('click', function () {
+      let miss = null; const data = {};
+      FBQ.forEach(function (f) { const el = document.getElementById('fb_' + f.id); el.classList.toggle('miss', !el.value); if (!el.value && !miss) miss = el; data[f.q] = el.value; });
+      if (miss) { err.hidden = false; err.textContent = 'Beantwoord eerst alle keuzevragen.'; miss.scrollIntoView({ behavior: 'smooth', block: 'center' }); miss.focus(); return; }
+      const naam = document.getElementById('fb_naam').value.trim();
+      data['Wat vond je het sterkst?'] = document.getElementById('fb_goed').value.trim() || '-';
+      data['Wat kan beter?'] = document.getElementById('fb_beter').value.trim() || '-';
+      data['Naam'] = naam || 'anoniem';
+      data['Score eindtoets'] = st.toets.score + '%';
+      const body = Object.assign({ access_key: FB_KEY, subject: 'Feedback e-learning ' + META.titel.split(':')[0] + (naam ? ' – ' + naam : ''), from_name: 'Colleo e-learning', botcheck: '' }, data);
+      btn.disabled = true; err.hidden = true; btn.innerHTML = 'Bezig met versturen…';
+      fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { if (!j.success) throw new Error(j.message || 'fout'); st.feedback = true; save(); go(cur + 1); })
+        .catch(function () {
+          btn.disabled = false; btn.innerHTML = 'Opnieuw proberen ' + icon('arrow', 18); err.hidden = false;
+          err.innerHTML = 'Het versturen is niet gelukt. Probeer opnieuw, of mail je feedback naar <a href="mailto:info@colleo.be">info@colleo.be</a>.';
+        });
+    });
+  }
+
   function renderEnd(s) {
     const t = st.toets;
     if (!t || !t.geslaagd) {
@@ -737,12 +796,17 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
       document.getElementById('toToets').addEventListener('click', function () { go(cur - 1); });
       setNext('Volgende', false); return;
     }
+    if (!st.feedback) {
+      pane.innerHTML = head(s) + '<p class="lede">Nog één stap: laat ons kort weten wat je van de e-learning vond.</p><div style="margin-top:22px"><button class="btn btn-primary" id="toFb">Naar de feedback ' + icon('arrow', 18) + '</button></div>';
+      document.getElementById('toFb').addEventListener('click', function () { go(cur - 1); });
+      setNext('Volgende', false); return;
+    }
     pane.innerHTML = '<span class="eyebrow">Afsluiten</span><h1>Proficiat, je hebt de module afgerond</h1>' +
       '<div class="cert"><div class="seal">' + icon('medal', 30) + '</div><h3>' + esc(META.titel) + '</h3><p style="color:var(--muted);margin-top:6px">Geslaagd voor de eindtoets</p><div class="cm"><span>Score ' + t.score + '%</span><span>' + esc(t.datum) + '</span><span>' + esc(META.punten) + '</span></div></div>' +
-      '<h3 style="margin-top:32px;font-size:1.25rem">Nog twee dingen</h3>' +
+      '<h3 style="margin-top:32px;font-size:1.25rem">Nog één ding</h3>' +
       '<div class="vsteps"><div class="vstep"><div class="n">1</div><div><h4>Voeg de navorming toe in je Pro-Q-Kine-portfolio</h4><p>Dat doe je zelf; wij hebben geen toegang tot je account. Via e-learning haal je maximaal 24 navormingseenheden per jaar.</p></div></div>' +
-      '<div class="vstep"><div class="n">2</div><div><h4>Laat ons weten wat je ervan vond</h4><p>We zijn een jonge organisatie en sturen bij op basis van jullie feedback.</p></div></div></div>' +
-      '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px"><a class="btn btn-primary" href="mailto:info@colleo.be?subject=Feedback%20e-learning%20Complexe%20pijn">Geef feedback ' + icon('arrow', 18) + '</a><button class="btn btn-ghost" id="restart">Opnieuw beginnen</button></div>';
+      '</div><p style="margin-top:18px;color:var(--muted)">Bedankt voor je feedback!</p>' +
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px"><button class="btn btn-ghost" id="restart">Opnieuw beginnen</button></div>';
     document.getElementById('restart').addEventListener('click', function () { st = { seen: {}, ans: {}, refl: {}, cas: {} }; save(); go(0); });
     setNext('Volgende', false);
   }
