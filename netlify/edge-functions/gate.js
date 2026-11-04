@@ -1,21 +1,23 @@
 // ---- Colleo wachtwoordscherm (gedeelde logica) ----
-// Wachtwoord komt uit de omgevingsvariabele SITE_PASSWORD (instellen bij de host).
-// Pagina's in PUBLIC blijven vrij toegankelijk (bv. de e-learning voor de huidige cohorte).
+// SITE_PASSWORD      = wachtwoord voor de hele site (team).
+// ELEARNING_PASSWORD = apart wachtwoord voor deelnemers: geeft enkel toegang tot de e-learning(s) in ELEARNING.
+// Wie het sitewachtwoord heeft, kan ook de e-learning openen.
 
 const COOKIE = "colleo_gate";
+const ELEARN_COOKIE = "colleo_elearn";
+const ELEARNING = [/^\/elearning-pijn(\.html)?\/?$/];
 const MAX_AGE = 60 * 60 * 24 * 30; // 30 dagen ingelogd blijven
 const PUBLIC = [
-  /^\/elearning-pijn(\.html)?\/?$/,
   /^\/img\//,
   /^\/vendor\//,
   /^\/robots\.txt$/,
   /^\/favicon\./,
 ];
 
-async function token(password) {
+async function token(password, salt = "colleo-gate-v1") {
   const enc = new TextEncoder();
   const key = await crypto.subtle.importKey("raw", enc.encode(password), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
-  const sig = await crypto.subtle.sign("HMAC", key, enc.encode("colleo-gate-v1"));
+  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(salt));
   return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
@@ -36,14 +38,20 @@ function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-function loginPage(next, message, status) {
+const TEXT = {
+  site: { title: "Colleo — Binnenkort online", h1: "Binnenkort online", intro: "Onze website wordt nog afgewerkt. Heb je een toegangswachtwoord gekregen? Log dan hieronder in." },
+  elearning: { title: "Colleo — E-learning Complexe pijn", h1: "E-learning Complexe pijn", intro: "Log in met het wachtwoord dat je van Colleo kreeg om de e-learning te starten." },
+};
+
+function loginPage(next, message, status, realm = "site") {
+  const t = TEXT[realm];
   const html = `<!doctype html>
 <html lang="nl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Colleo — Binnenkort online</title>
+<title>${t.title}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
@@ -71,10 +79,11 @@ function loginPage(next, message, status) {
 <body>
   <main class="card">
     <div class="brand"><span class="dot"></span>Colleo</div>
-    <h1>Binnenkort online</h1>
-    <p>Onze website wordt nog afgewerkt. Heb je een toegangswachtwoord gekregen? Log dan hieronder in.</p>
+    <h1>${t.h1}</h1>
+    <p>${t.intro}</p>
     <form method="post" action="/__login">
       <input type="hidden" name="next" value="${esc(next)}">
+      <input type="hidden" name="realm" value="${realm}">
       <label for="pw">Wachtwoord</label>
       <input id="pw" name="password" type="password" autocomplete="current-password" required autofocus>
       <button type="submit">Inloggen</button>
@@ -90,46 +99,63 @@ function loginPage(next, message, status) {
   });
 }
 
-async function gate(request, password, next) {
+function setCookie(name, value) {
+  return `${name}=${value}; Path=/; Max-Age=${MAX_AGE}; HttpOnly; Secure; SameSite=Lax`;
+}
+
+async function gate(request, password, elearnPassword, next) {
   const url = new URL(request.url);
   const path = url.pathname;
-
-  if (PUBLIC.some((re) => re.test(path))) return next();
-
-  if (path === "/__logout") {
-    return new Response(null, {
-      status: 302,
-      headers: { Location: "/", "Set-Cookie": `${COOKIE}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax` },
-    });
-  }
-
-  if (!password) return loginPage("/", "Er is nog geen wachtwoord ingesteld voor deze website.", 503);
-  const expected = await token(password);
-
-  if (path === "/__login" && request.method === "POST") {
-    const form = await request.formData().catch(() => null);
-    const given = form ? String(form.get("password") || "") : "";
-    const dest = safeNext(form ? form.get("next") : "/");
-    if (given && (await token(given)) === expected) {
-      return new Response(null, {
-        status: 303,
-        headers: { Location: dest, "Set-Cookie": `${COOKIE}=${expected}; Path=/; Max-Age=${MAX_AGE}; HttpOnly; Secure; SameSite=Lax` },
-      });
-    }
-    return loginPage(dest, "Dat wachtwoord klopt niet. Probeer het opnieuw.");
-  }
-
-  if (readCookie(request, COOKIE) === expected) {
+  const withNoindex = async () => {
     const res = await next();
     const out = new Response(res.body, res);
     out.headers.set("X-Robots-Tag", "noindex, nofollow");
     return out;
+  };
+
+  if (PUBLIC.some((re) => re.test(path))) return next();
+
+  if (path === "/__logout") {
+    const h = new Headers({ Location: "/" });
+    h.append("Set-Cookie", `${COOKIE}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax`);
+    h.append("Set-Cookie", `${ELEARN_COOKIE}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax`);
+    return new Response(null, { status: 302, headers: h });
   }
 
+  const siteToken = password ? await token(password) : null;
+  const elearnToken = elearnPassword ? await token(elearnPassword, "colleo-elearn-v1") : null;
+  const hasSite = siteToken && readCookie(request, COOKIE) === siteToken;
+  const hasElearn = elearnToken && readCookie(request, ELEARN_COOKIE) === elearnToken;
+
+  if (path === "/__login" && request.method === "POST") {
+    const form = await request.formData().catch(() => null);
+    const given = form ? String(form.get("password") || "") : "";
+    const realm = form && form.get("realm") === "elearning" ? "elearning" : "site";
+    const dest = safeNext(form ? form.get("next") : "/");
+    if (given) {
+      // Sitewachtwoord werkt op beide schermen; e-learningwachtwoord enkel voor de e-learning.
+      if (siteToken && (await token(given)) === siteToken) {
+        return new Response(null, { status: 303, headers: { Location: dest, "Set-Cookie": setCookie(COOKIE, siteToken) } });
+      }
+      if (realm === "elearning" && elearnToken && (await token(given, "colleo-elearn-v1")) === elearnToken) {
+        return new Response(null, { status: 303, headers: { Location: dest, "Set-Cookie": setCookie(ELEARN_COOKIE, elearnToken) } });
+      }
+    }
+    return loginPage(dest, "Dat wachtwoord klopt niet. Probeer het opnieuw.", 401, realm);
+  }
+
+  if (ELEARNING.some((re) => re.test(path))) {
+    if (!elearnPassword) return withNoindex(); // nog geen e-learningwachtwoord ingesteld: pagina blijft open zoals voorheen
+    if (hasSite || hasElearn) return withNoindex();
+    return loginPage(path + url.search, "", 401, "elearning");
+  }
+
+  if (!password) return loginPage("/", "Er is nog geen wachtwoord ingesteld voor deze website.", 503);
+  if (hasSite) return withNoindex();
   return loginPage(path + url.search);
 }
 
 // ---- Netlify Edge ----
 export default async (request, context) => {
-  return gate(request, Netlify.env.get("SITE_PASSWORD"), () => context.next());
+  return gate(request, Netlify.env.get("SITE_PASSWORD"), Netlify.env.get("ELEARNING_PASSWORD"), () => context.next());
 };
