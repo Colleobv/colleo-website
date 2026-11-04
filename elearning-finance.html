@@ -486,6 +486,7 @@ window.META = {"titel": "Finance for physios", "lede": "Van je juridische struct
     const b = e.target.closest && e.target.closest('.video.facade'); if (!b) return;
     const q = ['rel=0', 'modestbranding=1', 'autoplay=1']; if (b.dataset.start) q.push('start=' + b.dataset.start); if (b.dataset.end) q.push('end=' + b.dataset.end);
     const d = document.createElement('div'); d.className = 'video';
+    if (window.colleoTrack) window.colleoTrack('video', b.dataset.title);
     d.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(b.dataset.yt) + '?' + q.join('&') + '" title="' + b.dataset.title.replace(/"/g, '&quot;') + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
     b.replaceWith(d);
   });
@@ -533,6 +534,7 @@ window.META = {"titel": "Finance for physios", "lede": "Van je juridische struct
 
   function render() {
     const s = S[cur];
+    try { const det = { module: M.id, i: cur, n: S.length, title: s.title || (s.t === 'intro' ? 'Start' : s.t === 'doelen' ? 'Leerdoelen' : s.t), type: s.t }; window.__colleoScherm = det; window.dispatchEvent(new CustomEvent('colleo:scherm', { detail: det })); } catch (e) {}
     pane.classList.remove('in'); void pane.offsetWidth; pane.classList.add('in');
     chrome();
     if (s.t === 'intro') renderIntro();
@@ -720,6 +722,7 @@ window.META = {"titel": "Finance for physios", "lede": "Van je juridische struct
         q.querySelectorAll('.opt').forEach(function (o) { o.disabled = true; });
       });
       const score = Math.round(good / n * 100), ok = score >= pass, res = document.getElementById('res');
+      if (window.colleoTrack) window.colleoTrack('toets', ok ? 'geslaagd' : 'niet geslaagd', score);
       if (ok) {
         st.toets = { geslaagd: true, score: score, datum: new Date().toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' }) }; save();
         res.innerHTML = '<div class="result pass"><div class="big">' + score + '%</div><div><b>Geslaagd!</b> Je beantwoordde ' + good + ' van ' + n + ' vragen juist.</div><button class="btn btn-primary" id="toEnd">Naar de afronding ' + icon('arrow', 18) + '</button></div>';
@@ -757,5 +760,6 @@ window.META = {"titel": "Finance for physios", "lede": "Van je juridische struct
   render();
 })();
 </script>
+<script src="/s.js" defer></script>
 </body>
 </html>

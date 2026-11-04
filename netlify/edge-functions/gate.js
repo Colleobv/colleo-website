@@ -12,6 +12,10 @@ const PUBLIC = [
   /^\/vendor\//,
   /^\/robots\.txt$/,
   /^\/favicon\./,
+  // statistieken: meetscript + meetpunt zijn openbaar; het dashboard heeft een eigen wachtwoord (STATS_PASSWORD)
+  /^\/s\.js$/,
+  /^\/api\/(s|stats)$/,
+  /^\/statistieken(\.html)?\/?$/,
 ];
 
 async function token(password, salt = "colleo-gate-v1") {

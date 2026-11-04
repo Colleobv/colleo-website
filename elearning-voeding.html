@@ -518,6 +518,7 @@ window.META = {"titel": "Voeding in sport, revalidatie en herstel", "lede": "Wet
 
   function render() {
     const s = S[cur];
+    try { const det = { module: M.id, i: cur, n: S.length, title: s.title || (s.t === 'intro' ? 'Start' : s.t === 'doelen' ? 'Leerdoelen' : s.t), type: s.t }; window.__colleoScherm = det; window.dispatchEvent(new CustomEvent('colleo:scherm', { detail: det })); } catch (e) {}
     pane.classList.remove('in'); void pane.offsetWidth; pane.classList.add('in');
     chrome();
     if (s.t === 'intro') renderIntro();
@@ -705,6 +706,7 @@ window.META = {"titel": "Voeding in sport, revalidatie en herstel", "lede": "Wet
         q.querySelectorAll('.opt').forEach(function (o) { o.disabled = true; });
       });
       const score = Math.round(good / n * 100), ok = score >= pass, res = document.getElementById('res');
+      if (window.colleoTrack) window.colleoTrack('toets', ok ? 'geslaagd' : 'niet geslaagd', score);
       if (ok) {
         st.toets = { geslaagd: true, score: score, datum: new Date().toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' }) }; save();
         res.innerHTML = '<div class="result pass"><div class="big">' + score + '%</div><div><b>Geslaagd!</b> Je beantwoordde ' + good + ' van ' + n + ' vragen juist.</div><button class="btn btn-primary" id="toEnd">Naar de afronding ' + icon('arrow', 18) + '</button></div>';
@@ -742,5 +744,6 @@ window.META = {"titel": "Voeding in sport, revalidatie en herstel", "lede": "Wet
   render();
 })();
 </script>
+<script src="/s.js" defer></script>
 </body>
 </html>

@@ -1,5 +1,11 @@
 {
   "version": 1,
-  "include": ["/*"],
-  "exclude": ["/img/*", "/vendor/*"]
+  "include": [
+    "/*"
+  ],
+  "exclude": [
+    "/img/*",
+    "/vendor/*",
+    "/s.js"
+  ]
 }
