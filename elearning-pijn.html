@@ -534,7 +534,6 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
     const s = S[cur];
     pane.classList.remove('in'); void pane.offsetWidth; pane.classList.add('in');
     chrome();
-    if (!st.naam) { renderNaam(); return; }
     if (s.t === 'intro') renderIntro();
     else if (s.t === 'doelen') {
       pane.innerHTML = '<span class="eyebrow">Vooraf</span><h2>Wat je na deze module kan</h2><p class="lede">Lees de leerdoelen even door. Ze geven richting aan wat volgt.</p>' +
@@ -553,29 +552,6 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
     else if (s.t === 'toets') renderToets(s);
     else if (s.t === 'feedback') renderFeedback(s);
     else renderEnd(s);
-  }
-
-  // ── naam ingeven vóór de start (wordt meegestuurd met de feedback) ──
-  function renderNaam() {
-    pane.innerHTML = '<span class="eyebrow">Welkom</span><h1>' + esc(META.titel) + '</h1>' +
-      '<p class="lede">Vul eerst je naam in. Zo weten we wie de module gevolgd heeft wanneer je op het einde je feedback verstuurt.</p>' +
-      '<div class="card"><form id="naamForm" novalidate>' +
-      '<div class="fbq"><label for="nm_voor">Voornaam</label><input class="fbin" id="nm_voor" type="text" autocomplete="given-name" required></div>' +
-      '<div class="fbq"><label for="nm_achter">Achternaam</label><input class="fbin" id="nm_achter" type="text" autocomplete="family-name" required></div>' +
-      '<div class="fberr" id="nmerr" hidden></div>' +
-      '<div style="margin-top:22px"><button type="submit" class="btn btn-primary">Start de module ' + icon('arrow', 18) + '</button></div>' +
-      '</form></div>';
-    prev.disabled = true;
-    setNext('Volgende', false);
-    const f = document.getElementById('naamForm'), voor = document.getElementById('nm_voor'), achter = document.getElementById('nm_achter'), err = document.getElementById('nmerr');
-    voor.focus();
-    f.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const v = voor.value.trim(), a = achter.value.trim();
-      voor.classList.toggle('miss', !v); achter.classList.toggle('miss', !a);
-      if (!v || !a) { err.hidden = false; err.textContent = 'Vul je voornaam en achternaam in.'; (!v ? voor : achter).focus(); return; }
-      st.naam = v + ' ' + a; save(); render(); scrollTo({ top: 0, behavior: 'smooth' });
-    });
   }
 
   function renderIntro() {
@@ -788,18 +764,17 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
     h += '<div class="fbq"><label for="fb_goed">Wat vond je het sterkst aan deze e-learning? <span class="opt-l">(optioneel)</span></label><textarea class="ta" id="fb_goed" rows="3"></textarea></div>' +
       '<div class="fbq"><label for="fb_beter">Wat kan beter, of welk onderwerp mis je? <span class="opt-l">(optioneel)</span></label><textarea class="ta" id="fb_beter" rows="3"></textarea></div>' +
       '<div class="fbq"><label for="fb_vraag">Heb je een inhoudelijke vraag over de leerstof of een casus uit je praktijk? <span class="opt-l">(optioneel, we antwoorden je per mail)</span></label><textarea class="ta" id="fb_vraag" rows="4"></textarea></div>' +
-      '<div class="fbq"><label>Je naam</label><p class="small">' + esc(st.naam) + ' · <a href="#" id="fbNaamWijzig">wijzigen</a></p></div>' +
+      '<div class="fbq"><label for="fb_naam">Je naam <span class="opt-l">(optioneel, laat leeg om anoniem te antwoorden)</span></label><input class="fbin" id="fb_naam" type="text" autocomplete="name"></div>' +
       '<div class="fbq"><label for="fb_mail">Je e-mailadres <span class="opt-l">(enkel nodig als je een vraag stelt)</span></label><input class="fbin" id="fb_mail" type="email" autocomplete="email"></div>' +
       '<div class="fberr" id="fberr" hidden></div><div style="margin-top:22px"><button class="btn btn-primary" id="fbsend">Feedback versturen ' + icon('arrow', 18) + '</button></div></div>';
     pane.innerHTML = h;
     setNext('Naar de afronding', false);
-    document.getElementById('fbNaamWijzig').addEventListener('click', function (e) { e.preventDefault(); const n = prompt('Je naam (voornaam en achternaam):', st.naam); if (n && n.trim()) { st.naam = n.trim(); save(); renderFeedback(s); } });
     const btn = document.getElementById('fbsend'), err = document.getElementById('fberr');
     btn.addEventListener('click', function () {
       let miss = null; const data = {};
       FBQ.forEach(function (f) { const el = document.getElementById('fb_' + f.id); el.classList.toggle('miss', !el.value); if (!el.value && !miss) miss = el; data[f.q] = el.value; });
       if (miss) { err.hidden = false; err.textContent = 'Beantwoord eerst alle keuzevragen.'; miss.scrollIntoView({ behavior: 'smooth', block: 'center' }); miss.focus(); return; }
-      const naam = st.naam;
+      const naam = document.getElementById('fb_naam').value.trim();
       const vraag = document.getElementById('fb_vraag').value.trim(), mailEl = document.getElementById('fb_mail'), mail = mailEl.value.trim();
       const mailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
       mailEl.classList.toggle('miss', (!!vraag && !mailOk) || (!!mail && !mailOk));
@@ -807,7 +782,7 @@ window.META = {"titel": "Complexe pijn: begrijpen en in beweging brengen", "lede
       data['Wat vond je het sterkst?'] = document.getElementById('fb_goed').value.trim() || '-';
       data['Wat kan beter?'] = document.getElementById('fb_beter').value.trim() || '-';
       data['Inhoudelijke vraag'] = vraag || '-';
-      data['Naam'] = naam;
+      data['Naam'] = naam || 'anoniem';
       if (mail) data.email = mail;
       data['Score eindtoets'] = st.toets.score + '%';
       const body = Object.assign({ access_key: FB_KEY, subject: (vraag ? 'VRAAG + feedback' : 'Feedback') + ' e-learning ' + META.titel.split(':')[0] + (naam ? ' – ' + naam : ''), from_name: 'Colleo e-learning', botcheck: '' }, data);
